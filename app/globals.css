@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #12111a;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #20212d;
+  border-radius: 10px;
+}
+
+@layer utilities {
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+  @media screen and (max-width: 1588px) {
+    .main-responsive {
+      padding-inline: 20px;
+    }
+  }
+}

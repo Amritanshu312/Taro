@@ -1,0 +1,19 @@
+.cardImage::after {
+  content: "";
+  height: 36%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  background: linear-gradient(360deg, #12111ab8, transparent);
+  left: 0;
+  bottom: 0;
+}
+
+.cardImage:hover .rating {
+  opacity: 1;
+  transition: 0.2s;
+}
+.rating {
+  opacity: 0;
+}

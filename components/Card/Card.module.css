@@ -1,0 +1,46 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.wrapper::after {
+  content: "";
+  height: 36%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  background: linear-gradient(360deg, #12111ab8, #0000);
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: 0.2s;
+}
+.wrapper:hover::after {
+  opacity: 1;
+}
+
+.wrapper:hover .info {
+  opacity: 1 !important;
+  transition: 0.5s;
+}
+
+.bounce {
+  animation: bounce 0.5s linear;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(-30px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
