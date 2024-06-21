@@ -6,9 +6,11 @@ import Trending from "@/content/Home/Trending";
 import { SeasonalAnilist, Top100Anilist, TrendingAnilist } from "@/lib/Anilistfunction";
 
 const Home = async () => {
-  const trendingdata = await TrendingAnilist();
-  const top100data = await Top100Anilist();
-  const seasonaldata = await SeasonalAnilist();
+  // const top100data = await Top100Anilist();
+  const [trendingdata, seasonaldata] = await Promise.all([
+    TrendingAnilist(),
+    SeasonalAnilist()
+  ]);
 
 
   return (

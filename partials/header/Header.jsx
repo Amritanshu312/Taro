@@ -2,10 +2,11 @@ import { nightTokyo } from "@/utils/fonts"
 import styles from "./header.module.css"
 import Link from "next/link"
 import Image from "next/image"
-import Links from "./links/Links"
-import Search from "./search/Search"
+import Links from "./Links"
+import Search from "./Search"
 import { PiBellRingingFill as Bell } from "react-icons/pi";
-import { LuAlignLeft } from "react-icons/lu";
+import Responsive from "./Responsive"
+
 
 const Header = () => {
   return (
@@ -14,9 +15,7 @@ const Header = () => {
 
         <div className={styles.left}>
 
-          <div className="text-3xl text-white flex items-center justify-center mr-2 cursor-pointer min-[990px]:hidden">
-            <LuAlignLeft />
-          </div>
+          <Responsive />
 
           <Link href={"/"} className={`${nightTokyo.className} text-white flex items-center gap-2`}>
             <Image

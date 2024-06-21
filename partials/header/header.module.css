@@ -50,3 +50,17 @@
     gap: 14px;
   }
 }
+
+.animate_ltr {
+  animation: ltr 0.5s ease-in-out forwards;
+  left: -106%;
+}
+
+@keyframes ltr {
+  from {
+    left: -106%;
+  }
+  to {
+    left: 0%;
+  }
+}

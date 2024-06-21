@@ -11,9 +11,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background: #12111a;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -33,6 +35,11 @@ body {
   @media screen and (max-width: 1588px) {
     .main-responsive {
       padding-inline: 20px;
+    }
+  }
+  @media screen and (max-width: 400px) and (min-width: 350px) {
+    .grid-auto-fit {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
   }
 }

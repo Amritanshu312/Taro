@@ -51,10 +51,11 @@ const TrendingCard = ({ info }) => {
         muted
         onError={() => setVideoError(true)}
       ></video> : <Image
-        src={info?.coverImage?.large}
+        src={info?.coverImage?.extraLarge}
         alt="Trending"
         width={200}
         height={280}
+        quality={100}
         className="object-cover w-full h-full rounded-2xl hover:cursor-pointer"
       />}
 

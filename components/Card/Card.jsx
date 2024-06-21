@@ -11,7 +11,7 @@ const Card = ({ data, loading }) => {
     <motion.div className="aspect-[9/14] rounded-2xl cursor-pointer mb-2">
       <div className={`${styles.wrapper}`}>
         <Image
-          src={data?.coverImage?.large}
+          src={data?.coverImage?.extraLarge}
           alt="Trending"
           width={200}
           height={280}

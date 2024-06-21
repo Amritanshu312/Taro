@@ -5,7 +5,7 @@ const Collection = () => {
   return (
     <div className="w-full max-w-[96rem] relative mx-5">
       <div className="flex justify-between">
-        <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins']">| Featured Collections</h1>
+        <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins'] max-[450px]:text-[1.2rem]">| Featured Collections</h1>
 
         <div className="text-[#ffffffbd] flex items-center gap-1 cursor-pointer hover:text-slate-500 transition">See All <FaArrowRight /></div>
       </div>

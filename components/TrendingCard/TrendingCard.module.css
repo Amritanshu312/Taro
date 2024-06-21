@@ -10,6 +10,11 @@
   bottom: 0;
 }
 
+.cardImage:hover::after {
+  opacity: 0;
+  transition: 0.2s;
+}
+
 .cardImage:hover .rating {
   opacity: 1;
   transition: 0.2s;
