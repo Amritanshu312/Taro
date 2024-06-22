@@ -10,8 +10,9 @@ const Herosection = ({ data }) => {
   const [bannerImage, setBannerImage] = useState(null);
   const [trailer, setTrailer] = useState(null);
 
+
   let VideoPlay = false;
-  let dynamicBanner = true;
+  let dynamicBanner = false;
 
   useEffect(() => {
     const getPopular = () => {
@@ -26,6 +27,7 @@ const Herosection = ({ data }) => {
 
   useEffect(() => {
     async function fetchTrailer(trailerId) {
+      console.log("called");
       try {
         if (trailerId) {
           const response = await fetch(
@@ -37,6 +39,7 @@ const Herosection = ({ data }) => {
           const item = res.videoStreams.find(
             (i) => i.quality === '1080p' && i.format === 'WEBM'
           );
+          console.log(item?.url);
           setTrailer(item?.url || null);
         }
       } catch (error) {
@@ -69,18 +72,10 @@ const Herosection = ({ data }) => {
       }
     };
 
-    const onLoad = () => {
-      if (dynamicBanner) {
-        getBannerImage();
-      }
-    };
 
-    window.addEventListener('load', onLoad);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('load', onLoad);
-    };
+    if (dynamicBanner) {
+      getBannerImage();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [populardata]);
@@ -91,10 +86,10 @@ const Herosection = ({ data }) => {
     <div className={`relative w-full ${styles.smoothImageBlending}`}>
       <div>
 
-        {populardata && bannerImage ? populardata?.bannerImage ?
+        {populardata ? populardata?.bannerImage ?
           !trailer ?
             <Image
-              src={bannerImage}
+              src={dynamicBanner ? bannerImage : populardata?.bannerImage}
               alt="banner"
               loading='eager'
               priority={true}

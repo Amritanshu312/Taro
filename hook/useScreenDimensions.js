@@ -3,11 +3,15 @@ import { useState, useEffect } from 'react';
 
 function useScreenDimensions() {
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const handleResize = () => {
       setDimensions({
         width: window.innerWidth,
