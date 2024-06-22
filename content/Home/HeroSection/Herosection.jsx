@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 import styles from "./HeroSection.module.css"
 import { FaCirclePlay } from "react-icons/fa6";
+import Button from "@/components/ui/Button";
 
 const Herosection = ({ data }) => {
   const [populardata, setpopulardata] = useState(null);
@@ -10,7 +11,7 @@ const Herosection = ({ data }) => {
   const [trailer, setTrailer] = useState(null);
 
   let VideoPlay = false;
-  let dynamicBanner = false;
+  let dynamicBanner = true;
 
   useEffect(() => {
     const getPopular = () => {
@@ -49,32 +50,51 @@ const Herosection = ({ data }) => {
 
 
   useEffect(() => {
-    const getbannerImage = async () => {
+    const getBannerImage = async () => {
       if (populardata && populardata.bannerImage && populardata.id && !bannerImage && !VideoPlay) {
-        const response = await fetch(`https://consumet-anime-beta.vercel.app/meta/anilist/artwork/${populardata.id}`);
-        if (!response.ok) return
-        const data = await response.json();
-        const filteredData = data.filter(item => item.type === 'banner');
+        try {
+          const response = await fetch(`https://consumet-anime-beta.vercel.app/meta/anilist/artwork/${populardata.id}`);
+          if (!response.ok) setBannerImage(populardata?.bannerImage);
 
-        if (filteredData.length > 0) {
-          const randomIndex = Math.floor(Math.random() * filteredData.length);
-          setBannerImage(filteredData[randomIndex]?.img || null);
+          const data = await response.json();
+          const filteredData = data.filter(item => item.type === 'banner');
+
+          if (filteredData.length > 0) {
+            const randomIndex = Math.floor(Math.random() * filteredData.length);
+            setBannerImage(filteredData[randomIndex]?.img || null);
+          }
+        } catch (error) {
+          setBannerImage(populardata?.bannerImage)
         }
       }
-    }
+    };
 
-    if (dynamicBanner) getbannerImage()
-  }, [populardata])
+    const onLoad = () => {
+      if (dynamicBanner) {
+        getBannerImage();
+      }
+    };
+
+    window.addEventListener('load', onLoad);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('load', onLoad);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [populardata]);
+
 
   console.log(populardata);
   return (
     <div className={`relative w-full ${styles.smoothImageBlending}`}>
       <div>
 
-        {populardata ? populardata?.bannerImage ?
+        {populardata && bannerImage ? populardata?.bannerImage ?
           !trailer ?
             <Image
-              src={bannerImage || populardata?.bannerImage}
+              src={bannerImage}
               alt="banner"
               loading='eager'
               priority={true}
@@ -125,7 +145,7 @@ const Herosection = ({ data }) => {
           </div>
 
           <h2 className="text-sm text-white w-full max-w-[60rem] tracking-normal overflow-hidden text-ellipsis line-clamp-2 font-['poppins'] mt-3 mb-4 max-[794px]:text-[13px]">{populardata?.description.replace(/<[^>]*>/g, '')}</h2>
-          <button className="flex gap-2 items-center text-white bg-[#ffffff24] px-4 py-1 rounded-md border-[2px] border-[#ffffff31] mt-2"><FaCirclePlay /> Watch Now</button>
+          <Button text="Watch now" icon={<FaCirclePlay />} />
         </div> : null
       }
 

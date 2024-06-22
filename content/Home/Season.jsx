@@ -1,5 +1,4 @@
-import TrendingCard from "@/components/TrendingCard/TrendingCard";
-import { SeasonalAnilist } from "@/lib/Anilistfunction";
+import Card from "@/components/Cards/Card/Card";
 
 const Season = ({ data }) => {
 
@@ -8,7 +7,7 @@ const Season = ({ data }) => {
       <h1 className="text-[#ffffffbd] font-medium text-2xl font-['poppins']">| Most Popular This Season</h1>
 
       <div className="mt-8 grid grid-auto-fit gap-3">
-        {data?.map((item, index) => <TrendingCard info={item} key={index} />)}
+        {data?.map((item, index) => <Card data={item} key={index} />)}
       </div>
 
     </div>

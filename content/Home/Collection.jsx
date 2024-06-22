@@ -1,7 +1,33 @@
-import FeaturedCard from "@/components/featuredCard/FeaturedCard"
+import FeaturedCard from "@/components/Cards/featuredCard/FeaturedCard"
 import { FaArrowRight } from "react-icons/fa6";
 
 const Collection = () => {
+  const data = [
+    {
+      text: "The best of ecchi",
+      image: [
+        "https://media.themoviedb.org/t/p/w220_and_h330_face/uTb2twGxJuJN0qdcz3yQQfIHOrN.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx148109-cwAINDGwAHB2.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx130298-O7nR1Wrav2dH.jpg",
+      ]
+    },
+    {
+      text: "The best of romance",
+      image: [
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx9260-tbZARfVq8JoX.png",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/21650-qFjRMXrw1jku.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx97863-79AXrUZ7VQa5.jpg",
+      ]
+    },
+    {
+      text: "The best of Shounen",
+      image: [
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101302-7L0lcwYeFQQM.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-NuHM32a3VJsb.png",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx171627-EzihNzljlKKs.jpg",
+      ]
+    }
+  ]
   return (
     <div className="w-full max-w-[96rem] relative mx-5">
       <div className="flex justify-between">
@@ -11,9 +37,7 @@ const Collection = () => {
       </div>
 
       <div className="mt-8 mb-52 grid grid-cols-[repeat(auto-fit,minmax(345px,1fr))] gap-3">
-        <FeaturedCard />
-        <FeaturedCard />
-        <FeaturedCard />
+        {data.map((item, index) => <FeaturedCard key={index} data={item} />)}
       </div>
 
 

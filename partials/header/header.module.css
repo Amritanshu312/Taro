@@ -3,10 +3,10 @@
   position: fixed;
   justify-content: center;
   align-items: center;
-  height: 5rem;
+  height: 6rem;
   width: 100%;
   z-index: 999;
-  background: linear-gradient(180deg, #2a283bd0, #1c1b285b);
+  background: linear-gradient(#2a283bd6, #2a283b94, #1c1b2800);
 }
 
 .wrapper {

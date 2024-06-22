@@ -44,3 +44,12 @@
     transform: translateY(0px);
   }
 }
+
+.progressBar {
+  width: 40px;
+  height: 40px;
+}
+.progressBar::before {
+  color: white;
+  font-family: "poppins", sans-serif;
+}

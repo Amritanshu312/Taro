@@ -1,7 +1,7 @@
 "use client"
-import Card from "@/components/Card/Card"
+import Card from "@/components/Cards/Card/Card"
 import { PopularAnilist } from "@/lib/Anilistfunction"
-import { Fragment, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 const Popular = () => {
   const [page, setPage] = useState(1)
@@ -26,7 +26,7 @@ const Popular = () => {
 
       <div className="mt-8 grid grid-auto-fit gap-3">
         {popularData.map((item, index) => <Card data={item} key={index} />)}
-        {loading ? Array(page === 1 ? 16 : 10).fill(0).map((_, index) => <Card key={index} loading />) : null}
+        {loading ? Array(page === 1 ? 20 : 13).fill(0).map((_, index) => <Card key={index} loading />) : null}
       </div>
 
       <div className="mt-8 w-full flex justify-center">

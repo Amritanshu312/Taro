@@ -11,7 +11,7 @@ const TrendingCard = ({ info }) => {
   const [trailer, setTrailer] = useState(null);
 
   // main
-  const VideoPlay = false;
+  const VideoPlay = true;
 
   const HoverTime = 1000
   let hoverTimer = null;

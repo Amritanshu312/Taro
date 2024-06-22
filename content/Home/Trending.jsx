@@ -1,4 +1,4 @@
-import TrendingCard from "@/components/TrendingCard/TrendingCard"
+import TrendingCard from "@/components/Cards/TrendingCard/TrendingCard"
 import { Fragment } from "react"
 
 const Trending = ({ data }) => {
