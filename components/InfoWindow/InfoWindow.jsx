@@ -2,6 +2,7 @@ import { IoStar } from "react-icons/io5";
 import { motion } from "framer-motion"
 import useScreenDimensions from "@/hook/useScreenDimensions";
 import { FaCirclePlay } from "react-icons/fa6";
+import Link from "next/link";
 
 const InfoWindow = ({ info, hoverdata }) => {
   const { width: screenWidth } = useScreenDimensions()
@@ -36,7 +37,7 @@ const InfoWindow = ({ info, hoverdata }) => {
         <div><span className="text-[#ffffffd8]">Genres: </span> <span>{info?.genres.join(', ')} </span></div>
       </div>
 
-      <button className="text-white bg-[#73d8c730] w-full h-10 rounded-2xl mt-4 border-2 border-[#73d8c730] flex items-center justify-center gap-2"><FaCirclePlay /> Watch Now</button>
+      <Link href={`/watch/${info?.id}`} className="text-white bg-[#73d8c730] w-full h-10 rounded-2xl mt-4 border-2 border-[#73d8c730] flex items-center justify-center gap-2"><FaCirclePlay /> Watch Now</Link>
     </motion.div>
   )
 }

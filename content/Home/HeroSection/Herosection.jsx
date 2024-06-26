@@ -15,7 +15,7 @@ const Herosection = ({ data }) => {
   })()
 
   let VideoPlay = false;
-  let dynamicBanner = false;
+  let dynamicBanner = true;
 
 
 

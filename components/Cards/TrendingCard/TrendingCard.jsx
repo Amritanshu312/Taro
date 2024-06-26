@@ -4,6 +4,7 @@ import styles from "./TrendingCard.module.css"
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import { FetchYtVideoStream } from "@/utils/YT_Video";
+import Link from "next/link";
 
 const TrendingCard = ({ info }) => {
   const [imageHovered, setImageHovered] = useState(false);
@@ -37,7 +38,8 @@ const TrendingCard = ({ info }) => {
 
 
   return (
-    <div
+    <Link
+      href={`/watch/${info?.id}`}
       className={`${styles.cardImage} w-full aspect-[9/14] rounded-2xl relative overflow-hidden cursor-pointer group`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -69,7 +71,7 @@ const TrendingCard = ({ info }) => {
         <span className="text-[#ffffffb0] text-sm">{info?.seasonYear}, {info?.genres[0]}</span>
       </div>
 
-    </div>
+    </Link>
   )
 }
 

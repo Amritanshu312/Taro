@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --toastify-color-dark: #323043 !important;
+}
+
 * {
   margin: 0;
   padding: 0;
