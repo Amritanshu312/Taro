@@ -5,7 +5,7 @@ const Server = ({ sub, dub }) => {
   const { isDub, setIsDub } = useWatchContext()
 
   return (
-    <div className="w-full h-full flex flex-col gap-1">
+    <div className="w-full h-full flex flex-col gap-1 ">
       <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
 
         <div className="flex items-center">

@@ -18,7 +18,7 @@ const MainVideo = ({ sub, dub }) => {
 
       <Option />
 
-      <div className="h-full bg-[#484460] text-slate-100 flex rounded-md overflow-hidden mt-1 shadow-[4px_6px_18px_-4px_#48455f]">
+      <div className="h-full  bg-[#484460] text-slate-100 flex rounded-md overflow-hidden mt-1 shadow-[4px_6px_18px_-4px_#48455f]">
         <EpInfo episode={episode} />
         <Server sub={sub} dub={dub} />
       </div>

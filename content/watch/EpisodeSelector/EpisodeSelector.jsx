@@ -13,7 +13,7 @@ const EpisodeSelector = ({ sub, dub }) => {
   const { setIsDub, episode } = useWatchContext()
 
   const data = dubSelected?.id === 0 || dubSelected?.id === 1 ? sub : dub;
-
+  
   useEffect(() => {
     if (dubSelected?.id === 0 || dubSelected?.id === 1) {
       setIsDub(false)
@@ -23,7 +23,7 @@ const EpisodeSelector = ({ sub, dub }) => {
   }, [dubSelected?.id])
 
   return (
-    <div className="bg-[#201f28] max-w-[22rem] rounded-md w-full">
+    <div className="bg-[#201f28] max-w-[22rem] rounded-md w-full flex flex-col">
       <div>
         <div className="flex justify-between px-2 py-3 border-b-2 border-[#514f61a1]">
           <div className="bg-[#2e2b3d] h-10 rounded-md">
@@ -40,7 +40,7 @@ const EpisodeSelector = ({ sub, dub }) => {
         </div>
       </div>
 
-      <div className="px-2 overflow-y-scroll h-[44rem]">
+      <div className="px-2 overflow-y-scroll h-full max-h-[44rem]">
 
         {data.map((item, index) => <EpisodeCard key={index} info={item} currentEp={episode} />)}
         {data.length === 0 || data === undefined || !data ? <p className="text-[#d5d5d7] text-center mt-5">No episodes found</p> : null}

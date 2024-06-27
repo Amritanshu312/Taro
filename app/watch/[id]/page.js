@@ -10,6 +10,7 @@ import { WatchAreaContextProvider } from "@/context/Watch"
 
 const Watch = async ({ params }) => {
   const { id: AnimeID } = params
+  
   const [animeInfo, sub, dub] = await Promise.all([
     AnimeInfoAnilist(AnimeID),
     FetchEpisodes(AnimeID, false),
@@ -21,7 +22,7 @@ const Watch = async ({ params }) => {
     <div className="w-full flex flex-col items-center z-10 relative main-responsive top-[106px]">
       <div className="w-full max-w-[96rem]">
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 aspect-video max-h-[52rem]">
           <WatchAreaContextProvider sub={sub} dub={dub}>
             <EpisodeSelector sub={sub} dub={dub} />
             <MainVideo sub={sub} dub={dub} />

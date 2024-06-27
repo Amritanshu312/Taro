@@ -11,6 +11,7 @@
   "dependencies": {
     "artplayer": "^5.1.6",
     "artplayer-plugin-hls-quality": "^2.0.0",
+    "axios": "^1.7.2",
     "framer-motion": "^11.2.10",
     "hls.js": "^1.5.11",
     "next": "14.2.4",
