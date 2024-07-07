@@ -29,27 +29,25 @@ const Server = ({ sub, dub }) => {
         </div>
       </div>
 
-      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
+      {dub && dub.length > 0 ?
+        <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
 
-        <div className="flex items-center">
-          <span className="mr-1">
-            <FaMicrophone />
-          </span>
-          Dub
-        </div>
+          <div className="flex items-center">
+            <span className="mr-1">
+              <FaMicrophone />
+            </span>
+            Dub
+          </div>
 
-        <div className="flex gap-2 ml-[2px]">
-          {(dub && dub.length > 0) ?
+          <div className="flex gap-2 ml-[2px]">
+
             <div
               className="px-4 py-2 text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
               style={{ backgroundColor: isDub ? "#4a446c" : "" }}
               onClick={() => !isDub && setIsDub(true)}
-            >Load Dub</div> :
-            <div
-              className="px-4 py-2 text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-            >No Dub Found</div>}
-        </div>
-      </div>
+            >Load Dub</div>
+          </div>
+        </div> : null}
 
     </div>
   )

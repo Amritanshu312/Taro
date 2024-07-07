@@ -19,7 +19,7 @@ const AnimeInfo = ({ info }) => {
 
         <p className="text-[15px] font-['poppins'] text-[#fff4f4b1] overflow-hidden text-ellipsis line-clamp-4 mb-2">{info?.description?.replace(/<[^>]*>/g, '')}</p>
 
-        <div className="flex gap-32 justify-between">
+        <div className="flex gap-32 justify-between max-[960px]:flex-col max-[960px]:gap-0">
           <div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Type: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.format}</span></div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Country: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.countryOfOrigin}</span></div>

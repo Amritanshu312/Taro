@@ -12,7 +12,7 @@
   left: 0;
   bottom: 0;
   z-index: 1;
-  background: linear-gradient(90deg, #12111a, #12111aa8, #12111a4f, #00000024);
+  background: linear-gradient(90deg, #12111ad4, #12111a91, #12111a00, #00000000);
 }
 
 .backgroundImage::before {
@@ -23,5 +23,5 @@
   left: 0;
   bottom: 0;
   z-index: 1;
-  background: linear-gradient(90deg, #12111a, #12111acc, #12111a59, #00000024);
+  background: linear-gradient(270deg, #12111a, #12111ad8, #12111a8d, #00000052);
 }

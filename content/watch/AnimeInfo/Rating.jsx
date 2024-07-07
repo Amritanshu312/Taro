@@ -3,7 +3,7 @@ import { IoStar } from "react-icons/io5"
 
 const Rating = ({ info }) => {
   return (
-    <div className="flex items-center mt-2 relative">
+    <div className="flex items-center mt-2 relative max-[1240px]:hidden">
 
       <Image
         src="/images/waifus/2.png"

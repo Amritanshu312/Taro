@@ -1,8 +1,16 @@
 import { useWatchContext } from "@/context/Watch"
 import Image from "next/image"
 
-const EpisodeCard = ({ info, currentEp }) => {
+const EpisodeCard = ({ info, currentEp, loading, index }) => {
   const { setEpisode } = useWatchContext()
+
+  if (loading) {
+    return <div
+      className={`flex py-2 h-[96px] my-[3px] border-2 border-[#21232e] rounded-md hover:bg-[#242430] cursor-pointer group bg-[#1f1f28] loading`}
+      style={{ animationDelay: `${index * Math.random() * 0.5}s` }}
+    ></div>
+  }
+
   return (
     <div
       className={`flex gap-3 py-2 border-2 border-[#21232e] rounded-md hover:bg-[#242430] cursor-pointer group ${currentEp === info?.number ? 'bg-[#242430]' : 'bg-[#1f1f28]'}`}

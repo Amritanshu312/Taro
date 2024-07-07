@@ -6,20 +6,25 @@ import Artplayer from 'artplayer';
 import { useWatchContext } from '@/context/Watch';
 import LoadingVideo from '@/components/loadings/loadingVideo/loadingVideo';
 import '@/components/loadings/loadingVideo/loadingVideos.module.css'
+import { AnimatePresence, motion } from 'framer-motion';
+import { useWatchSettingContext } from '@/context/WatchSetting';
 
 const VideoPlayer = ({ getInstance }) => {
-  const { watchInfo } = useWatchContext();
+  const { setEpisode, watchInfo } = useWatchContext();
+  const { setWatchSetting, watchSetting } = useWatchSettingContext()
+
+  console.log(watchInfo);
+
   const artRef = useRef();
 
   useEffect(() => {
-    console.log(watchInfo);
-    const M3U8Url = watchInfo?.sources?.find(source => source?.quality === 'default')?.url
+    const M3U8Url = watchInfo?.streamingData?.sources?.find(source => source?.quality === 'default')?.url
     if (!M3U8Url || !M3U8Url === undefined || watchInfo?.loading) return
     const art = new Artplayer({
       url: M3U8Url,
       setting: true,
       theme: '#7569c8',
-      autoplay: true,
+      autoplay: watchSetting?.autoPlay,
       playbackRate: true,
       pip: true,
       fullscreen: true,
@@ -65,6 +70,9 @@ const VideoPlayer = ({ getInstance }) => {
       loading.appendChild(customLoading);
     });
 
+    art.on('video:ended', () => {
+      watchSetting.autoNext && setEpisode((prev) => prev + 1);
+    })
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(art);
@@ -80,12 +88,30 @@ const VideoPlayer = ({ getInstance }) => {
 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchInfo]);
+  }, [watchInfo, watchSetting?.autoNext]);
 
 
-  return watchInfo?.loading ? <LoadingVideo /> :
-    <div ref={artRef} className="aspect-video"></div>
-    ;
+  return <>
+    <div className='z-30'>
+      {
+        watchInfo?.loading ? <LoadingVideo /> :
+          <div ref={artRef} className="aspect-video"></div>
+      }
+    </div>
+
+    <AnimatePresence>
+      {watchSetting?.light ?
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className='fixed top-0 left-0 w-full h-full z-20 opacity-0 bg-[#000000e5]'
+          onClick={() => setWatchSetting({ ...watchSetting, light: false })}
+        ></motion.div>
+        : null
+      }
+    </AnimatePresence>
+  </>
 
 }
 

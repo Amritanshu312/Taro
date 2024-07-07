@@ -19,8 +19,8 @@ const FeaturedAnime = ({ data }) => {
       <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins'] max-[450px]:text-[1.2rem]">| Featured Anime</h1>
 
 
-      <div className="my-20 flex h-[24rem] relative overflow-hidden">
-        <div className="absolute z-10 top-3 left-0 w-full h-full max-[1348px]:hidden">
+      <div className="my-20 flex h-[24rem] relative overflow-hidden rounded-lg">
+        <div className="absolute z-10 top-3 right-0  h-full max-[1348px]:hidden">
           <Image src="/images/waifus/1.png" alt="Ecchi " width={350} height={344} quality={100} className="object-cover" />
         </div>
 
@@ -28,7 +28,7 @@ const FeaturedAnime = ({ data }) => {
           <Image src={populardata?.bannerImage} alt="Ecchi " fill quality={100} className="object-cover !relative !h-[24rem] rounded-lg aspect-[9/14]" />
         </div>
 
-        <div className="absolute z-10 bottom-1/2 translate-y-1/2 min-[1348px]:left-[24rem] flex gap-8">
+        <div className="absolute z-10 bottom-1/2 translate-y-1/2 max-[700px]:left-[10px] left-[2rem] flex gap-8">
           <div className="max-[990px]:hidden">
             <Image src={populardata?.coverImage?.extraLarge} alt="Ecchi " width={200} height={340} className="object-cover rounded-lg" />
           </div>
