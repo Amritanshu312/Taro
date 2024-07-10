@@ -58,25 +58,4 @@ body {
   }
 }
 
-.backgroundgradient3 {
-  position: fixed;
-  width: 138.33px;
-  height: 82.25px;
-  left: 1%;
-  top: 2%;
-  background: #92b7fc8f;
-  filter: blur(200px);
-}
 
-.backgroundgradient4 {
-  position: fixed;
-  width: 500px;
-  border-radius: 0 0 30% 30%;
-  height: 370.13px;
-  right: 50%;
-  bottom: 20%;
-  background: #576683b4;
-  filter: blur(215.03px);
-  transform: translateX(70%);
-  z-index: 0;
-}

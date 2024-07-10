@@ -23,7 +23,7 @@ async function MalSync(id) {
     const sites = Object.keys(data.Sites).map(providerId => ({ providerId: providerId.toLowerCase(), data: Object.values(data.Sites[providerId]) }));
     const newdata = sites.filter(site => site.providerId === 'gogoanime' || site.providerId === 'zoro');
     const finaldata = [];
-    console.log(newdata)
+
     newdata.forEach(item => {
       const { providerId, data } = item;
       if (providerId === 'gogoanime') {
@@ -38,7 +38,6 @@ async function MalSync(id) {
         finaldata.push({ providerId, sub: sub || '' });
       }
     });
-    console.log(finaldata)
     return finaldata;
   } catch (error) {
     console.error('Error fetching data from Malsync:', error);

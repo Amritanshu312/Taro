@@ -4,47 +4,65 @@ import { AnimeInfoAnilist } from "@/lib/Anilistfunction"
 import './watch.css'
 import AnimeInfo from "@/content/watch/AnimeInfo/AnimeInfo"
 import Rating from "@/content/watch/AnimeInfo/Rating"
-import { FetchEpisodes } from "@/lib/ConsumetFunction"
 import { WatchAreaContextProvider } from "@/context/Watch"
 import { WatchSettingContextProvider } from "@/context/WatchSetting"
 import Additionalinfo from "@/content/watch/Additionalinfo/Additionalinfo"
+import { Fragment } from "react"
+
+export async function generateMetadata({ params }) {
+  const { id: AnimeID } = params
+  const data = await AnimeInfoAnilist(AnimeID)
+
+  return {
+    title: `Watching ${data?.title?.english || data?.title?.romaji}` || 'Loading...',
+    description: data?.description?.slice(0, 180),
+    openGraph: {
+      title: "watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
+      images: [data?.coverImage?.extraLarge],
+      description: data?.description,
+    },
+    twitter: {
+      card: "summary",
+      title: "watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
+      description: data?.description?.slice(0, 180),
+    },
+  }
+}
 
 
 const Watch = async ({ params }) => {
   const { id: AnimeID } = params
 
-  const [animeInfo] = await Promise.all([
-    AnimeInfoAnilist(AnimeID)
-  ])
-
+  const animeInfo = await AnimeInfoAnilist(AnimeID)
 
 
   return (
-    <div className="w-full flex flex-col items-center z-10 relative main-responsive top-[106px]">
-      <div className="w-full max-w-[96rem]">
+    <Fragment>
+      <div className="w-full flex flex-col items-center z-10 relative main-responsive top-[106px]">
+        <div className="w-full max-w-[96rem]">
+          {/* container div in this context ⬇ ⬇ */}
+          <WatchSettingContextProvider>
+            <WatchAreaContextProvider AnimeInfo={animeInfo}>
+              <EpisodeSelector AnimeID={AnimeID} />
+              <MainVideo />
+            </WatchAreaContextProvider>
+          </WatchSettingContextProvider>
 
-        {/* container div in this context ⬇ ⬇ */}
-        <WatchSettingContextProvider>
+          <div className="mt-20 flex gap-44">
+            <AnimeInfo info={animeInfo} />
+            <Rating info={animeInfo} />
+          </div>
 
-          <WatchAreaContextProvider AnimeInfo={animeInfo}>
-            <EpisodeSelector AnimeID={AnimeID} />
 
-            <MainVideo />
+          <Additionalinfo info={animeInfo} />
 
-          </WatchAreaContextProvider>
-
-        </WatchSettingContextProvider>
-
-        <div className="mt-20 flex gap-44">
-          <AnimeInfo info={animeInfo} />
-          <Rating info={animeInfo} />
         </div>
-
-
-        {/* <Additionalinfo info={animeInfo} /> */}
-
       </div>
-    </div>
+
+      {/* background */}
+      <div className="fixed w-[138.33px] h-[82.25px] left-[1%] top-[2%] bg-[#92b7fc8f] blur-[200px]"></div>
+      <div className="absolute w-[500px] h-[370.13px] right-[50%] bottom-[-25%] bg-[#576683b4] blur-[215.03px] translate-x-[70%] z-0 rounded-b-[30%]"></div>
+    </Fragment>
   )
 }
 

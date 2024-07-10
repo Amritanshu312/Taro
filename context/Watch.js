@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
@@ -10,12 +11,12 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
   const [episodes, setEpisodes] = useState("loading")
+  console.log(AnimeInfo);
 
   let dub, sub;
   if (episodes !== "loading") {
     ({ dub, sub } = episodes);
   }
-
 
   useEffect(() => {
     if (episodes === "loading") return
@@ -57,7 +58,6 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const fetchWatchData = async (episodeData, AnimeInfo) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idMal}&episode=${episodeData.number}`);
-      console.log(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idmal}&episode=${episodeData.number}`);
       if (response.ok) {
         return await response.json();
       } else {

@@ -44,7 +44,6 @@ export const GET = async (req, { params }) => {
   const idMal = url.searchParams.get('idmal');
   const episode = url.searchParams.get('episode');
 
-  console.log(idMal, episode);
 
   const [streamingData, skipTime] = await Promise.all([
     fetchStreamingData(episodeId),

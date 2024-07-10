@@ -7,7 +7,6 @@ const Video = ({ populardata }) => {
 
   useEffect(() => {
     async function fetchTrailer(trailerId) {
-      console.log("called");
       try {
         if (trailerId) {
           const response = await fetch(
@@ -19,7 +18,6 @@ const Video = ({ populardata }) => {
           const item = res.videoStreams.find(
             (i) => i.quality === '1080p' && i.format === 'WEBM'
           );
-          console.log(item?.url);
           setTrailer(item?.url || null);
         }
       } catch (error) {

@@ -5,7 +5,6 @@ export async function FetchYtVideoStream(videoID) {
         `https://pipedapi.kavin.rocks/streams/${videoID}`
       );
 
-      console.log(response.status);
       if (!response.ok) return "error";
       const res = await response.json();
       const item = res.videoStreams.find(

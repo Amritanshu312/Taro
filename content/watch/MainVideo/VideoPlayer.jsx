@@ -13,7 +13,6 @@ const VideoPlayer = ({ getInstance }) => {
   const { setEpisode, watchInfo } = useWatchContext();
   const { setWatchSetting, watchSetting } = useWatchSettingContext()
 
-  console.log(watchInfo);
 
   const artRef = useRef();
 
