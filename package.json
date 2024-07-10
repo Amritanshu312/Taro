@@ -12,6 +12,7 @@
     "artplayer": "^5.1.6",
     "artplayer-plugin-hls-quality": "^2.0.0",
     "axios": "^1.7.2",
+    "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
     "hls.js": "^1.5.11",
     "ioredis": "^5.4.1",

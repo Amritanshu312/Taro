@@ -5,14 +5,22 @@ import { toast } from 'react-toastify';
 
 export const WatchAreaContext = createContext();
 
-export function WatchAreaContextProvider({ children, dub, sub, AnimeInfo }) {
+export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const [episode, setEpisode] = useState(1);
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
+  const [episodes, setEpisodes] = useState("loading")
+
+  let dub, sub;
+  if (episodes !== "loading") {
+    ({ dub, sub } = episodes);
+  }
+
 
   useEffect(() => {
-    let isMounted = true;
+    if (episodes === "loading") return
 
+    let isMounted = true;
     const fetchData = async () => {
       setWatchInfo((prev) => ({ ...prev, loading: true }));
 
@@ -47,9 +55,9 @@ export function WatchAreaContextProvider({ children, dub, sub, AnimeInfo }) {
   };
 
   const fetchWatchData = async (episodeData, AnimeInfo) => {
-    console.log(AnimeInfo?.idmal);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idmal}&episode=${episodeData.number}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idMal}&episode=${episodeData.number}`);
+      console.log(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idmal}&episode=${episodeData.number}`);
       if (response.ok) {
         return await response.json();
       } else {
@@ -81,7 +89,9 @@ export function WatchAreaContextProvider({ children, dub, sub, AnimeInfo }) {
     setEpisode,
     setIsDub,
     isDub,
-  }), [episode, watchInfo, isDub]);
+    setEpisodes,
+    episodes
+  }), [episode, watchInfo, isDub, episodes]);
 
   return (
     <WatchAreaContext.Provider value={contextValue}>

@@ -1,8 +1,14 @@
 import { useWatchContext } from "@/context/Watch"
 import { FaMicrophone } from "react-icons/fa6"
 
-const Server = ({ sub, dub }) => {
-  const { isDub, setIsDub } = useWatchContext()
+const Server = () => {
+  const { isDub, setIsDub, episodes } = useWatchContext()
+
+
+  let dub, sub;
+  if (episodes) {
+    ({ dub, sub } = episodes);
+  }
 
   return (
     <div className="w-full h-full flex flex-col gap-1 ">
@@ -18,37 +24,40 @@ const Server = ({ sub, dub }) => {
         <div className="flex gap-2">
           {(sub && sub.length > 0) ?
             <div
-              className="px-4 py-2 text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
+              className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
               style={{ backgroundColor: !isDub ? "#4a446c" : "" }}
               onClick={() => isDub && setIsDub(false)}
             >Load Sub</div> :
 
             <div
-              className="px-4 py-2 text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
+              className="px-4  py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
             >No Sub Found</div>}
         </div>
       </div>
 
-      {dub && dub.length > 0 ?
-        <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
+      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
+        {dub && dub.length > 0 ?
+          <>
 
-          <div className="flex items-center">
-            <span className="mr-1">
-              <FaMicrophone />
-            </span>
-            Dub
-          </div>
+            <div className="flex items-center">
+              <span className="mr-1">
+                <FaMicrophone />
+              </span>
+              Dub
+            </div>
 
-          <div className="flex gap-2 ml-[2px]">
+            <div className="flex gap-2 ml-[2px]">
 
-            <div
-              className="px-4 py-2 text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-              style={{ backgroundColor: isDub ? "#4a446c" : "" }}
-              onClick={() => !isDub && setIsDub(true)}
-            >Load Dub</div>
-          </div>
-        </div> : null}
+              <div
+                className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
+                style={{ backgroundColor: isDub ? "#4a446c" : "" }}
+                onClick={() => !isDub && setIsDub(true)}
+              >Load Dub</div>
+            </div>
+          </>
+          : null}
 
+      </div>
     </div>
   )
 }

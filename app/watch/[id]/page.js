@@ -7,16 +7,16 @@ import Rating from "@/content/watch/AnimeInfo/Rating"
 import { FetchEpisodes } from "@/lib/ConsumetFunction"
 import { WatchAreaContextProvider } from "@/context/Watch"
 import { WatchSettingContextProvider } from "@/context/WatchSetting"
+import Additionalinfo from "@/content/watch/Additionalinfo/Additionalinfo"
 
 
 const Watch = async ({ params }) => {
   const { id: AnimeID } = params
 
-  const [animeInfo, sub, dub] = await Promise.all([
-    AnimeInfoAnilist(AnimeID),
-    FetchEpisodes(AnimeID, false),
-    FetchEpisodes(AnimeID, true)
+  const [animeInfo] = await Promise.all([
+    AnimeInfoAnilist(AnimeID)
   ])
+
 
 
   return (
@@ -26,10 +26,10 @@ const Watch = async ({ params }) => {
         {/* container div in this context ⬇ ⬇ */}
         <WatchSettingContextProvider>
 
-          <WatchAreaContextProvider sub={sub} dub={dub} AnimeInfo={animeInfo}>
-            <EpisodeSelector sub={sub} dub={dub} />
+          <WatchAreaContextProvider AnimeInfo={animeInfo}>
+            <EpisodeSelector AnimeID={AnimeID} />
 
-            <MainVideo sub={sub} dub={dub} />
+            <MainVideo />
 
           </WatchAreaContextProvider>
 
@@ -39,6 +39,9 @@ const Watch = async ({ params }) => {
           <AnimeInfo info={animeInfo} />
           <Rating info={animeInfo} />
         </div>
+
+
+        {/* <Additionalinfo info={animeInfo} /> */}
 
       </div>
     </div>

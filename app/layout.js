@@ -19,10 +19,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <div class="backgroundgradient"></div>
-        <div class="backgroundgradient2"></div>
-        <div class="backgroundgradient3"></div>
-        <div class="backgroundgradient4"></div>
+        <div className="backgroundgradient"></div>
+        <div className="backgroundgradient2"></div>
+        <div className="backgroundgradient3"></div>
+        <div className="backgroundgradient4"></div>
         {children}
 
         <ToastContainer draggable theme="dark" />
