@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
