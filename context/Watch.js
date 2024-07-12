@@ -10,7 +10,6 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
   const [episodes, setEpisodes] = useState("loading")
-  console.log(AnimeInfo);
 
   let dub, sub;
   if (episodes !== "loading") {

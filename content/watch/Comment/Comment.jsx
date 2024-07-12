@@ -13,16 +13,17 @@ const Comments = ({ AnimeID, title }) => {
       const disqusNode = document.querySelector('#disqus_thread');
       if (disqusNode && disqusNode.innerHTML.trim() !== "") {
         setLoading(false);
-        clearInterval(interval);
+        clearInterval(interval); // Clear the interval here
       }
     }, 500);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Cleanup function to clear interval on unmount
   }, []);
 
 
+
   return (
-    <div className="text-white mb-64 bg-[#242735] border-[1px] border-[#39374b] rounded-md pb-4 w-full">
+    <div className="text-white mb-64 bg-[#242735] border-[1px] border-[#39374b] rounded-md pb-4 w-full h-max">
       <div className="py-2 px-3 flex justify-between items-center">
         <div className="text-[#ffffffd3] text-[18px] font-medium font-['poppins']">Comment</div>
       </div>
@@ -42,6 +43,7 @@ const Comments = ({ AnimeID, title }) => {
           }}
         />
       </div>
+
     </div>
   );
 }
