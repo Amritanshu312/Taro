@@ -5,7 +5,7 @@ import clsx from "clsx"
 import Relations from "./Relations/Relations"
 
 const Additionalinfo = ({ info }) => {
-  const [active, setActive] = useState("Characters")
+  const [active, setActive] = useState("Relation")
 
   const links = ["Characters", "Relation", "Comments"]
 
@@ -29,7 +29,7 @@ const Additionalinfo = ({ info }) => {
 
       {active === "Characters" ? <Characters info={info} /> : null}
       {active === "Relation" ? <Relations info={info} /> : null}
-
+          
     </div>
   )
 }

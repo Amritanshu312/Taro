@@ -7,14 +7,18 @@ import Link from "next/link"
 
 const Card = ({ data, loading }) => {
   const [isHovered, setIsHovered] = useState({ hover: false, info: {} })
+  let hoverTimer = null;
 
 
   const onmouseEnter = (data) => {
-    const { clientX, clientY } = data
-    setIsHovered({ hover: true, info: { clientX, clientY } })
+    hoverTimer = setTimeout(() => {
+      const { clientX, clientY } = data
+      setIsHovered({ hover: true, info: { clientX, clientY } })
+    }, 200);
   }
 
   const onmouseLeave = () => {
+    clearTimeout(hoverTimer); // Cancel the timeout if mouse leaves before HoverTime
     setIsHovered({ hover: false, info: {} })
   }
 
@@ -23,8 +27,8 @@ const Card = ({ data, loading }) => {
   }
 
   return (
-    <div className="aspect-[9/14] rounded-2xl cursor-pointer mb-2 relative" onMouseEnter={onmouseEnter} onMouseLeave={onmouseLeave}>
-      <Link href={`/watch/${data?.id}`} className={`${styles.wrapper}`}>
+    <div className="aspect-[9/14] rounded-2xl cursor-pointer mb-2 relative" >
+      <Link href={`/watch/${data?.id}`} className={`${styles.wrapper}`} onMouseEnter={onmouseEnter} onMouseLeave={onmouseLeave}>
         <Image
           src={data?.coverImage?.extraLarge}
           alt="Trending"

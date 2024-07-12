@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 const Popular = () => {
   const [page, setPage] = useState(1)
   const [popularData, setPopularData] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getPopular = async () => {

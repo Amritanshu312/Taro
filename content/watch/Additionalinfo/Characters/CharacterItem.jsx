@@ -3,8 +3,8 @@ import Image from "next/image"
 const CharacterItem = ({ data }) => {
   return (
     <div
-      className="bg-[#252a39] max-w-[26rem] flex w-full overflow-hidden rounded-md">
-      
+      className="bg-[#242735] border-[1px] border-[#39374b] max-w-[26rem] flex w-full overflow-hidden rounded-md">
+
       <Image src={data?.node?.image?.large} alt="yes" height={130} width={100} className="object-cover h-[110px] w-[80px]" />
 
       <div className="w-full flex flex-col justify-between mx-2 my-2">
