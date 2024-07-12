@@ -1,10 +1,7 @@
-"use client"
 import Image from "next/image"
-import { useState } from "react";
 import { IoLayers } from "react-icons/io5";
 
 const HorizontalCard = ({ data }) => {
-  const [isHovered, setIsHovered] = useState()
 
   return (
     <div

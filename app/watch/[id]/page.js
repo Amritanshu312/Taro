@@ -16,16 +16,16 @@ export async function generateMetadata({ params }) {
   const data = await AnimeInfoAnilist(AnimeID)
 
   return {
-    title: `Watch ${data?.title?.english || data?.title?.romaji} . Taro` || 'Loading...',
+    title: `Watch ${data?.title?.english || data?.title?.romaji} - Taro` || 'Loading...',
     description: data?.description?.slice(0, 180),
     openGraph: {
-      title: "watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
+      title: "Watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
       images: [data?.coverImage?.extraLarge],
       description: data?.description,
     },
     twitter: {
       card: "summary",
-      title: "watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
+      title: "Watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
       description: data?.description?.slice(0, 180),
     },
   }
