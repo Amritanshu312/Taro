@@ -8,13 +8,15 @@ import { WatchAreaContextProvider } from "@/context/Watch"
 import { WatchSettingContextProvider } from "@/context/WatchSetting"
 import Additionalinfo from "@/content/watch/Additionalinfo/Additionalinfo"
 import { Fragment } from "react"
+import Comments from "@/content/watch/Comment/Comment"
+import Recommendation from "@/content/watch/Recommendation/Recommendation"
 
 export async function generateMetadata({ params }) {
   const { id: AnimeID } = params
   const data = await AnimeInfoAnilist(AnimeID)
 
   return {
-    title: `Watching ${data?.title?.english || data?.title?.romaji}` || 'Loading...',
+    title: `Watch ${data?.title?.english || data?.title?.romaji} . Taro` || 'Loading...',
     description: data?.description?.slice(0, 180),
     openGraph: {
       title: "watch" + ' - ' + data?.title?.english || data?.title?.romaji + "in Taro",
@@ -55,6 +57,12 @@ const Watch = async ({ params }) => {
 
 
           <Additionalinfo info={animeInfo} />
+
+
+          <div className="flex gap-5">
+            <Comments AnimeID={AnimeID} title={animeInfo?.title?.english} />
+            <Recommendation />
+          </div>
 
         </div>
       </div>

@@ -10,7 +10,7 @@ const Additionalinfo = ({ info }) => {
   const links = ["Characters", "Relation", "Comments"]
 
   return (
-    <div className="mt-8 mb-64 w-full">
+    <div className="mt-8 mb-16 w-full">
       <div className="text-white flex w-full relative gap-2">
 
         {links.map(item => <div
@@ -29,7 +29,7 @@ const Additionalinfo = ({ info }) => {
 
       {active === "Characters" ? <Characters info={info} /> : null}
       {active === "Relation" ? <Relations info={info} /> : null}
-          
+
     </div>
   )
 }
