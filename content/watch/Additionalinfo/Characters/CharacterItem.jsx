@@ -1,11 +1,35 @@
+import clsx from "clsx"
 import Image from "next/image"
+import { useState } from "react"
+
+const LoadingImage = ({ url }) => {
+  const [imageLoading, setImageLoading] = useState(true);
+
+  return (
+    <div className="h-[110px] w-[140px]">
+      {imageLoading ? <div className="absolute h-[110px] w-[80px] bg-[#323043] rounded-md"></div> : null}
+      <Image
+        src={url}
+        alt="Character"
+        height={130}
+        width={100}
+        className={clsx("object-cover h-[110px] w-[80px]", {
+          "opacity-0": imageLoading,
+        })}
+        onError={() => setImageLoading(true)}
+        onLoad={() => setImageLoading(false)}
+      />
+    </div>
+  );
+};
+
 
 const CharacterItem = ({ data }) => {
   return (
     <div
       className="bg-[#242735] border-[1px] border-[#39374b] max-w-[26rem] flex w-full overflow-hidden rounded-md">
 
-      <Image src={data?.node?.image?.large} alt="yes" height={130} width={100} className="object-cover h-[110px] w-[80px]" />
+      <LoadingImage url={data?.node?.image?.large} />
 
       <div className="w-full flex flex-col justify-between mx-2 my-2">
 
@@ -20,7 +44,7 @@ const CharacterItem = ({ data }) => {
         </div>
       </div>
 
-      <Image src={data?.voiceActorRoles[0]?.voiceActor?.image?.large} alt="yes" height={130} width={100} className="object-cover h-[110px] w-[80px]" />
+      <LoadingImage url={data?.voiceActorRoles[0]?.voiceActor?.image?.large} />
 
     </div>
   )
