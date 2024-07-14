@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link";
 import { IoLayers } from "react-icons/io5";
 
 const HorizontalCard = ({ data }) => {
@@ -18,10 +19,10 @@ const HorizontalCard = ({ data }) => {
       <div className="w-full h-full flex flex-col mx-2 my-2 max-w-[17rem]">
 
         <div className="flex flex-col gap-3 ">
-          <div className="text-[#c4c7cc] text-[15px] font-medium overflow-hidden text-ellipsis line-clamp-2 hover:text-[#e4e5e8] transition-all cursor-pointer">{data?.title?.english || data?.title?.romaji}</div>
+          <Link href={`/watch/${data?.id}`} className="text-[#c4c7cc] text-[15px] font-medium overflow-hidden text-ellipsis line-clamp-2 hover:text-[#e4e5e8] transition-all cursor-pointer">{data?.title?.english || data?.title?.romaji}</Link>
 
           <div className="flex gap-[6px] text-[14px] text-[#c4c7ccce] items-center">
-            <div className="flex items-center gap-1 font-medium overflow-hidden text-ellipsis line-clamp-1">TV</div>
+            <div className="flex items-center gap-1 font-medium overflow-hidden text-ellipsis line-clamp-1">{data?.format.length > 4 ? `${data?.format.slice(0, 1).toUpperCase()}${data?.format.slice(1).toLowerCase()}` : data?.format}</div>
             <div className="h-1 w-1 bg-[#ffffff94] rounded-full"></div>
             <div className="flex items-center gap-1 font-medium overflow-hidden text-ellipsis line-clamp-1"><IoLayers /> {data?.episodes} Episodes</div>
             <div className="h-1 w-1 bg-[#ffffff94] rounded-full"></div>

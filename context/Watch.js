@@ -15,7 +15,7 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
   if (episodes !== "loading") {
     ({ dub, sub } = episodes);
   }
-
+  console.log(AnimeInfo);
   useEffect(() => {
     if (episodes === "loading") return
 

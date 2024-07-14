@@ -1,6 +1,8 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const AnimeInfo = ({ info }) => {
+
   return (
     <div className="text-white flex gap-6">
       <Image
@@ -21,17 +23,17 @@ const AnimeInfo = ({ info }) => {
 
         <div className="flex gap-32 justify-between max-[960px]:flex-col max-[960px]:gap-0">
           <div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Type: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.format}</span></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Type: <Link href={`/type/${info?.format}`} className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.format}</Link></div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Country: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.countryOfOrigin}</span></div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Premiered: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"][info?.startDate?.month]} {info?.startDate?.day}, {info?.startDate?.year}</span></div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Date aired: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.seasonYear}</span></div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Season: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.season}</span></div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Status: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.status}</span></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Premiered: <Link href={`/year/${info?.seasonYear}`} className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"][info?.startDate?.month]} {info?.startDate?.day}, {info?.startDate?.year}</Link></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Date aired: <Link href={`/year/${info?.seasonYear}`} className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.seasonYear}</Link></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Season: <Link href={`/season/${info?.season}`} className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.season}</Link></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Status: <Link href={`/status/${info?.status}`} className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.status}</Link></div>
           </div>
           <div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Genres: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.genres.join(", ")}</span></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Genres: <span className="text-[#e26bbcd9]">{info?.genres.map((item, index) => <Link key={item} href={`/genre/${item}`} className="cursor-pointer hover:text-[#ff3df9]">{item}{info?.genres?.length - 1 === index ? null : ", "}</Link>)}</span></div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Episodes: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.episodes}</span></div>
-            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Studios: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.studios?.nodes?.map((studio) => studio?.name).join(", ")}</span></div>
+            <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Studios: <span className="text-[#e26bbcd9]">{info?.studios?.nodes.map((item, index) => <Link key={item?.name} href={`/genre/${item?.name}`} className="cursor-pointer hover:text-[#ff3df9]">{item?.name}{info?.studios?.nodes?.length - 1 === index ? null : ", "}</Link>)}</span></div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Rating: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.averageScore / 10}</span></div>
             <div className="text-sm text-[#dadada] font-['poppins'] mt-[2px]">Duration: <span className="text-[#e26bbcd9] cursor-pointer hover:text-[#ff3df9]">{info?.duration} m</span></div>
           </div>
