@@ -1,14 +1,13 @@
 "use client"
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
-import Checkbox from "../components/Checkbox"
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import Dropdown from "../components/Dropdown";
 
-const AiringStatus = () => {
+const AiringStatus = ({ airingStatus, setAiringStatus }) => {
   const [isOpened, setIsOpened] = useState(true)
-  const [checkBoxItem, setCheckBoxItem] = useState("")
-  console.log(checkBoxItem);
+  const checkBoxItem = airingStatus, setCheckBoxItem = setAiringStatus
+
   const airings = [
     "Airing",
     "Finished",

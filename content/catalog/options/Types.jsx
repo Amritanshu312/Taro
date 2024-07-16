@@ -4,9 +4,8 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import Checkbox from "../components/Checkbox"
 import { Fragment, useState } from "react";
 
-const Types = () => {
+const Types = ({ type, setType }) => {
   const [isOpened, setIsOpened] = useState(true)
-  const [checkBoxItem, setCheckBoxItem] = useState("")
 
   const types = [
     "TV",
@@ -28,11 +27,11 @@ const Types = () => {
       {isOpened ? <div className="mt-3 px-1 flex gap-12">
 
         <div className="flex flex-col gap-2">
-          {types.slice(0, 3)?.map(item => <Fragment key={item}><Checkbox title={item} checkBoxItem={checkBoxItem} setCheckBoxItem={setCheckBoxItem} /></Fragment>)}
+          {types.slice(0, 3)?.map(item => <Fragment key={item}><Checkbox title={item} checkBoxItem={type} setCheckBoxItem={setType} /></Fragment>)}
         </div>
 
         <div className="flex flex-col gap-2">
-          {types.slice(3)?.map(item => <Fragment key={item}><Checkbox title={item} checkBoxItem={checkBoxItem} setCheckBoxItem={setCheckBoxItem} /></Fragment>)}
+          {types.slice(3)?.map(item => <Fragment key={item}><Checkbox title={item} checkBoxItem={type} setCheckBoxItem={setType} /></Fragment>)}
         </div>
 
 

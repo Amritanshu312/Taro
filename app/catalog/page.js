@@ -1,3 +1,4 @@
+import Animes from "@/content/catalog/Animes"
 import SortBy from "@/content/catalog/components/SortBy"
 import Options from "@/content/catalog/options/Options"
 import { Fragment } from "react"
@@ -18,9 +19,9 @@ const Page = () => {
             <SortBy />
           </div>
 
-          <div>
+          <div className="flex gap-4 mt-4">
             <Options />
-            
+            <Animes />
           </div>
 
         </div>

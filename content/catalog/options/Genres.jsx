@@ -4,10 +4,9 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import Checkbox from "../components/Checkbox"
 import { Fragment, useState } from "react";
 
-const Genres = () => {
+const Genres = ({ genresitem, setGenres }) => {
   const [isOpened, setIsOpened] = useState(true)
-  const [checkBoxItem, setCheckBoxItem] = useState([])
-
+  const checkBoxItem = genresitem, setCheckBoxItem = setGenres
 
   const genres = [
     "Action",
