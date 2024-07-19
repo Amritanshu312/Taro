@@ -3,6 +3,7 @@ import Card from "@/components/Cards/Card/Card";
 import { AdvancedSearch } from "@/lib/Anilistfunction";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useMemo, useCallback } from "react";
+import Pagination from "./Pagination";
 
 const Animes = () => {
   const searchParams = useSearchParams();
@@ -52,6 +53,7 @@ const Animes = () => {
           airing,
           sort
         );
+        console.log(data);
         setAnimes(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -69,8 +71,15 @@ const Animes = () => {
   const loadingCards = useMemo(() => Array.from({ length: 30 }).map((_, index) => <Card key={index} loading />), []);
 
   return (
-    <div className="w-full h-full grid grid-auto-fit gap-3">
-      {loading ? loadingCards : animes?.media?.map((item, index) => <Card data={item} key={index} />)}
+    <div className="w-full">
+
+      <div className="w-full h-full grid grid-auto-fit gap-3">
+        {loading ? loadingCards : animes?.media?.map((item, index) => <Card data={item} key={index} />)}
+      </div>
+
+      <div className="mt-8"></div>
+      {animes?.pageInfo && animes?.media.length >= 30 ? <Pagination pageInfo={animes?.pageInfo} /> : null}
+
 
     </div>
   );

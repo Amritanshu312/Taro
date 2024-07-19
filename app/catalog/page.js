@@ -1,7 +1,6 @@
 import Animes from "@/content/catalog/Animes"
 import SortBy from "@/content/catalog/components/SortBy"
 import Options from "@/content/catalog/options/Options"
-import Pagination from "@/content/catalog/Pagination"
 import { Fragment } from "react"
 
 const Page = () => {
@@ -25,7 +24,6 @@ const Page = () => {
             <Animes />
           </div>
 
-          {/* <Pagination /> */}
 
         </div>
       </div>
