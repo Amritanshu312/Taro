@@ -6,16 +6,27 @@ import Search from "./Search"
 import Season from "./Season"
 import Types from "./Types"
 import Year from "./Year"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 const Options = () => {
   const router = useRouter(), pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const [search, setSearch] = useState("")
-  const [type, setType] = useState("")
-  const [season, setSeason] = useState("")
-  const [airingStatus, setAiringStatus] = useState("")
-  const [genres, setGenres] = useState([])
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  const [season, setSeason] = useState("");
+  const [airingStatus, setAiringStatus] = useState("");
+  const [genres, setGenres] = useState([]);
+
+  useEffect(() => {
+    setSearch(searchParams.get('search') || "");
+    setType(searchParams.get('type') || "");
+    setSeason(searchParams.get('season') || "");
+    setAiringStatus(searchParams.get('airing') || "");
+    setGenres(searchParams.get('genres') ? JSON.parse(searchParams.get('genres')) : []);
+  }, [searchParams]);
+
+
 
   const handleSubmit = () => {
     const params = [
@@ -31,13 +42,12 @@ const Options = () => {
 
 
   return (
-    <div className="py-4 px-3 bg-[#242735] border-[1px] border-[#39374b] w-full max-w-[20rem] text-white rounded-sm">
-      <Search search={search} setSearch={setSearch} />
+    <div className="py-4 px-3 bg-[#242735] border-[1px] border-[#39374b] w-full h-max max-w-[20rem] text-white rounded-sm">
+      <Search search={search} setSearch={setSearch} pathname={pathname} />
       <Types type={type} setType={setType} />
       <Season season={season} setSeason={setSeason} />
       <AiringStatus airingStatus={airingStatus} setAiringStatus={setAiringStatus} />
       <Genres genresitem={genres} setGenres={setGenres} />
-
       <Year />
 
       <div

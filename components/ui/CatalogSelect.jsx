@@ -7,10 +7,10 @@ import { IoIosArrowDown } from "react-icons/io"
 
 const CatalogSelect = ({ setSortBy }) => {
   const data = [
-    { key: "UPDATED", value: "upadted" },
-    { key: "POPULAR", value: "popular" },
-    { key: "UltraPp", value: "update at" },
-    { key: "POPULAR", value: "trending" },
+    { key: "POPULARITY_DESC", value: "Popularity" },
+    { key: "TRENDING_DESC", value: "Trending" },
+    { key: "FAVOURITES_DESC", value: "Favourites" },
+    { key: "SCORE_DESC", value: "MAL Score" },
   ]
   const [isOpened, setIsOpened] = useState(false)
   const [active, setActive] = useState(data[0]?.value)
@@ -28,7 +28,7 @@ const CatalogSelect = ({ setSortBy }) => {
         {active} <span className="text-md"><IoIosArrowDown /></span>
       </div>
 
-      {isOpened ? <div className="bg-[#406c807a] overflow-hidden text-center text-slate-200 absolute w-full border-[1px] border-[#3f72896e] rounded-md mt-1">
+      {isOpened ? <div className="bg-[#406c807a] backdrop-blur-md z-10 overflow-hidden text-center text-slate-200 absolute w-full border-[1px] border-[#3f72896e] rounded-md mt-1">
         {data?.map(item => <div
           key={item?.value}
           className={clsx(

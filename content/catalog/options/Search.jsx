@@ -1,4 +1,8 @@
-const Search = ({ search, setSearch }) => {
+import { useRouter } from "next/navigation";
+
+const Search = ({ search, setSearch, pathname }) => {
+  const router = useRouter()
+
   return (
     <div>
       <div className="flex justify-between items-center cursor-pointer border-[#1a1921] border-b-[2px] pb-2">
@@ -13,6 +17,11 @@ const Search = ({ search, setSearch }) => {
           className="w-full bg-transparent text-[#e9e8e8d5] focus:border-0 focus:outline-none"
           value={search}
           onChange={value => setSearch(value.target.value)}
+          onKeyUp={e => {
+            if (e.key === "Enter") {
+              router.push(`${pathname}?search=${search}`);
+            }
+          }}
         />
       </div>
     </div>
