@@ -16,9 +16,9 @@ const HorizontalCard = ({ data }) => {
         className={"object-cover h-[106px] w-[80px] cursor-pointer"}
       />
 
-      <div className="w-full h-full flex flex-col mx-2 my-2 max-w-[17rem]">
+      <div className="w-full h-full flex flex-col mx-2 my-2 max-w-[17rem] justify-center">
 
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-3">
           <Link href={`/watch/${data?.id}`} className="text-[#c4c7cc] text-[15px] font-medium overflow-hidden text-ellipsis line-clamp-2 hover:text-[#e4e5e8] transition-all cursor-pointer">{data?.title?.english || data?.title?.romaji}</Link>
 
           <div className="flex gap-[6px] text-[14px] text-[#c4c7ccce] items-center">

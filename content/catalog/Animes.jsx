@@ -21,6 +21,7 @@ const Animes = () => {
     let season = searchParams.get("season") || null;
     const type = searchParams.get("type") || null;
     const year = searchParams.get("year") || null;
+    const page = searchParams.get("page") || 1;
 
     airing &&
       (airing = {
@@ -51,9 +52,10 @@ const Animes = () => {
           type,
           genresData,
           airing,
-          sort
+          sort,
+          page
         );
-        console.log(data);
+
         setAnimes(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -68,13 +70,14 @@ const Animes = () => {
     fetchAdvanceSearch();
   }, [fetchAdvanceSearch]);
 
-  const loadingCards = useMemo(() => Array.from({ length: 30 }).map((_, index) => <Card key={index} loading />), []);
+  const loadingCards = useMemo(() => Array.from({ length: 30 }).map((_, index) => <Card key={index} index={index} loading />), []);
 
   return (
     <div className="w-full">
 
       <div className="w-full h-full grid grid-auto-fit gap-3">
         {loading ? loadingCards : animes?.media?.map((item, index) => <Card data={item} key={index} />)}
+        {(!loading && animes?.media?.length < 6) && Array.from({ length: 6 - animes?.media?.length }).map((_, index) => <Card key={index} index={index} hidden />)}
       </div>
 
       <div className="mt-8"></div>

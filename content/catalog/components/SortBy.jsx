@@ -1,15 +1,22 @@
-"use client"
+"use client";
 
-import CatalogSelect from "@/components/ui/CatalogSelect"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useRef, useState } from "react"
+import CatalogSelect from "@/components/ui/CatalogSelect";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const SortBy = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [sortData, setSortData] = useState(null);
 
-  const currentSort = searchParams.get("sort");
+  const data = [
+    { key: "POPULARITY_DESC", value: "Popularity" },
+    { key: "TRENDING_DESC", value: "Trending" },
+    { key: "FAVOURITES_DESC", value: "Favourites" },
+    { key: "SCORE_DESC", value: "MAL Score" },
+  ];
+
+  const [sortData, setSortData] = useState(data.find(item => item.key === searchParams.get("sort")));
+  const [active, setActive] = useState(sortData?.value || data[0]?.value)
 
   useEffect(() => {
     const updateSortInUrl = (sortKey) => {
@@ -25,21 +32,19 @@ const SortBy = () => {
       router.push(newUrl, { scroll: false });
     };
 
-    // Check if sortData.key is defined and different from currentSort before updating URL
-    if (sortData?.key && sortData.key !== currentSort) {
+    if (sortData?.key) {
       updateSortInUrl(sortData.key);
     }
-  }, [sortData?.key, currentSort, router, searchParams]);
-
+  }, [sortData?.key, router, searchParams]);
 
   return (
     <div>
       <span className="text-[#d7d7d797] text-sm">Sort by</span>
       <div className="w-full max-w-44">
-        <CatalogSelect setSortBy={setSortData} currentSort={currentSort} />
+        <CatalogSelect setSortBy={setSortData} data={data} active={active} setActive={setActive} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SortBy
+export default SortBy;

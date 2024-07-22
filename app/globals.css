@@ -18,6 +18,7 @@
 
 body {
   background: #12111a;
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar-track {

@@ -5,15 +5,8 @@ import clsx from "clsx"
 import { useEffect, useState } from "react"
 import { IoIosArrowDown } from "react-icons/io"
 
-const CatalogSelect = ({ setSortBy }) => {
-  const data = [
-    { key: "POPULARITY_DESC", value: "Popularity" },
-    { key: "TRENDING_DESC", value: "Trending" },
-    { key: "FAVOURITES_DESC", value: "Favourites" },
-    { key: "SCORE_DESC", value: "MAL Score" },
-  ]
+const CatalogSelect = ({ data, setSortBy, active, setActive }) => {
   const [isOpened, setIsOpened] = useState(false)
-  const [active, setActive] = useState(data[0]?.value)
 
   useEffect(() => {
     setSortBy(data.find(item => item?.value === active))

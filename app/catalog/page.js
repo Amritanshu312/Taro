@@ -19,13 +19,20 @@ const Page = () => {
             <SortBy />
           </div>
 
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4 mb-32">
             <Options />
             <Animes />
           </div>
 
 
         </div>
+      </div>
+
+      {/* background */}
+      <div className="fixed w-[138.33px] h-[82.25px] left-[1%] top-[2%] bg-[#92b7fc8f] blur-[200px]"></div>
+      <div className="fixed w-[500px] h-[370.13px] right-[50%] bottom-[20%] bg-[#576683b4] blur-[215.03px] translate-x-[70%] z-0 rounded-b-[30%]"></div>
+      <div>
+
       </div>
     </Fragment>
   )

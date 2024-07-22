@@ -4,26 +4,40 @@ import styles from "./Card.module.css"
 import { useState } from "react"
 import InfoWindow from "@/components/InfoWindow/InfoWindow"
 import Link from "next/link"
+import useScreenDimensions from "@/hook/useScreenDimensions"
 
-const Card = ({ data, loading }) => {
+const Card = ({ data, index, loading, hidden }) => {
   const [isHovered, setIsHovered] = useState({ hover: false, info: {} })
   let hoverTimer = null;
 
 
   const onmouseEnter = (data) => {
-    hoverTimer = setTimeout(() => {
-      const { clientX, clientY } = data
-      setIsHovered({ hover: true, info: { clientX, clientY } })
-    }, 200);
+    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      hoverTimer = setTimeout(() => {
+        const { clientX, clientY } = data
+        setIsHovered({ hover: true, info: { clientX, clientY } })
+      }, 200);
+    }
   }
 
   const onmouseLeave = () => {
-    clearTimeout(hoverTimer); // Cancel the timeout if mouse leaves before HoverTime
-    setIsHovered({ hover: false, info: {} })
+    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      clearTimeout(hoverTimer); // Cancel the timeout if mouse leaves before HoverTime
+      setIsHovered({ hover: false, info: {} })
+    }
+  }
+
+  if (hidden) {
+    return <div
+      className={`aspect-[9/14] mb-2 bg-[#1c1b2000]`}
+    ></div>
   }
 
   if (loading) {
-    return <div className={`${styles.bounce} aspect-[9/14] rounded-2xl cursor-pointer mb-2 bg-[#22212c]`}></div>
+    return <div
+      className={`${styles.bounce} aspect-[9/14] rounded-2xl cursor-pointer mb-2 bg-[#22212c]`}
+      style={{ animationDelay: `${index * 0.02 + 0.1}s` }}
+    ></div>
   }
 
   return (

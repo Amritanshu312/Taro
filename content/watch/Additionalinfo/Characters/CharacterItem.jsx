@@ -27,7 +27,7 @@ const LoadingImage = ({ url }) => {
 const CharacterItem = ({ data }) => {
   return (
     <div
-      className="bg-[#242735] border-[1px] border-[#39374b] max-w-[26rem] flex w-full overflow-hidden rounded-md">
+      className="bg-[#242735] border-[1px] border-[#39374b] max-w-[26rem] max-[704px]:max-w-full flex w-full overflow-hidden rounded-md">
 
       <LoadingImage url={data?.node?.image?.large} />
 
