@@ -12,7 +12,7 @@ const Server = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-1 ">
-      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
+      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8 max-[880px]:py-2">
 
         <div className="flex items-center">
           <span>
@@ -35,7 +35,7 @@ const Server = () => {
         </div>
       </div>
 
-      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8">
+      <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8 max-[880px]:py-2">
         {dub && dub.length > 0 ?
           <>
 

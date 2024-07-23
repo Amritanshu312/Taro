@@ -42,7 +42,7 @@ const Options = () => {
 
 
   return (
-    <div className="py-4 px-3 bg-[#242735] border-[1px] border-[#39374b] w-full h-max max-w-[20rem] text-white rounded-sm">
+    <div className="py-4 px-3 bg-[#242735] border-[1px] border-[#39374b] w-full h-max max-w-[20rem] text-white rounded-sm max-[780px]:max-w-full">
       <Search search={search} setSearch={setSearch} pathname={pathname} />
       <Types type={type} setType={setType} />
       <Season season={season} setSeason={setSeason} />

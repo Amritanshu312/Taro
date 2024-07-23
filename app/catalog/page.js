@@ -19,7 +19,7 @@ const Page = () => {
             <SortBy />
           </div>
 
-          <div className="flex gap-4 mt-4 mb-32">
+          <div className="flex gap-4 mt-4 mb-32 max-[780px]:flex-col">
             <Options />
             <Animes />
           </div>

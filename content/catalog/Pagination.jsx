@@ -45,7 +45,7 @@ const Pagination = ({ pageInfo }) => {
         nextLabel={<FaArrowRight />}
         onPageChange={(selectedPage) => setPage(selectedPage.selected + 1)}
         pageRangeDisplayed={5}
-        containerClassName="flex items-center gap-[4px]"
+        containerClassName="flex items-center gap-[4px] flex-wrap"
         pageLinkClassName={itemClass}
         breakClassName={itemClass}
         nextClassName={itemClass}

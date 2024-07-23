@@ -52,7 +52,7 @@ const EpisodeSelector = ({ AnimeID }) => {
               className="bg-transparent outline-none h-full w-full px-2 text-slate-200 max-w-[13rem]"
             />
           </div>
-          
+
           <div className="bg-[#2e2b3d] flex gap-2 rounded-lg">
             <div className="text-[#d5d5d7] hover:bg-[#d5d5d7] hover:text-[#2e2b3d] w-10 rounded-lg flex items-center justify-center text-2xl cursor-pointer">
               <RiFilter3Line />
@@ -95,7 +95,7 @@ const EpisodeSelector = ({ AnimeID }) => {
         )}
 
         {!loading && (!data || data.length === 0) && (
-          <p className="text-[#d5d5d7] text-center mt-5">No episodes found</p>
+          <p className="text-[#d5d5d7] text-center my-5">No episodes found</p>
         )}
       </div>
     </div>
