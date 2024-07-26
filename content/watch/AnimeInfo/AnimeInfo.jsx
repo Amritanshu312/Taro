@@ -10,7 +10,7 @@ const AnimeInfo = ({ info }) => {
         alt="Taro"
         width={215}
         height={300}
-        className="rounded-2xl object-cover h-80 w-[38rem] max-[840px]:h-[14rem] max-[380px]:h-[9rem]"
+        className="rounded-2xl object-cover h-80 w-[16rem] max-[840px]:h-[14rem] max-[380px]:h-[9rem]"
       />
       <div className="mt-2">
         <h1 className="text-2xl font-['poppins'] font-medium max-[840px]:text-[22px] max-[380px]:text-[19px]">{info?.title?.english}</h1>

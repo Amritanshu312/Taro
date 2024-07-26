@@ -8,13 +8,15 @@ const HorizontalCard = ({ data }) => {
     <div
       className="bg-[#242735] border-[1px] border-[#39374b] flex w-full h-full overflow-hidden rounded-md relative items-center">
 
-      <Image
-        src={data?.coverImage?.large}
-        alt="Character"
-        height={130}
-        width={100}
-        className={"object-cover h-[106px] w-[80px] cursor-pointer"}
-      />
+      <Link href={`/watch/${data?.id}`} >
+        <Image
+          src={data?.coverImage?.large}
+          alt="Character"
+          height={130}
+          width={100}
+          className={"object-cover h-[106px] w-[80px] cursor-pointer max-[420px]:w-[112px]"}
+        />
+      </Link>
 
       <div className="w-full h-full flex flex-col mx-2 my-2 max-w-[17rem] justify-center">
 

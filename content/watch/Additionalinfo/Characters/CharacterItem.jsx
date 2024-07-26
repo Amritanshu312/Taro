@@ -44,6 +44,7 @@ const CharacterItem = ({ data }) => {
         </div>
       </div>
 
+
       <LoadingImage url={data?.voiceActorRoles[0]?.voiceActor?.image?.large} />
 
     </div>

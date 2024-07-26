@@ -13,6 +13,8 @@ const EpisodeSelector = ({ AnimeID }) => {
   const [dubSelected, setDubSelected] = useState({ id: 0 });
   const [epFromTo, setEpFromTo] = useState({});
 
+  const chunkSize = 30;
+
   // Context state
   const { setIsDub, episode, setEpisodes, episodes } = useWatchContext();
 
@@ -34,6 +36,14 @@ const EpisodeSelector = ({ AnimeID }) => {
   const loading = episodes === "loading";
   const isSubSelected = dubSelected?.id === 0 || dubSelected?.id === 1;
   const data = !loading && isSubSelected ? episodes?.sub : episodes?.dub;
+  const SplitedEpisodes = () => {
+    return data?.reduce((chunks, _, i) => {
+      if (i % chunkSize === 0) {
+        chunks.push(data.slice(i, i + chunkSize));
+      }
+      return chunks;
+    }, []);
+  }
 
   // Update dub/sub state based on the selected option
   useEffect(() => {
@@ -77,7 +87,7 @@ const EpisodeSelector = ({ AnimeID }) => {
           <div className="w-full">
             <Select
               setSelected={setEpFromTo}
-              data={["1-100", "100-200", "200-300"]}
+              data={Array.from({ length: SplitedEpisodes()?.length ?? 0 }, (v, i) => `${i * chunkSize} - ${(i + 1) * chunkSize}`)}
               defaultValue={0}
             />
           </div>
@@ -87,7 +97,7 @@ const EpisodeSelector = ({ AnimeID }) => {
       {/* Episode list */}
       <div className="px-2 overflow-y-scroll h-full max-h-[44rem]">
         {!loading ? (
-          data.map((item, index) => (
+          SplitedEpisodes()[epFromTo?.id]?.map((item, index) => (
             <EpisodeCard key={index + 1} info={item} currentEp={episode} />
           ))
         ) : (

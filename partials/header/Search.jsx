@@ -8,7 +8,6 @@ import { usePathname, useRouter } from "next/navigation";
 
 const Search = () => {
   const router = useRouter()
-  const pathname = usePathname()
 
   const { width } = useScreenDimensions();
   const [isSearchBoxOpen, setIsSearchBoxOpen] = useState(false);
@@ -44,7 +43,7 @@ const Search = () => {
                   onChange={e => setSearchValue(e.target.value)}
                   onKeyUp={e => {
                     if (e.key === "Enter") {
-                      router.push(`${pathname}?search=${searchValue}`);
+                      router.push(`/catalog?search=${searchValue}`);
                     }
                   }}
                 />
@@ -81,7 +80,7 @@ const Search = () => {
           onChange={e => setSearchValue(e.target.value)}
           onKeyUp={e => {
             if (e.key === "Enter") {
-              router.push(`${pathname}?search=${searchValue}`);
+              router.push(`/catalog?search=${searchValue}`);
             }
           }}
         />

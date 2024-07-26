@@ -1,10 +1,27 @@
 import Image from "next/image"
+import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 const ResultItems = ({ data }) => {
   return (
-    <div className="flex gap-[6px] w-full cursor-pointer transition-all hover:bg-[#242734]">
+    <Link className="flex gap-[6px] w-full cursor-pointer  hover:bg-[#242734]" href={`/watch/${data?.id}`}>
       <div className="px-2 py-[4px] flex gap-[6px] w-full">
         <Image
           src={data?.image}
@@ -23,30 +40,46 @@ const ResultItems = ({ data }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
+
 const SearchResults = ({ searchValue }) => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const debouncedSearchValue = useDebounce(searchValue, 500); // 500ms delay
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const data = await fetch(`${process.env.NEXT_PUBLIC_CONSUMET_URL}/meta/anilist/${searchValue}`)
-      const dataJSON = await data.json()
+      if (!debouncedSearchValue) {
+        setData([]);
+        return;
+      }
+      const response = await fetch(`${process.env.NEXT_PUBLIC_CONSUMET_URL}/meta/anilist/${debouncedSearchValue}`);
+      if (response.ok) {
+        const dataJSON = await response.json();
 
-      setData(dataJSON)
-    }
+        if (dataJSON?.results?.length === 0) {
+          return setData("NO_RESULT_FOUND")
+        }
+        setData(dataJSON);
+      }
 
-    fetchSearch()
-  }, [searchValue])
+    };
+
+    fetchSearch();
+  }, [debouncedSearchValue]);
 
   return (
-    <div className="bg-[#231f2c] rounded-md w-full absolute flex flex-col gap-2">
-      {data?.results?.slice(0, 5)?.map((data, index) => <Fragment key={index}><ResultItems data={data} /></Fragment>)}
-      {(data?.length === 0 && searchValue !== "") && <div>No result found</div>}
+    <div className="bg-[#231f2c] rounded-b-md w-full absolute flex flex-col gap-2 pb-1 border-x border-b border-[#ffffff24]">
+      {data?.results?.slice(0, 5)?.map((result, index) => (
+        <Fragment key={index}>
+          <ResultItems data={result} />
+        </Fragment>
+      ))}
+      {(data === "NO_RESULT_FOUND" === 0) && <div>No result found</div>}
     </div>
-  )
-}
+  );
+};
 
-export default SearchResults
+export default SearchResults;
