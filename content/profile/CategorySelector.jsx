@@ -9,7 +9,7 @@ import { useState } from "react";
 import clsx from "clsx";
 
 const CategorySelector = () => {
-  const [active, setActive] = useState()
+  const [active, setActive] = useState("Watching")
   const categorys = [
     {
       title: "Watching",
