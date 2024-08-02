@@ -54,7 +54,7 @@ const Search = () => {
               </div>
             </div>
 
-            <SearchResults searchValue={searchValue} />
+            {searchValue !== "" && <SearchResults searchValue={searchValue} />}
           </div>
         </div>
       ) : (
@@ -86,7 +86,7 @@ const Search = () => {
         />
       </div>
 
-      <SearchResults searchValue={searchValue} />
+      {searchValue !== "" && <SearchResults searchValue={searchValue} />}
     </div>
   );
 }

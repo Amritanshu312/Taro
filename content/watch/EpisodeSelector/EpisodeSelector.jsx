@@ -13,7 +13,7 @@ const EpisodeSelector = ({ AnimeID }) => {
   const [dubSelected, setDubSelected] = useState({ id: 0 });
   const [epFromTo, setEpFromTo] = useState({});
 
-  const chunkSize = 30;
+  const chunkSize = 80;
 
   // Context state
   const { setIsDub, episode, setEpisodes, episodes } = useWatchContext();
@@ -87,7 +87,7 @@ const EpisodeSelector = ({ AnimeID }) => {
           <div className="w-full">
             <Select
               setSelected={setEpFromTo}
-              data={Array.from({ length: SplitedEpisodes()?.length ?? 0 }, (v, i) => `${i * chunkSize} - ${(i + 1) * chunkSize}`)}
+              data={Array.from({ length: SplitedEpisodes()?.length ?? 0 }, (v, i) => `${(i === 0 && i * chunkSize === 0) ? 1 : i * chunkSize} - ${(i + 1) * chunkSize}`)}
               defaultValue={0}
             />
           </div>

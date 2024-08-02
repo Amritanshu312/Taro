@@ -19,6 +19,7 @@ const VideoPlayer = ({ getInstance }) => {
   useEffect(() => {
     const M3U8Url = watchInfo?.streamingData?.sources?.find(source => source?.quality === 'default')?.url
     if (!M3U8Url || !M3U8Url === undefined || watchInfo?.loading) return
+    console.log(watchInfo?.thumbnail);
     const art = new Artplayer({
       url: M3U8Url,
       setting: true,
@@ -26,6 +27,11 @@ const VideoPlayer = ({ getInstance }) => {
       autoplay: watchSetting?.autoPlay,
       playbackRate: true,
       pip: true,
+      thumbnails: {
+        url: watchInfo?.thumbnail,
+        number: 60,
+        column: 10,
+      },
       fullscreen: true,
       container: artRef.current,
       plugins: [

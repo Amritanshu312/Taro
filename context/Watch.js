@@ -30,11 +30,10 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
           handleNoEpisodeFound(isMounted);
           return;
         }
-
         const watchData = await fetchWatchData(episodeData, AnimeInfo);
 
         if (isMounted) {
-          setWatchInfo({ ...watchData, loading: false });
+          setWatchInfo({ ...watchData, thumbnail: episodeData?.image, loading: false });
         }
       } catch (error) {
         handleError(error, isMounted);
