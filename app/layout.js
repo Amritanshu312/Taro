@@ -4,6 +4,8 @@ import Header from "@/partials/header/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "@/partials/footer/Footer";
+import { AuthProvider } from "./SessionProvider";
+import { getAuthSession } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,13 +17,17 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getAuthSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        {children}
-        {/* <Footer /> */}
+        <AuthProvider session={session}>
+          <Header />
+          {children}
+          {/* <Footer /> */}
+        </AuthProvider>
 
         <ToastContainer draggable theme="dark" />
       </body>

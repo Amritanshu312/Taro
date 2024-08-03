@@ -8,31 +8,35 @@ import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import clsx from "clsx";
 
-const CategorySelector = () => {
-  const [active, setActive] = useState("Watching")
+const CategorySelector = ({ active, setActive }) => {
   const categorys = [
     {
       title: "Watching",
+      id: "CURRENT",
       icon: <LuEye />,
       number: 46
     },
     {
       title: "To Watch",
+      id: "PLANNING",
       icon: <FaRegBookmark />,
       number: 46
     },
     {
       title: "Watched",
+      id: "COMPLETED",
       icon: <IoMdCheckmark />,
       number: 46
     },
     {
       title: "On Hold",
+      id: "PAUSED",
       icon: <MdOutlineFrontHand />,
       number: 46
     },
     {
       title: "Dropped",
+      id: "DROPPED",
       icon: <BiBullseye />,
       number: 46
     },
@@ -41,6 +45,7 @@ const CategorySelector = () => {
       icon: <IoPersonOutline />
     },
   ]
+
   return (
     <div className="relative w-full h-14 border-b border-[#23253274] text-white z-10">
       <div className="flex items-center justify-center h-full gap-1">
@@ -51,10 +56,10 @@ const CategorySelector = () => {
           className={
             clsx(
               "relative flex gap-1 items-center cursor-pointer px-2 py-4 justify-center after:bg-[#ffffff9d] after:hover:w-full after:h-[3px] after:rounded-lg after:absolute after:bottom-0 after:w-0 after:transition-all",
-              { "after:bg-[#ffffff9d] after:w-full after:h-[3px] after:rounded-lg after:absolute after:bottom-0": active === item?.title }
+              { "after:bg-[#ffffff9d] after:w-full after:h-[3px] after:rounded-lg after:absolute after:bottom-0": categorys.find(item => item?.id === active)?.title === item?.title }
             )
           }
-          onClick={() => setActive(item?.title)}
+          onClick={() => setActive(item?.id)}
         >
           <div className="text-xl">{item?.icon}</div>
           <div>{item?.title}</div>

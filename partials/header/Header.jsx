@@ -6,6 +6,7 @@ import Links from "./Links"
 import Search from "./Search"
 import { PiBellRingingFill as Bell } from "react-icons/pi";
 import Responsive from "./Responsive"
+import Profile from "./Profile"
 
 
 const Header = () => {
@@ -39,11 +40,7 @@ const Header = () => {
           </div>
 
           {/* profile */}
-          <div>
-            <Link href={"/profile"}>
-              <Image src="/images/logo.png" alt="profile" width={50} height={50} />
-            </Link>
-          </div>
+          <Profile />
 
         </div>
 

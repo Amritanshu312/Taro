@@ -1,17 +1,29 @@
+
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/route"
 import Animes from "@/content/profile/Animes"
 import Banner from "@/content/profile/Banner/Banner"
+import CategoryMain from "@/content/profile/CategoryMain"
 import CategorySelector from "@/content/profile/CategorySelector"
+import { UserProfile } from "@/lib/AnilistUser"
+import { redirect } from "next/navigation"
 import { Fragment } from "react"
 
-const Page = () => {
+const Page = async () => {
+  const session = await getAuthSession();
+
+  if (!session || !session.user) {
+    redirect('/');
+  }
+
+  const data = await UserProfile(session?.user?.token, session?.user?.name);
+  const { user, lists } = data;
+
+  console.log(user, lists);
+
   return (
     <Fragment>
-      <Banner />
-
-      <div>
-        <CategorySelector />
-        <Animes />
-      </div>
+      <Banner info={user} />
+      <CategoryMain lists={lists} />
 
       {/* background */}
       <div className="fixed w-[138.33px] h-[82.25px] left-[1%] top-[2%] bg-[#92b7fc8f] blur-[200px]"></div>
