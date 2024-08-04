@@ -4,7 +4,16 @@ import Link from "next/link";
 const Relations = ({ info }) => {
   const { relations: { edges } } = info
 
-  const relations = edges.filter(item => item?.relationType !== "OTHER" && item?.node?.format !== "ONA" && item?.node?.status !== "NOT_YET_RELEASED");
+  console.log(edges);
+
+  const relations = edges.filter(({ relationType, node }) =>
+    relationType !== "OTHER" &&
+    relationType !== "CHARACTER" &&
+    relationType !== "SOURCE" &&
+    relationType !== "ALTERNATIVE" &&
+    node?.format !== "ONA" &&
+    node?.status !== "NOT_YET_RELEASED"
+  );
 
   // const isAnime = (item) => { return item?.format !== "MANGA" && item?.id && (item?.node?.title?.english || item?.node?.title?.native || item?.node?.title?.romaji) }
   const isAnime = (item) => {
@@ -28,7 +37,7 @@ const Relations = ({ info }) => {
         <div className="ml-2 my-2 flex flex-col justify-between font-['poppins'] max-w-[17rem]">
           <div className="text-[#e839b8] font-medium text-[14px]">{item?.relationType ? `${item?.relationType.slice(0, 1).toUpperCase()}${item?.relationType.slice(1).toLowerCase()}` : ''}</div>
           {isAnime(item) ?
-            <Link href={`/watch/${item?.node?.id}`} className="text-[#c4c7cc] text-[15px] overflow-hidden text-ellipsis line-clamp-2 cursor-pointer transition-all hover:text-[#dcdfe3]">{item?.node?.title?.english}</Link>
+            <Link href={`/watch/${item?.node?.id}`} className="text-[#c4c7cc] text-[15px] overflow-hidden text-ellipsis line-clamp-2 cursor-pointer transition-all hover:text-[#dcdfe3]">{item?.node?.title?.english || item?.node?.title?.romaji}</Link>
             :
             <div className="text-[#c4c7cc] text-[15px] overflow-hidden text-ellipsis line-clamp-2 cursor-pointer transition-all hover:text-[#dcdfe3]">{item?.node?.title?.english}</div>}
 

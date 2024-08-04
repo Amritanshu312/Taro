@@ -27,7 +27,7 @@ const VideoPlayer = ({ getInstance }) => {
       autoplay: watchSetting?.autoPlay,
       playbackRate: true,
       pip: true,
-      poster: watchInfo?.thumbnail,
+      // poster: watchInfo?.thumbnail,
       thumbnails: {
         url: watchInfo?.thumbnail,
         number: 5,
