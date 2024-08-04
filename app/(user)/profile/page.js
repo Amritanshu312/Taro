@@ -1,7 +1,7 @@
 
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/route"
 import Animes from "@/content/profile/Animes"
-import Banner from "@/content/profile/Banner/Banner"
+import Banner from "@/content/profile/Banner"
 import CategoryMain from "@/content/profile/CategoryMain"
 import CategorySelector from "@/content/profile/CategorySelector"
 import { UserProfile } from "@/lib/AnilistUser"
@@ -18,12 +18,12 @@ const Page = async () => {
   const data = await UserProfile(session?.user?.token, session?.user?.name);
   const { user, lists } = data;
 
-  console.log(user, lists);
+  const watchedAnime = lists.find(item => item?.status === "COMPLETED")
 
   return (
     <Fragment>
-      <Banner info={user} />
-      <CategoryMain lists={lists} />
+      <Banner info={user} data={watchedAnime} />
+      <CategoryMain lists={lists} user={user} watchedAnime={watchedAnime} />
 
       {/* background */}
       <div className="fixed w-[138.33px] h-[82.25px] left-[1%] top-[2%] bg-[#92b7fc8f] blur-[200px]"></div>

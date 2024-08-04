@@ -1,9 +1,18 @@
+"use client"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 const ProfileCard = ({ info, loading, hidden }) => {
   const animeInfo = info?.media
+
+
+  const listItem = {
+    hidden: { scale: 0 },
+    show: { scale: 1 }
+  };
+
   if (hidden) {
-    return <div className="aspect-[9/14] relative rounded-xl mb-2 overflow-hidden opacity-0"></div>
+    return <motion.div className="aspect-[9/14] relative rounded-xl mb-2 overflow-hidden opacity-0" variants={listItem}></motion.div>
   }
 
   if (loading) {
@@ -18,7 +27,7 @@ const ProfileCard = ({ info, loading, hidden }) => {
   }
 
   return (
-    <div className="aspect-[9/14] relative rounded-md cursor-pointer mb-2 overflow-hidden">
+    <motion.div className="aspect-[9/14] relative rounded-md cursor-pointer mb-2 overflow-hidden" variants={listItem}>
 
       <div className="w-full h-full aspect-[9/14] after:content-[''] after:w-full after:h-[36%] after:absolute after:flex after:bg-[linear-gradient(360deg,#12111ab8,#0000)] after:left-0 after:bottom-0">
         <Image
@@ -35,7 +44,7 @@ const ProfileCard = ({ info, loading, hidden }) => {
         <div className="text-sm text-[#c3c2c2be]">{animeInfo?.status.charAt(0).toUpperCase() + animeInfo?.status.slice(1).toLowerCase()}</div>
       </div>
 
-    </div>
+    </motion.div>
   )
 }
 

@@ -5,46 +5,58 @@ import { IoMdCheckmark } from "react-icons/io";
 import { MdOutlineFrontHand } from "react-icons/md";
 import { BiBullseye } from "react-icons/bi";
 import { IoPersonOutline } from "react-icons/io5";
-import { useState } from "react";
 import clsx from "clsx";
+import { useMemo } from "react";
 
-const CategorySelector = ({ active, setActive }) => {
-  const categorys = [
+const CategorySelector = ({ active, setActive, data }) => {
+
+  const statusMap = useMemo(() => {
+    return data.reduce((acc, item) => {
+      if (item && item.status) {
+        acc[item.status] = (item.entries || []).length;
+      }
+      return acc;
+    }, {});
+  }, [data]);
+
+  // Memoize the categorys array
+  const categorys = useMemo(() => [
     {
       title: "Watching",
       id: "CURRENT",
       icon: <LuEye />,
-      number: 46
+      number: statusMap['CURRENT'] || 0,
     },
     {
       title: "To Watch",
       id: "PLANNING",
       icon: <FaRegBookmark />,
-      number: 46
+      number: statusMap['PLANNING'] || 0,
     },
     {
       title: "Watched",
       id: "COMPLETED",
       icon: <IoMdCheckmark />,
-      number: 46
+      number: statusMap['COMPLETED'] || 0,
     },
     {
       title: "On Hold",
       id: "PAUSED",
       icon: <MdOutlineFrontHand />,
-      number: 46
+      number: statusMap['PAUSED'] || 0,
     },
     {
       title: "Dropped",
       id: "DROPPED",
       icon: <BiBullseye />,
-      number: 46
+      number: statusMap['DROPPED'] || 0,
     },
     {
       title: "Statistics",
+      id: "STATISTICS",
       icon: <IoPersonOutline />
-    },
-  ]
+    }
+  ], [statusMap]);
 
   return (
     <div className="relative w-full h-14 border-b border-[#23253274] text-white z-10">

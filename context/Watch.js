@@ -25,7 +25,6 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
       try {
         const selectedList = isDub ? dub : sub;
         const episodeData = findEpisodeData(selectedList, episode);
-
         if (!episodeData) {
           handleNoEpisodeFound(isMounted);
           return;

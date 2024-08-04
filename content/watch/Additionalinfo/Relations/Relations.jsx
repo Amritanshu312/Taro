@@ -8,7 +8,6 @@ const Relations = ({ info }) => {
 
   // const isAnime = (item) => { return item?.format !== "MANGA" && item?.id && (item?.node?.title?.english || item?.node?.title?.native || item?.node?.title?.romaji) }
   const isAnime = (item) => {
-    console.log(item);
     return item?.node?.format !== "MANGA"
   }
 
