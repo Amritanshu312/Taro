@@ -28,7 +28,7 @@ const Additionalinfo = ({ info }) => {
       </div>
 
       {active === "Characters" ? <Characters info={info} /> : null}
-      {active === "Relation" ? <Relations info={info} /> : null}
+      {active === "Relation" ? <Relations info={info} setActive={setActive} /> : null}
 
     </div>
   )

@@ -59,7 +59,7 @@ const Watch = async ({ params }) => {
           <Additionalinfo info={animeInfo} />
 
 
-          <div className="flex gap-5 max-[1125px]:flex-col">
+          <div className="flex mb-5 gap-5 max-[1125px]:flex-col">
             <Comments AnimeID={AnimeID} title={animeInfo?.title?.english} />
             <Recommendation info={animeInfo} />
           </div>

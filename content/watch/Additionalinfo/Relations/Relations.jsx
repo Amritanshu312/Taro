@@ -1,10 +1,9 @@
 import Image from "next/image"
 import Link from "next/link";
 
-const Relations = ({ info }) => {
+const Relations = ({ info, setActive }) => {
   const { relations: { edges } } = info
 
-  console.log(edges);
 
   const relations = edges.filter(({ relationType, node }) =>
     relationType !== "OTHER" &&
@@ -14,6 +13,10 @@ const Relations = ({ info }) => {
     node?.format !== "ONA" &&
     node?.status !== "NOT_YET_RELEASED"
   );
+
+  if (relations || relations.length > 1) {
+    setActive("Characters")
+  }
 
   // const isAnime = (item) => { return item?.format !== "MANGA" && item?.id && (item?.node?.title?.english || item?.node?.title?.native || item?.node?.title?.romaji) }
   const isAnime = (item) => {

@@ -70,7 +70,7 @@ const EpisodeSelector = ({ AnimeID }) => {
               <HiOutlineBars3 />
             </div>
           </div>
-          
+
         </div>
         <div className="flex justify-between px-2 py-3 gap-4">
           <div className="w-full">
