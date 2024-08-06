@@ -4,7 +4,7 @@ import { useWatchContext } from "@/context/Watch";
 import EpInfo from "./EpInfo";
 import Option from "./Option"
 import Server from "./Server";
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "./videoPlayer/VideoPlayer";
 
 const MainVideo = () => {
   const { episode } = useWatchContext();
@@ -13,7 +13,6 @@ const MainVideo = () => {
     <div className="w-full bg-[#22212c] rounded-md p-2 !pb-0 flex flex-col">
 
       <VideoPlayer />
-
 
       <Option />
 

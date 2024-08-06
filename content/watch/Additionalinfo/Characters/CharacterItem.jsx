@@ -4,24 +4,38 @@ import { useState } from "react"
 
 const LoadingImage = ({ url }) => {
   const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageLoading(false);
+    setImageError(true);
+  };
 
   return (
-    <div className="h-[110px] w-[140px]">
-      {imageLoading ? <div className="absolute h-[110px] w-[80px] bg-[#323043] rounded-md"></div> : null}
-      <Image
-        src={url}
-        alt="Character"
-        height={130}
-        width={100}
-        className={clsx("object-cover h-[110px] w-[80px]", {
-          "opacity-0": imageLoading,
-        })}
-        onError={() => setImageLoading(true)}
-        onLoad={() => setImageLoading(false)}
-      />
+    <div className="relative h-[110px] w-[140px]">
+      {imageLoading && !imageError && (
+        <div className="absolute inset-0 bg-[#323043] rounded-md"></div>
+      )}
+      {!imageError ? (
+        <Image
+          src={url}
+          alt="Character"
+          height={130}
+          width={100}
+          className={clsx("object-cover h-[110px] w-[140px]", {
+            "opacity-0": imageLoading,
+          })}
+          onError={handleImageError}
+          onLoad={() => setImageLoading(false)}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-[#323043] rounded-md"></div>
+      )}
     </div>
   );
 };
+
+
 
 
 const CharacterItem = ({ data }) => {

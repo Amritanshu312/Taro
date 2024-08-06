@@ -85,8 +85,9 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
     setIsDub,
     isDub,
     setEpisodes,
-    episodes
-  }), [episode, watchInfo, isDub, episodes]);
+    episodes,
+    animeid: AnimeInfo?.id
+  }), [episode, watchInfo, isDub, episodes, AnimeInfo]);
 
   return (
     <WatchAreaContext.Provider value={contextValue}>
