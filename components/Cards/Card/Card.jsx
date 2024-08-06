@@ -10,8 +10,7 @@ const Card = ({ data, index, loading, hidden }) => {
   const [isHovered, setIsHovered] = useState({ hover: false, info: {} })
   let hoverTimer = null;
 
-
-  const onmouseEnter = (data) => {
+  const onMouseEnter = (data) => {
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       hoverTimer = setTimeout(() => {
         const { clientX, clientY } = data
@@ -20,11 +19,19 @@ const Card = ({ data, index, loading, hidden }) => {
     }
   }
 
-  const onmouseLeave = () => {
+  const onMouseLeave = () => {
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       clearTimeout(hoverTimer); // Cancel the timeout if mouse leaves before HoverTime
       setIsHovered({ hover: false, info: {} })
     }
+  }
+
+  const onInfoWindowMouseEnter = () => {
+    setIsHovered((prev) => ({ ...prev, hover: true }))
+  }
+
+  const onInfoWindowMouseLeave = () => {
+    setIsHovered((prev) => ({ ...prev, hover: false, info: {} }))
   }
 
   if (hidden) {
@@ -42,7 +49,7 @@ const Card = ({ data, index, loading, hidden }) => {
 
   return (
     <div className="aspect-[9/14] rounded-2xl cursor-pointer mb-2 relative" >
-      <Link href={`/watch/${data?.id}`} className={`${styles.wrapper}`} onMouseEnter={onmouseEnter} onMouseLeave={onmouseLeave}>
+      <Link href={`/watch/${data?.id}`} className={`${styles.wrapper}`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Image
           src={data?.coverImage?.extraLarge}
           alt="Trending"
@@ -63,7 +70,14 @@ const Card = ({ data, index, loading, hidden }) => {
 
       <div className="text-[#efebebf2] font-['Poppins'] font-medium text-[14px] mt-2 text-center line-clamp-2 text-ellipsis overflow-hidden mx-3">{data?.title?.english}</div>
 
-      {isHovered?.hover ? <InfoWindow info={data} hoverdata={isHovered?.info} /> : null}
+      {isHovered?.hover && (
+        <InfoWindow
+          info={data}
+          hoverdata={isHovered?.info}
+          onMouseEnter={onInfoWindowMouseEnter}
+          onMouseLeave={onInfoWindowMouseLeave}
+        />
+      )}
     </div>
   )
 }

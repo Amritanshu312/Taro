@@ -13,7 +13,6 @@ const Recommendation = ({ info }) => {
 
       <div className="w-full flex flex-col gap-3 max-[1125px]:grid max-[1125px]:grid-cols-[repeat(auto-fit,minmax(306px,1fr))]">
         {recommendation?.map((item, index) => <Fragment key={index}><RecommendationCard data={item?.mediaRecommendation} /></Fragment>)}
-
       </div>
     </div>
   )

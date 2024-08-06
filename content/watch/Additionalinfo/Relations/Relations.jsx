@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link";
+import { useEffect } from "react";
 
 const Relations = ({ info, setActive }) => {
   const { relations: { edges } } = info
@@ -14,9 +15,11 @@ const Relations = ({ info, setActive }) => {
     node?.status !== "NOT_YET_RELEASED"
   );
 
-  if (relations || relations.length > 1) {
-    setActive("Characters")
-  }
+  useEffect(() => {
+    if (!relations || relations.length < 1) {
+      setActive("Characters")
+    }
+  }, [info])
 
   // const isAnime = (item) => { return item?.format !== "MANGA" && item?.id && (item?.node?.title?.english || item?.node?.title?.native || item?.node?.title?.romaji) }
   const isAnime = (item) => {
