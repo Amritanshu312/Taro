@@ -13,7 +13,6 @@ const EpisodeSelector = ({ AnimeID }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [watchedEP, setWatchedEP] = useState([]);
 
-  console.log(watchedEP);
 
   const chunkSize = 80;
 

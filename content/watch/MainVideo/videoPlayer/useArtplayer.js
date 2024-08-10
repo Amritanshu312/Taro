@@ -14,7 +14,6 @@ const useArtplayer = (getInstance) => {
   const { setWatchSetting, watchSetting } = useWatchSettingContext();
   const artRef = useRef();
 
-  console.log(watchInfo?.skipTime?.results);
 
   useEffect(() => {
     const initializeArtPlayer = () => {

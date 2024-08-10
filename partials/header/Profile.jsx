@@ -21,7 +21,6 @@ const Profile = () => {
     }
   }, [status])
 
-  console.log(data);
 
   return (
     <div className="relative">
