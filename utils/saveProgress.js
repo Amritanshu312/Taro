@@ -18,7 +18,7 @@ export const saveProgress = (
       thumbnail,
       duration,
       title,
-      updatedDate: new Date()
+      updatedDate: new Date().valueOf()
     }
   };
 
