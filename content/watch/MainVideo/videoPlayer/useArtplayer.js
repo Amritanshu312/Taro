@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 import Artplayer from 'artplayer';
