@@ -59,8 +59,8 @@ const CategorySelector = ({ active, setActive, data }) => {
   ], [statusMap]);
 
   return (
-    <div className="relative w-full h-14 border-b border-[#23253274] text-white z-10">
-      <div className="flex items-center justify-center h-full gap-1">
+    <div className="relative w-full min-[762px]:h-14 border-b border-[#23253274] text-white z-10">
+      <div className="flex items-center justify-center h-full gap-1 max-[762px]:flex-wrap">
 
 
         {categorys.map((item, index) => <div

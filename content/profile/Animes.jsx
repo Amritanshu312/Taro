@@ -36,7 +36,7 @@ const Animes = ({ data }) => {
     <Fragment>
       <motion.div
         key={page}
-        className="h-full mt-6 mx-24 grid grid-auto-fit gap-[8px_20px]"
+        className="h-full mt-6 mx-24 grid grid-auto-fit gap-[8px_20px] max-[1080px]:mx-8"
         variants={containerVariants}
         initial="hidden"
         animate="show"

@@ -7,10 +7,13 @@ import { useWatchContext } from '@/context/Watch';
 import { useWatchSettingContext } from '@/context/WatchSetting';
 import { saveProgress } from '@/utils/saveProgress';
 
+
 const useArtplayer = (getInstance) => {
-  const { setEpisode, watchInfo, episode, animeid } = useWatchContext();
+  const { setEpisode, watchInfo, episode, animeid, AnimeInfo } = useWatchContext();
   const { setWatchSetting, watchSetting } = useWatchSettingContext();
   const artRef = useRef();
+
+  console.log(watchInfo?.skipTime?.results);
 
   useEffect(() => {
     const initializeArtPlayer = () => {
@@ -37,13 +40,15 @@ const useArtplayer = (getInstance) => {
               title: 'Quality',
               auto: 'Auto',
             }),
-            artplayerPluginChapter({
-              chapters: watchInfo?.skipTime?.results?.map(item => ({
-                start: item?.interval?.startTime,
-                end: item?.interval?.endTime,
-                title: item?.skipType === "op" ? "opening" : "ending"
-              })) || [],
-            }),
+
+            // artplayerPluginChapter({
+            //   chapters: watchInfo?.skipTime?.results?.map(item => ({
+            //     start: item?.interval?.startTime,
+            //     end: item?.skipType === "ed" ? Infinity : item?.interval?.endTime,
+            //     title: item?.skipType === "op" ? "opening" : item?.skipType === "ed" ? "ending" : ""
+            //   })) || [],
+            // }),
+
           ],
           customType: {
             m3u8: (video, url, art) => {
@@ -78,10 +83,55 @@ const useArtplayer = (getInstance) => {
           }
         });
 
-        art.on('video:progress', (data) => {
-          const currentTime = data.target.currentTime;
-          saveProgress(animeid, episode, currentTime, watchInfo?.thumbnail);
+
+        function throttle(func, limit) {
+          let inThrottle;
+          return function (...args) {
+            const context = this;
+            if (!inThrottle) {
+              func.apply(context, args);
+              inThrottle = true;
+              setTimeout(() => (inThrottle = false), limit);
+            }
+          };
+        }
+
+        const throttledSaveProgress = throttle((data) => {
+          saveProgress(
+            animeid,
+            episode,
+            data?.target?.currentTime,
+            watchInfo?.thumbnail,
+            data?.target?.duration,
+            watchInfo?.title || (AnimeInfo?.title?.english || AnimeInfo?.title?.romaji),
+          );
+        }, 8000);
+
+        art.on('video:timeupdate', (data) => {
+          throttledSaveProgress(data);
         });
+
+        art.on('ready', () => {
+          const watch_history = JSON.parse(localStorage?.getItem("watch_history"));
+
+          if (
+            watch_history &&
+            watch_history[animeid] &&
+            watch_history[animeid].episode?.toString() === episode?.toString() &&
+            watch_history[animeid].currentTime
+          ) {
+            const currentTime = parseInt(watch_history[animeid].currentTime, 10);
+            if (!isNaN(currentTime)) {
+              art.seek = currentTime;
+
+              // art.play();
+            }
+          }
+        });
+
+
+
+
 
         if (getInstance && typeof getInstance === 'function') {
           getInstance(art);

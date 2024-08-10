@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { HiOutlineBars3 } from "react-icons/hi2";
-import { RiFilter3Line } from "react-icons/ri";
 import Select from "@/components/ui/Select";
 import EpisodeCard from "./EpisodeCard";
 import { useWatchContext } from "@/context/Watch";
@@ -12,6 +11,9 @@ const EpisodeSelector = ({ AnimeID }) => {
   const [dubSelected, setDubSelected] = useState({ id: 0 });
   const [epFromTo, setEpFromTo] = useState({ id: 0 });
   const [searchQuery, setSearchQuery] = useState("");
+  const [watchedEP, setWatchedEP] = useState([]);
+
+  console.log(watchedEP);
 
   const chunkSize = 80;
 
@@ -45,11 +47,24 @@ const EpisodeSelector = ({ AnimeID }) => {
       }
       return chunks;
     }, []);
-  }, [data, chunkSize]);
+  }, [data]);
 
   useEffect(() => {
     setIsDub(!isSubSelected);
   }, [isSubSelected, setIsDub]);
+
+  useEffect(() => {
+    const storedItems = JSON.parse(localStorage.getItem(AnimeID) || "[]");
+    if (!storedItems.includes(episode)) {
+      storedItems.push(episode);
+      localStorage.setItem(AnimeID, JSON.stringify(storedItems));
+    }
+    setWatchedEP(storedItems);
+  }, [AnimeID, episode]);
+
+  const handleSearchQueryChange = useCallback((e) => {
+    setSearchQuery(e.target.value);
+  }, []);
 
   return (
     <div className="bg-[#201f28] w-full max-w-[22rem] EPSResponsive rounded-md flex flex-col">
@@ -61,7 +76,7 @@ const EpisodeSelector = ({ AnimeID }) => {
               placeholder="Ep Number"
               className="bg-transparent outline-none h-full w-full px-2 text-slate-200 max-w-[13rem]"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearchQueryChange}
             />
           </div>
 
@@ -70,7 +85,6 @@ const EpisodeSelector = ({ AnimeID }) => {
               <HiOutlineBars3 />
             </div>
           </div>
-
         </div>
         <div className="flex justify-between px-2 py-3 gap-4">
           <div className="w-full">
@@ -84,7 +98,7 @@ const EpisodeSelector = ({ AnimeID }) => {
             <Select
               setSelected={setEpFromTo}
               data={Array.from({ length: SplitedEpisodes?.length ?? 0 }, (v, i) =>
-                `${(i === 0 && i * chunkSize === 0) ? 1 : i * chunkSize} - ${(i + 1) * chunkSize}`
+                `${i === 0 && i * chunkSize === 0 ? 1 : i * chunkSize} - ${(i + 1) * chunkSize}`
               )}
               defaultValue={0}
             />
@@ -94,13 +108,11 @@ const EpisodeSelector = ({ AnimeID }) => {
 
       <div className="px-2 overflow-y-scroll h-full max-h-[44rem]">
         {!loading ? (
-          // Check if there's a search query
           !searchQuery ? (
             SplitedEpisodes[epFromTo?.id]?.map((item, index) => (
-              <EpisodeCard key={index + 1} info={item} currentEp={episode} />
+              <EpisodeCard key={index + 1} info={item} currentEp={episode} watchedEP={watchedEP} />
             ))
           ) : (
-            // Filter episodes based on the search query
             data
               .filter(
                 (item) =>
@@ -108,11 +120,10 @@ const EpisodeSelector = ({ AnimeID }) => {
                   item?.title?.toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '')?.includes(searchQuery.toLowerCase())
               )
               ?.map((item, index) => (
-                <EpisodeCard key={index + 1} info={item} currentEp={episode} />
+                <EpisodeCard key={index + 1} info={item} currentEp={episode} watchedEP={watchedEP} />
               ))
           )
         ) : (
-          // Show loading state
           Array.from({ length: 7 }).map((_, index) => (
             <EpisodeCard key={index} loading />
           ))

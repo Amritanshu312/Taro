@@ -1,16 +1,26 @@
-export const saveProgress = (animeid, episode, currentTime, thumbnail) => {
-  let saveTimeout;
-  const DEBOUNCE_DELAY = 5000; // 5 seconds
+export const saveProgress = (
+  animeid,
+  episode,
+  currentTime,
+  thumbnail,
+  duration,
+  title,
+) => {
+  const localStorageData = localStorage.getItem("watch_history") || '{}';
+  const jsonifyLocalStorageData = JSON.parse(localStorageData) || {};
 
-  if (saveTimeout) {
-    clearTimeout(saveTimeout);
-  }
-
-  saveTimeout = setTimeout(() => {
-    localStorage.setItem(animeid, JSON.stringify({
+  const updatedData = {
+    ...jsonifyLocalStorageData,
+    [animeid]: {
+      animeid,
       episode,
-      duration: currentTime,
-      image: thumbnail
-    }));
-  }, DEBOUNCE_DELAY);
+      currentTime,
+      thumbnail,
+      duration,
+      title,
+      updatedDate: new Date()
+    }
+  };
+
+  localStorage.setItem("watch_history", JSON.stringify(updatedData));
 };

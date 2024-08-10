@@ -3,7 +3,7 @@ import Image from "next/image"
 const Banner = ({ info, data }) => {
   const { count, episodesWatched } = info?.statistics?.anime
   const watchedAnime = data?.entries?.length
-  
+
   return (
     <div className="relative after:bg-[linear-gradient(360deg,#000000a6,transparent);] after:content-[''] after:w-full after:h-56 after:bottom-0 after:absolute ">
       <div className="relative w-full h-[21rem] border-b border-[#181821]">
@@ -28,17 +28,17 @@ const Banner = ({ info, data }) => {
 
           <div className="flex flex-col items-center">
             <div className="font-semibold">{watchedAnime}</div>
-            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e]">Anime Watched</div>
+            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e] text-center">Anime Watched</div>
           </div>
 
           <div className="flex flex-col items-center">
             <div className="font-semibold">{episodesWatched}</div>
-            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e]">Episodes Watched</div>
+            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e] text-center">Episodes Watched</div>
           </div>
 
           <div className="flex flex-col items-center">
             <div className="font-semibold">{count}</div>
-            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e]">Total Anime</div>
+            <div className="font-['Rubik'] text-[15px] font-medium text-[#c86e8e] text-center">Total Anime</div>
           </div>
 
 

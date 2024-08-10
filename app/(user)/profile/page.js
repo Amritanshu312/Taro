@@ -1,9 +1,7 @@
 
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/route"
-import Animes from "@/content/profile/Animes"
 import Banner from "@/content/profile/Banner"
 import CategoryMain from "@/content/profile/CategoryMain"
-import CategorySelector from "@/content/profile/CategorySelector"
 import { UserProfile } from "@/lib/AnilistUser"
 import { redirect } from "next/navigation"
 import { Fragment } from "react"

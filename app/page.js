@@ -4,6 +4,7 @@ import Herosection from "@/content/Home/HeroSection/Herosection"
 import Popular from "@/content/Home/Popular";
 import Season from "@/content/Home/Season";
 import Trending from "@/content/Home/Trending";
+import WatchHistory from "@/content/Home/WatchHistory";
 import { SeasonalAnilist, Top100Anilist, TrendingAnilist } from "@/lib/Anilistfunction";
 
 const Home = async () => {
@@ -21,6 +22,7 @@ const Home = async () => {
       <div className="w-full flex flex-col items-center z-10 relative main-responsive">
         <Trending data={trendingdata} />
         <FeaturedAnime data={trendingdata} />
+        <WatchHistory />
         <Collection />
         <Popular />
         <Season data={seasonaldata} />

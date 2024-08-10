@@ -1,12 +1,15 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
 export const WatchAreaContext = createContext();
 
 export function WatchAreaContextProvider({ children, AnimeInfo }) {
-  const [episode, setEpisode] = useState(1);
+  const searchparam = useSearchParams()
+
+  const [episode, setEpisode] = useState(parseInt(searchparam.get('ep')) || 1);
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
   const [episodes, setEpisodes] = useState("loading")
@@ -32,7 +35,13 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
         const watchData = await fetchWatchData(episodeData, AnimeInfo);
 
         if (isMounted) {
-          setWatchInfo({ ...watchData, thumbnail: episodeData?.image, loading: false });
+          setWatchInfo(
+            {
+              ...watchData,
+              thumbnail: episodeData?.image,
+              title: episodeData?.title,
+              loading: false
+            });
         }
       } catch (error) {
         handleError(error, isMounted);
@@ -86,6 +95,7 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
     isDub,
     setEpisodes,
     episodes,
+    AnimeInfo,
     animeid: AnimeInfo?.id
   }), [episode, watchInfo, isDub, episodes, AnimeInfo]);
 
