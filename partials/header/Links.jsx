@@ -38,7 +38,7 @@ const Links = ({ isMobile }) => {
     <div className="flex mt-[8px] text-[#c4c2c7] max-[990px]:hidden">
       {links.map((link, index) => (
         <Link
-          href={link === "Home" ? "/" : `/${link.toLowerCase()}`}
+          href={link === "Home" ? "/" : link === "Trending" ? "/catalog?sort=TRENDING_DESC" : `/${link.toLowerCase()}`}
           key={link}
           className={`${index === 0 ? "ml-6" : "ml-4"} ${(pathname === "/" ? "home" : pathname).includes(link.toLowerCase()) ? "text-white" : ""}`}
         >

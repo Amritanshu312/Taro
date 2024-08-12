@@ -5,6 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { useWatchSettingContext } from "@/context/WatchSetting";
 import { useWatchContext } from "@/context/Watch";
 import { BiCollapse } from "react-icons/bi";
+import AddToList from "@/components/AddToList";
 
 const Option = () => {
   const { setWatchSetting, watchSetting } = useWatchSettingContext()
@@ -51,7 +52,7 @@ const Option = () => {
           className="flex items-center gap-2 cursor-pointer"
           onClick={() => setEpisode(prev => prev + 1)}
         >Next <span><FaForward /></span></div>
-        <div className="flex items-center gap-2 cursor-pointer"><span className="text-xl"><GoPlus /></span> Add to List</div>
+        <AddToList />
       </div>
     </div>
   )
