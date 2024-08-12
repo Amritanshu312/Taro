@@ -20,8 +20,14 @@ const Animes = () => {
     const genres = searchParams.get("genres") || null;
     let season = searchParams.get("season") || null;
     const type = searchParams.get("type") || null;
-    const year = searchParams.get("year") || null;
     const page = searchParams.get("page") || 1;
+    const year = searchParams.get("year") || null;
+
+    // hidden parama
+    const country = searchParams.get("country") || null;
+    const startYear = searchParams.get("syear") || null;
+    const episodes = searchParams.get("episodes") || null;
+
 
     airing &&
       (airing = {
@@ -53,7 +59,11 @@ const Animes = () => {
           genresData,
           airing,
           sort,
-          page
+          page,
+          // hidden
+          country,
+          startYear,
+          episodes
         );
 
         setAnimes(data);

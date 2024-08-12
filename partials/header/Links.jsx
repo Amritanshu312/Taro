@@ -13,7 +13,7 @@ const Links = ({ isMobile }) => {
     "Catalog",
     "News",
     "Collection",
-    "Ai-Chat"
+    "Trending"
   ]
 
   if (isMobile) {
