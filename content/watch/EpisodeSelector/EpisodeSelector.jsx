@@ -53,10 +53,10 @@ const EpisodeSelector = ({ AnimeID }) => {
   }, [isSubSelected, setIsDub]);
 
   useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem(AnimeID) || "[]");
+    const storedItems = JSON.parse(localStorage.getItem(`playing.${AnimeID}`) || "[]");
     if (!storedItems.includes(episode)) {
       storedItems.push(episode);
-      localStorage.setItem(AnimeID, JSON.stringify(storedItems));
+      localStorage.setItem(`playing.${AnimeID}`, JSON.stringify(storedItems));
     }
     setWatchedEP(storedItems);
   }, [AnimeID, episode]);
