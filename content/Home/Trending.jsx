@@ -8,9 +8,19 @@ const Trending = ({ data }) => {
 
 
       <div className="mt-8 grid grid-auto-fit gap-3">
-        {data.filter(item => item.trailer && item.trailer.id && item.id !== 21 && item.bannerImage !== null && item.status !== 'NOT_YET_RELEASED')?.slice(0, 8).map((item, index) => <Fragment key={index}>
-          <TrendingCard info={item} />
-        </Fragment>)}
+        {data
+          .filter(item =>
+            item.trailer &&
+            item.trailer.id &&
+            item.id !== 21 &&
+            item.bannerImage !== null &&
+            item.status !== 'NOT_YET_RELEASED')
+          .slice(0, 8)
+          .map((item, index) =>
+            <Fragment key={index}>
+              <TrendingCard info={item} />
+            </Fragment>)
+        }
 
       </div>
     </div>

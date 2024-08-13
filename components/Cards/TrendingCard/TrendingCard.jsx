@@ -10,7 +10,7 @@ const TrendingCard = ({ info }) => {
   const [imageHovered, setImageHovered] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [trailer, setTrailer] = useState(null);
-
+  const [videoready, setVideoready] = useState(false)
   // main
   const VideoPlay = true;
 
@@ -44,7 +44,7 @@ const TrendingCard = ({ info }) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {imageHovered && !videoError ? <video
+      {imageHovered && !videoError && <video
         src={trailer}
         className="object-cover w-full h-full rounded-2xl hover:cursor-pointer"
         preload="auto"
@@ -52,14 +52,21 @@ const TrendingCard = ({ info }) => {
         loop
         muted
         onError={() => setVideoError(true)}
-      ></video> : <Image
+        onCanPlay={(e) => {
+          if (e.target.readyState === 4) {
+            setVideoready(true)
+          }
+        }}
+        style={{ opacity: videoready ? 1 : 0 }}
+      ></video>} <Image
         src={info?.coverImage?.extraLarge}
         alt="Trending"
         width={200}
         height={280}
         quality={100}
         className="object-cover w-full h-full rounded-2xl hover:cursor-pointer"
-      />}
+        style={{ opacity: (imageHovered && videoready) ? 0 : 1 }}
+      />
 
       <div className={`${styles.rating} absolute top-0 left-0 bg-[#21212c] w-[60%] rounded-br-lg rounded-tl-md flex items-center justify-center gap-2 text-white h-10`}>
         <FaStar />
