@@ -11,8 +11,9 @@ const Select = ({ data, defaultValue, setSelected }) => {
   }
 
   useEffect(() => {
-    setSelected({ id: isOpened?.id, value: data[isOpened?.id] })
-  }, [isOpened?.id])
+    setSelected({ id: isOpened.id, value: data[isOpened.id] })
+  }, [isOpened.id, data, setSelected])
+
 
   return (
     <div className="w-full relative">
