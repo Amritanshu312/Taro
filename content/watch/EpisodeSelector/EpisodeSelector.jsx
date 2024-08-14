@@ -20,10 +20,7 @@ const EpisodeSelector = ({ AnimeID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [sub, dub] = await Promise.all([
-        FetchEpisodes(AnimeID, false),
-        FetchEpisodes(AnimeID, true),
-      ]);
+      const { sub, dub } = await FetchEpisodes(AnimeID);
 
       setEpisodes({ dub, sub });
     };
