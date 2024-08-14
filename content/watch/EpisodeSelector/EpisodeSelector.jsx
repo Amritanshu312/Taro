@@ -45,9 +45,9 @@ const EpisodeSelector = ({ AnimeID }) => {
     }, []);
   }, [data]);
 
-  useEffect(() => {
-    setIsDub(!isSubSelected);
-  }, [isSubSelected, setIsDub]);
+  // useEffect(() => {
+  //   setIsDub(!isSubSelected);
+  // }, [isSubSelected, setIsDub]);
 
   useEffect(() => {
     const storedItems = JSON.parse(localStorage.getItem(`playing.${AnimeID}`) || "[]");
