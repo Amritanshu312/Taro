@@ -46,7 +46,7 @@ const TrendingCard = ({ info }) => {
           loop
           muted
           onError={() => setVideoError(true)}
-          onCanPlay={(e) => setIsVideoReady(e.target.readyState === 4)}
+          onCanPlay={(e) => setIsVideoReady(e.target.readyState > 2)}
           style={{ opacity: isVideoReady ? 1 : 0 }}
         />
       ) : (
