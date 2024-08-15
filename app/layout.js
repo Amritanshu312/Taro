@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/partials/header/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Footer from "@/partials/footer/Footer";
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from "./SessionProvider";
 import { getAuthSession } from "./api/auth/[...nextauth]/route";
 
@@ -26,6 +26,7 @@ export default async function RootLayout({ children }) {
         <AuthProvider session={session}>
           <Header />
           {children}
+          <Analytics />
           {/* <Footer /> */}
         </AuthProvider>
 
