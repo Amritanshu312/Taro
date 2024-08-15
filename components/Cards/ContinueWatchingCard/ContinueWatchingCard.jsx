@@ -5,7 +5,11 @@ import Image from "next/image"
 import Link from "next/link";
 import { FaPlay } from "react-icons/fa6";
 
-const ContinueWatchingCard = ({ data }) => {
+const ContinueWatchingCard = ({ data, hidden }) => {
+
+  if (hidden) {
+    return <div className=""></div>
+  }
 
   return (
     <Link

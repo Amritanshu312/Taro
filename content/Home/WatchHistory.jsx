@@ -48,6 +48,8 @@ const WatchHistory = () => {
         {mappedData.map(data => (
           <ContinueWatchingCard key={data.id} data={data} />
         ))}
+
+        {(mappedData?.length < 4) ? Array.from({ length: 4 - mappedData?.length }).map((i, _) => <ContinueWatchingCard key={_} hidden />) : null}
       </div>
     </div>
   );
