@@ -28,7 +28,9 @@ export function AuthProvider({ children, session }) {
       <ProgressBar
         height="3px"
         color="#e26bbd"
-        options={{ showSpinner: true }}
+        options={
+          { showSpinner: true }
+        }
       />
     </SessionProvider>
   );
