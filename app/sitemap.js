@@ -1,4 +1,4 @@
-import { TrendingAnilist, Top100Anilist, SeasonalAnilist } from '@/lib/Anilistfunctions';
+import { TrendingAnilist, Top100Anilist, SeasonalAnilist } from '@/lib/Anilistfunction';
 export default async function sitemap() {
   const data = await TrendingAnilist();
   const data2 = await Top100Anilist();
