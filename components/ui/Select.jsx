@@ -12,7 +12,7 @@ const Select = ({ data, defaultValue, setSelected }) => {
 
   useEffect(() => {
     setSelected({ id: isOpened.id, value: data[isOpened.id] })
-  }, [isOpened.id, data, setSelected])
+  }, [isOpened.id])
 
 
   return (

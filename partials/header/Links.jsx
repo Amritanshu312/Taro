@@ -23,7 +23,7 @@ const Links = ({ isMobile }) => {
           <Link
             href={link === "Home" ? "/" : link.toLowerCase()}
             key={link}
-            className={`${(pathname === "/" ? "Home" : pathname).includes(link) ? "text-white bg-[#242233] border-2 border-[#313e5038]" : ""}  w-full h-full text-center p-2 rounded-md hover:bg-[#242233] hover:border-2 hover:border-[#313e5038] relative ${styles.animate_ltr}`}
+            className={`${(pathname === "/" ? "Home" : pathname).includes(link) ? "text-white bg-[#242233] border-2 border-[#313e5038]" : ""}  w-full h-full text-center py-[6px] rounded-md hover:bg-[#242233] border-2 border-transparent hover:border-[#313e5038] relative ${styles.animate_ltr}`}
             style={{ animationDelay: `${index * 0.13}s` }}
 
           >

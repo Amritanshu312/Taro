@@ -45,9 +45,9 @@ export const GET = async (req, { params }) => {
   const episode = url.searchParams.get('episode');
 
 
-  const [streamingData, skipTime] = await Promise.all([
+  const [streamingData] = await Promise.all([
     fetchStreamingData(episodeId),
-    fetchSkipTime(idMal, episode)
+    // fetchSkipTime(idMal, episode)
   ]);
 
   const initialData = {
@@ -55,7 +55,7 @@ export const GET = async (req, { params }) => {
     idMal,
     episodeId,
     streamingData,
-    skipTime
+    // skipTime
   };
 
   const response = NextResponse.json(initialData);

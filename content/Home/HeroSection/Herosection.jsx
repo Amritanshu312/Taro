@@ -64,7 +64,7 @@ const Herosection = ({ data }) => {
           </div>
 
           <h2 className="text-sm text-white w-full max-w-[60rem] tracking-normal overflow-hidden text-ellipsis line-clamp-2 font-['poppins'] mt-3 mb-4 max-[794px]:text-[13px]">{populardata?.description.replace(/<[^>]*>/g, '')}</h2>
-          <Button text="Watch now" icon={<FaCirclePlay />} />
+          <Button text="Watch now" icon={<FaCirclePlay />} animeID={populardata?.id} />
         </div> : null
       }
 
