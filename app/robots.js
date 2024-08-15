@@ -3,7 +3,11 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/anime/', '/api/'],
+      disallow: [
+        '/watch/',
+        '/catalog/',
+        '/api/'
+      ],
     },
     sitemap: 'https://taro-anime.vercel.app/sitemap.xml',
   }
