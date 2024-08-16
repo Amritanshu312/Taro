@@ -2,7 +2,7 @@
 import Image from "next/image"
 import styles from "./TrendingCard.module.css"
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FetchYtVideoStream } from "@/utils/YT_Video";
 import Link from "next/link";
 
@@ -10,15 +10,17 @@ const TrendingCard = ({ info }) => {
   const [imageHovered, setImageHovered] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [trailer, setTrailer] = useState(null);
+  const [videoPlay, setVideoPlay] = useState(false)
 
-  // main
-  const VideoPlay = true;
+  useEffect(() => {
+    setVideoPlay(JSON.parse(localStorage.getItem("setting.Taro") || '{}')?.Preferences?.trendingCardVideo || false)
+  }, [])
 
   const HoverTime = 1000
   let hoverTimer = null;
 
   const onMouseEnter = () => {
-    if (VideoPlay) {
+    if (videoPlay) {
       hoverTimer = setTimeout(async () => {
         if (!trailer) {
           const trailer = await FetchYtVideoStream(info.trailer.id);
@@ -33,7 +35,7 @@ const TrendingCard = ({ info }) => {
 
 
   const onMouseLeave = () => {
-    if (!VideoPlay) return
+    if (!videoPlay) return
     clearTimeout(hoverTimer); // Cancel the timeout if mouse leaves before HoverTime
     setImageHovered(false);
   }

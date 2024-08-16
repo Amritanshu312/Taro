@@ -1,8 +1,8 @@
 import styles from "./HeroSection.module.css"
 import { FaCirclePlay } from "react-icons/fa6";
 import Button from "@/components/ui/Button";
-import Video from "./Trailer";
-import ImageView from "./ImageView";
+import ImageSection from "./ImageSection";
+
 
 const Herosection = ({ data }) => {
 
@@ -14,8 +14,6 @@ const Herosection = ({ data }) => {
     }
   })()
 
-  let VideoPlay = false;
-  let dynamicBanner = true;
 
 
 
@@ -24,10 +22,7 @@ const Herosection = ({ data }) => {
       <div>
 
         {populardata ?
-          !VideoPlay ?
-            <ImageView populardata={populardata} dynamicBanner={dynamicBanner} VideoPlay={VideoPlay} />
-            :
-            <Video populardata={populardata} />
+          <ImageSection populardata={populardata} />
           :
           <div className={`${styles.smoothTransform} relative aspect-[16/9] object-cover max-h-[800px] min-h-[460px] w-full`}></div>
         }

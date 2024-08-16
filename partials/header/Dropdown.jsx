@@ -36,11 +36,14 @@ const Dropdown = ({ data, isLoggedIn }) => {
           </div>
         </> :
           <>
-            <div className="flex items-center gap-2 hover:bg-[#262232] rounded-xl px-2 py-2 mb-2 text-slate-200 cursor-pointer" onClick={()=> signIn('AniListProvider')}>
+            <div className="flex items-center gap-2 hover:bg-[#262232] rounded-xl px-2 py-2 mb-2 text-slate-200 cursor-pointer" onClick={() => signIn('AniListProvider')}>
               <div><RxExit /></div>
               <div>Sign in</div>
             </div>
-
+            <Link href={"/settings"} className="flex items-center gap-2 hover:bg-[#231f2f] rounded-xl px-2 py-2 text-slate-200 cursor-pointer">
+              <div><IoMdSettings /></div>
+              <div>Settings</div>
+            </Link>
           </>
       }
 

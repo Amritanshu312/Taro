@@ -3,11 +3,12 @@ import { FaBrush } from "react-icons/fa6";
 import { BiLogoPlayStore } from "react-icons/bi";
 import { IoMdLink } from "react-icons/io";
 
-const TypeSelector = () => {
-  const types = [
+const TypeSelector = ({ isLoggedIn }) => {
+  let types = [
     {
       name: "Account",
-      icon: <IoPersonOutline />
+      icon: <IoPersonOutline />,
+      requirelogin: true
     },
     {
       name: "Appearance",
@@ -26,8 +27,11 @@ const TypeSelector = () => {
       icon: <IoMdLink />
     },
   ]
+
+
   return (
-    <div className="max-w-72 w-full">
+    <div className="max-w-72 w-full fixed">
+
       <div className="text-[#ffffffbe] font-['poppins'] font-semibold">Settings</div>
 
       <div className="flex flex-col gap-2 mt-2">

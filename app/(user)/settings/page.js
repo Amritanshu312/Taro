@@ -1,13 +1,30 @@
+"use client"
 import AllSettings from "@/content/settings/AllSettings"
 import TypeSelector from "@/content/settings/TypeSelector"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react";
+
 
 const Page = () => {
-  return (
-    <div className="flex flex-col mx-96 z-10 relative top-[130px] text-white">
+  const { data, status } = useSession();
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-      <div className="flex gap-10">
-        <TypeSelector />
-        <AllSettings />
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      setIsLoggedIn(true);
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+  }, [status])
+
+  return (
+    <div className="flex flex-col z-10 relative top-[130px] text-white">
+
+      <div className="flex mx-96 relative">
+        <TypeSelector isLoggedIn={isLoggedIn} />
+        <AllSettings isLoggedIn={isLoggedIn} data={data} />
       </div>
     </div>
   )

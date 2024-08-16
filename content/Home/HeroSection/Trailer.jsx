@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import styles from "./HeroSection.module.css"
 
-const Video = ({ populardata }) => {
+const Video = ({ populardata, setVideoError }) => {
   const [trailer, setTrailer] = useState(null);
-
   useEffect(() => {
     async function fetchTrailer(trailerId) {
       try {
@@ -13,7 +12,7 @@ const Video = ({ populardata }) => {
             `https://pipedapi.kavin.rocks/streams/${trailerId}`
           );
 
-          if (!response.ok) return
+          if (!response.ok) return setVideoError(true)
           const res = await response.json();
           const item = res.videoStreams.find(
             (i) => i.quality === '1080p' && i.format === 'WEBM'
@@ -21,6 +20,7 @@ const Video = ({ populardata }) => {
           setTrailer(item?.url || null);
         }
       } catch (error) {
+        setVideoError(true)
         console.error('Error fetching trailer:', error);
       }
     }

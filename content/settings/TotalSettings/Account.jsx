@@ -1,22 +1,9 @@
-"use client"
 import Image from "next/image"
 import Title from "../components/Title"
-import { useEffect, useState } from "react"
-import { useSession } from "next-auth/react";
-
-const Account = () => {
-  const { data, status } = useSession();
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      setIsLoggedIn(true);
-    }
-    else {
-      setIsLoggedIn(false);
-    }
-  }, [status])
+const Account = ({ isLoggedIn, data }) => {
+
 
   return !isLoggedIn ? null : (
     <div className="w-full">
