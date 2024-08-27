@@ -59,8 +59,8 @@ const fetchData = async (animeId, refresh, cacheTime) => {
     const cachedData = await redis.get(cacheKey);
 
     if (!refresh && cachedData) {
-      // Reset the cache expiration time to 1 week if data is found
-      await redis.expire(cacheKey, 60 * 60 * 24 * 7); // 1 week expiration
+      // Reset the cache expiration time to the provided cacheTime if data is found
+      await redis.expire(cacheKey, cacheTime);
       return JSON.parse(cachedData);
     }
 
@@ -71,10 +71,10 @@ const fetchData = async (animeId, refresh, cacheTime) => {
     ]);
 
     // Combine dub and sub episodes into one list
-    const episodes = [...dubEpisodes, ...subEpisodes];
+    const episodes = { dub: dubEpisodes, sub: subEpisodes };
 
-    // Cache the new data in Redis with an expiration time of 1 week
-    await redis.set(cacheKey, JSON.stringify(episodes), 'EX', 60 * 60 * 24 * 7); // 1 week expiration
+    // Cache the new data in Redis with the provided cacheTime
+    await redis.set(cacheKey, JSON.stringify(episodes), 'EX', cacheTime);
 
     return episodes;
   } catch (error) {
