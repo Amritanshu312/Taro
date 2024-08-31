@@ -1,5 +1,6 @@
 'use client';
 
+import { fetchWatchData } from '@/lib/ConsumetFunction';
 import { useSearchParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
@@ -32,7 +33,8 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
           handleNoEpisodeFound(isMounted);
           return;
         }
-        const watchData = await fetchWatchData(episodeData, AnimeInfo);
+        const watchData = await fetchWatchData(episodeData.id, AnimeInfo?.idMal, episodeData.number);
+        console.log(watchData);
 
         if (isMounted) {
           setWatchInfo(
@@ -59,20 +61,6 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
     return selectedList?.find((item) => item.number === episodeNumber);
   };
 
-  const fetchWatchData = async (episodeData, AnimeInfo) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/watch/${episodeData.id}?idmal=${AnimeInfo?.idMal}&episode=${episodeData.number}`);
-      if (response.ok) {
-        return await response.json();
-      } else {
-        throw new Error('Network response was not ok.');
-      }
-    } catch (error) {
-      console.error('Error fetching watch info:', error);
-      toast('Failed to fetch watch data');
-      return { error: 'Failed to fetch data' };
-    }
-  };
 
   const handleNoEpisodeFound = () => {
     setWatchInfo({ loading: false });
