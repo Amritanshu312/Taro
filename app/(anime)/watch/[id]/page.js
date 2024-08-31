@@ -74,4 +74,5 @@ const Watch = async ({ params }) => {
   )
 }
 
+export const dynamic = 'force-dynamic'
 export default Watch
