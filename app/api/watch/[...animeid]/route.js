@@ -41,8 +41,8 @@ const fetchSkipTime = async (idMal, epNum) => {
 export const GET = async (req, { params }) => {
   const url = new URL(req.url);
   const episodeId = params.animeid[0];
-  const idMal = url.searchParams.get('idmal');
-  const episode = url.searchParams.get('episode');
+  // const idMal = url.searchParams.get('idmal');
+  // const episode = url.searchParams.get('episode');
 
 
   const [streamingData] = await Promise.all([
@@ -52,7 +52,7 @@ export const GET = async (req, { params }) => {
 
   const initialData = {
     url,
-    idMal,
+    // idMal,
     episodeId,
     streamingData,
     // skipTime

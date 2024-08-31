@@ -56,7 +56,8 @@ const fetchData = async (animeId, refresh, cacheTime) => {
     }
 
     // Fetch data from Redis
-    const cachedData = await redis.get(cacheKey);
+    const cachedData = null
+    // const cachedData = await redis.get(cacheKey);
 
     if (!refresh && cachedData) {
       // Reset the cache expiration time to the provided cacheTime if data is found
@@ -74,7 +75,7 @@ const fetchData = async (animeId, refresh, cacheTime) => {
     const episodes = { dub: dubEpisodes, sub: subEpisodes };
 
     // Cache the new data in Redis with the provided cacheTime
-    await redis.set(cacheKey, JSON.stringify(episodes), 'EX', cacheTime);
+    // await redis.setex(cacheKey, cacheTime, JSON.stringify(episodes),);
 
     return episodes;
   } catch (error) {
