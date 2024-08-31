@@ -1,22 +1,11 @@
 import axios from 'axios';
-import { Redis } from 'ioredis';
 import { NextResponse } from 'next/server';
 
-// Create a Redis client
-const redis = new Redis({
-  host: process.env.NEXT_REDIS_HOST, // Redis server hostname
-  port: process.env.NEXT_REDIS_PORT, // Redis server port
-  password: process.env.NEXT_REDIS_PASSWORD, // Optional, if your Redis server requires a password
-});
 
 // Set a global timeout for Axios requests if not already set
 axios.interceptors.request.use(config => {
-  if (!config.timeout) {
-    config.timeout = 15000; // Set timeout to 15 seconds for faster failure
-  }
+  config.timeout = 9000;
   return config;
-}, error => {
-  return Promise.reject(error);
 });
 
 // Validate environment variables
