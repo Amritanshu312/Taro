@@ -45,26 +45,8 @@ const fetchEpisodes = async (animeID, isDub) => {
 };
 
 // Fetch and organize data with Redis caching
-const fetchData = async (animeId, refresh, cacheTime) => {
+const fetchData = async (animeId) => {
   try {
-    // Create a unique cache key using anime ID and potentially other identifiers
-    const cacheKey = `anime:${animeId}:episodes`;
-
-    // Fetch new data if refresh is true or if cache is empty (data has expired)
-    if (refresh) {
-      console.log(`Refresh triggered for animeId: ${animeId}, fetching new data.`);
-    }
-
-    // Fetch data from Redis
-    const cachedData = null
-    // const cachedData = await redis.get(cacheKey);
-
-    if (!refresh && cachedData) {
-      // Reset the cache expiration time to the provided cacheTime if data is found
-      await redis.expire(cacheKey, cacheTime);
-      return JSON.parse(cachedData);
-    }
-
     // If no cached data or refresh is true, fetch new data from external API
     const [dubEpisodes, subEpisodes] = await Promise.all([
       fetchEpisodes(animeId, true),
@@ -73,9 +55,6 @@ const fetchData = async (animeId, refresh, cacheTime) => {
 
     // Combine dub and sub episodes into one list
     const episodes = { dub: dubEpisodes, sub: subEpisodes };
-
-    // Cache the new data in Redis with the provided cacheTime
-    // await redis.setex(cacheKey, cacheTime, JSON.stringify(episodes),);
 
     return episodes;
   } catch (error) {
@@ -87,27 +66,12 @@ const fetchData = async (animeId, refresh, cacheTime) => {
 export const GET = async (req, { params }) => {
   try {
     const animeId = params.animeid[0];
-    const url = new URL(req.url);
-    const refresh = url.searchParams.get('refresh') === 'true';
-    const releasing = url.searchParams.get('releasing') || false;
-
-    let cacheTime;
-    if (releasing === "true") {
-      cacheTime = 60 * 60 * 3; // 3 hours for releasing anime
-    } else if (releasing === "false") {
-      cacheTime = 60 * 60 * 24 * 45; // 45 days for completed anime
-    } else {
-      cacheTime = 60 * 60 * 24; // Default cache time, e.g., 24 hours
-    }
-
-    // Ensure cacheTime is an integer
-    cacheTime = parseInt(cacheTime, 10);
 
     if (!animeId) {
       return NextResponse.json({ error: 'Anime ID is required.' }, { status: 400 });
     }
 
-    const data = await fetchData(animeId, refresh, cacheTime);
+    const data = await fetchData(animeId);
 
     if (data.error) {
       return NextResponse.json(data, { status: 500 });
