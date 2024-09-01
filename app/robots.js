@@ -5,7 +5,8 @@ export default function robots() {
       allow: '/',
       disallow: [
         '/watch/',
-        '/catalog/',
+        '/catalog',
+        '/profile',
         '/api/'
       ],
     },

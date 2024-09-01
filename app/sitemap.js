@@ -1,29 +1,20 @@
 import { TrendingAnilist, Top100Anilist, SeasonalAnilist } from '@/lib/Anilistfunction';
+
 export default async function sitemap() {
-  const data = await TrendingAnilist();
-  const data2 = await Top100Anilist();
-  const data3 = await SeasonalAnilist();
+  const [trendingData, top100Data, seasonalData] = await Promise.all([
+    TrendingAnilist(),
+    Top100Anilist(),
+    SeasonalAnilist(),
+  ]);
 
-  const trending = data.map((anime) => {
-    return {
-      url: `https://taro-anime.vercel.app/anime/info/${anime.id}`,
-      lastModified: new Date(),
-    }
-  })
+  const generateSitemapEntries = (data) => data.map((anime) => ({
+    url: `https://taro-anime.vercel.app/anime/info/${anime.id}`,
+    lastModified: new Date(),
+  }));
 
-  const top100 = data2.map((anime) => {
-    return {
-      url: `https://taro-anime.vercel.app/anime/info/${anime.id}`,
-      lastModified: new Date(),
-    }
-  })
-
-  const seasonal = data3.map((anime) => {
-    return {
-      url: `https://taro-anime.vercel.app/anime/info/${anime.id}`,
-      lastModified: new Date(),
-    }
-  })
+  const trending = generateSitemapEntries(trendingData);
+  const top100 = generateSitemapEntries(top100Data);
+  const seasonal = generateSitemapEntries(seasonalData);
 
   return [
     {
@@ -34,6 +25,6 @@ export default async function sitemap() {
     },
     ...trending,
     ...top100,
-    ...seasonal
-  ]
+    ...seasonal,
+  ];
 }
