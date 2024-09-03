@@ -16,7 +16,7 @@ const MainVideo = () => {
 
       <Option />
 
-      <div className="h-full min-h-[124px] bg-[#484460] text-slate-100 flex rounded-md overflow-hidden mt-1 shadow-[3px_13px_29px_0px_#48455fbd] max-[880px]:flex-col">
+      <div className="h-full min-h-[124px] bg-[#484460] text-slate-100 flex rounded-md overflow-hidden mt-4 shadow-[3px_13px_29px_0px_#48455fbd] max-[880px]:flex-col">
         <EpInfo episode={episode} />
         <Server />
       </div>
