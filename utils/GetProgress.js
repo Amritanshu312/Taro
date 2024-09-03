@@ -23,7 +23,7 @@ export const getWatchProgress = (isSlice = true) => {
     videoURL: item.videoURL || '', // same for videoURL
     currentTime: item.currentTime || 0, // fallback for currentTime
     duration: item.duration || 0, // fallback for duration
-    date: item.updatedDate || 0 // fallback for updatedDate
+    date: item.updatedDate || 0, // fallback for updatedDate,
   }));
 
   return data;

@@ -9,6 +9,7 @@ export const SaveProgress = (
   const localStorageData = localStorage.getItem("watch_history") || '{}';
   const jsonifyLocalStorageData = JSON.parse(localStorageData) || {};
 
+
   const updatedData = {
     ...jsonifyLocalStorageData,
     [animeid]: {

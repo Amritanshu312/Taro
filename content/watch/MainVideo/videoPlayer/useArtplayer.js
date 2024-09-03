@@ -85,13 +85,20 @@ const useArtplayer = (getInstance) => {
 
 
         function throttle(func, limit) {
-          let inThrottle;
+          let lastFunc, lastRan;
           return function (...args) {
             const context = this;
-            if (!inThrottle) {
+            if (!lastRan) {
               func.apply(context, args);
-              inThrottle = true;
-              setTimeout(() => (inThrottle = false), limit);
+              lastRan = Date.now();
+            } else {
+              clearTimeout(lastFunc);
+              lastFunc = setTimeout(() => {
+                if (Date.now() - lastRan >= limit) {
+                  func.apply(context, args);
+                  lastRan = Date.now();
+                }
+              }, Math.max(limit - (Date.now() - lastRan), 0));
             }
           };
         }
@@ -103,13 +110,12 @@ const useArtplayer = (getInstance) => {
             data?.target?.currentTime,
             watchInfo?.thumbnail,
             data?.target?.duration,
-            watchInfo?.title || (AnimeInfo?.title?.english || AnimeInfo?.title?.romaji),
+            watchInfo?.title || AnimeInfo?.title?.english || AnimeInfo?.title?.romaji
           );
         }, 8000);
 
-        art.on('video:timeupdate', (data) => {
-          throttledSaveProgress(data);
-        });
+        art.on('video:timeupdate', throttledSaveProgress);
+
 
         art.on('ready', () => {
           const watch_history = JSON.parse(localStorage?.getItem("watch_history"));
