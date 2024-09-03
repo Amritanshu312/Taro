@@ -2,37 +2,17 @@
 import { useEffect, useState } from "react";
 import ContinueWatchingCard from "@/components/Cards/ContinueWatchingCard/ContinueWatchingCard";
 import { FaArrowRight } from "react-icons/fa";
+import { getWatchProgress } from "@/utils/GetProgress";
 
 const WatchHistory = () => {
   const [mappedData, setMappedData] = useState([]);
 
   useEffect(() => {
-    const animeData = JSON.parse(localStorage.getItem("watch_history") || "{}");
+    const data = getWatchProgress()
 
-    // Using Object.keys to map over the object
-    const data = Object.keys(animeData)
-      .slice(0, 4)
-      .sort((keyA, keyB) => {
-        const dateA = new Date(animeData[keyA]?.updatedDate || 0);
-        const dateB = new Date(animeData[keyB]?.updatedDate || 0);
-        return dateB - dateA;
-      })
-      .map(key => {
-        const item = animeData[key];
-        return {
-          id: key,
-          animeid: item.animeid,
-          episode: item.episode,
-          thumbnail: item.thumbnail,
-          title: item.title || '', // title might be undefined, so we provide a fallback
-          videoURL: item.videoURL || '', // same for videoURL
-          currentTime: item.currentTime || 0, // fallback for currentTime
-          duration: item.duration || 0, // fallback for duration
-          date: item.updatedDate || 0 // fallback for duration
-        };
-      });
-
-    setMappedData(data);
+    if (data) {
+      setMappedData(data);
+    }
   }, []);
 
 

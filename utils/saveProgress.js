@@ -1,4 +1,4 @@
-export const saveProgress = (
+export const SaveProgress = (
   animeid,
   episode,
   currentTime,

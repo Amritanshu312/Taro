@@ -6,7 +6,7 @@ import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
 import artplayerPluginChapter from 'artplayer-plugin-chapter';
 import { useWatchContext } from '@/context/Watch';
 import { useWatchSettingContext } from '@/context/WatchSetting';
-import { saveProgress } from '@/utils/saveProgress';
+import { SaveProgress } from '@/utils/saveProgress';
 
 
 const useArtplayer = (getInstance) => {
@@ -97,7 +97,7 @@ const useArtplayer = (getInstance) => {
         }
 
         const throttledSaveProgress = throttle((data) => {
-          saveProgress(
+          SaveProgress(
             animeid,
             episode,
             data?.target?.currentTime,
