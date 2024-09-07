@@ -129,7 +129,6 @@ export const metadata = {
   },
   other: {
     'google-site-verification': 'ls1OUoOoLjxYsmKMPQ1ML9P99TWDsm7d5hfnGQjW7Tw',
-    'google-adsense-account': 'ca-pub-1120730383022833',
     "X-Frame-Options": "SAMEORIGIN",
     
   }
