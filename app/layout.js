@@ -130,6 +130,7 @@ export const metadata = {
   other: {
     'google-site-verification': 'ls1OUoOoLjxYsmKMPQ1ML9P99TWDsm7d5hfnGQjW7Tw',
     "X-Frame-Options": "SAMEORIGIN",
+    
   }
 };
 
