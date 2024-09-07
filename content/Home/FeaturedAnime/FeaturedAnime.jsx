@@ -22,23 +22,23 @@ const getRandomFeaturedAnime = (data) => {
 const FeaturedAnime = ({ data }) => {
   const [populardata, setPopulardata] = useState([])
 
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      const setting = JSON.parse(localStorage.getItem("setting.Taro"))
+  // useEffect(() => {
+  //   if (typeof window !== undefined) {
+  //     const setting = JSON.parse(localStorage.getItem("setting.Taro"))
 
-      if (
-        setting?.appearence?.featuredSection ||
-        setting?.appearence?.featuredSection === undefined
-      ) {
+  //     if (
+  //       setting?.appearence?.featuredSection ||
+  //       setting?.appearence?.featuredSection === undefined
+  //     ) {
 
-        const populardata = getRandomFeaturedAnime(data);
+  //       const populardata = getRandomFeaturedAnime(data);
 
-        setPopulardata(populardata)
-      }
+  //       setPopulardata(populardata)
+  //     }
 
 
-    }
-  }, [])
+  //   }
+  // }, [])
 
 
 
