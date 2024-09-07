@@ -1,20 +1,48 @@
+"use client"
 import Image from "next/image"
 import styles from "./FeaturedAnime.module.css"
 import { FaCirclePlay } from "react-icons/fa6";
 import Button from "@/components/ui/Button";
+import { useEffect, useState } from "react";
 
+
+const getRandomFeaturedAnime = (data) => {
+  if (!data || !Array.isArray(data) || data.length === 0) return null;
+  const filteredData = data.filter(
+    (item) =>
+      item.trailer?.id &&
+      item.id !== 21 &&
+      item.bannerImage &&
+      item.status !== "NOT_YET_RELEASED"
+  );
+  const randomIndex = Math.floor(Math.random() * filteredData.length);
+  return filteredData[randomIndex];
+};
 
 const FeaturedAnime = ({ data }) => {
-  const populardata = (() => {
-    if (data && Array.isArray(data) && data.length > 0) {
-      const filteredData = data.filter(item => item.trailer && item.trailer.id && item.id !== 21 && item.bannerImage !== null && item.status !== 'NOT_YET_RELEASED');
-      const randomIndex = Math.floor(Math.random() * filteredData.length);
-      return filteredData[randomIndex]
+  const [populardata, setPopulardata] = useState([])
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const setting = JSON.parse(localStorage.getItem("setting.Taro"))
+
+      if (
+        setting?.appearence?.featuredSection ||
+        setting?.appearence?.featuredSection === undefined
+      ) {
+
+        const populardata = getRandomFeaturedAnime(data);
+
+        setPopulardata(populardata)
+      }
+
+
     }
-  })()
+  }, [])
 
 
-  return (
+
+  return populardata.length === 0 ? null : (
     <div className="w-full max-w-[96rem] relative mx-5">
       <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins'] max-[450px]:text-[1.2rem]">| Featured Anime</h1>
 
