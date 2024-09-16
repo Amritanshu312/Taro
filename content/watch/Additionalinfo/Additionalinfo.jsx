@@ -15,7 +15,7 @@ const Additionalinfo = ({ info }) => {
 
         {links.map(item => <div
           key={item}
-          onClick={() => item !== "Comments" && setActive(item)}
+          onClick={() => item !== "Comments" ? setActive(item) : document.getElementById('comment').scrollIntoView({ behavior: "smooth" })}
           className={clsx(
             "px-[16px] py-[8px] text-[18px] font-medium relative after:content-[''] after:absolute after:w-0 after:bottom-0 after:left-0 after:h-[3px] after:bg-[#8c8c8e] after:rounded-md after:transition-all hover:after:w-full after:z-10 cursor-pointer max-[380px]:text-[16px]",
             { "after:w-full": item === active }
