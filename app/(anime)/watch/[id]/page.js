@@ -8,7 +8,6 @@ import { WatchAreaContextProvider } from "@/context/Watch"
 import { WatchSettingContextProvider } from "@/context/WatchSetting"
 import Additionalinfo from "@/content/watch/Additionalinfo/Additionalinfo"
 import { Fragment } from "react"
-import Comments from "@/content/watch/Comment/Comment"
 import Recommendation from "@/content/watch/Recommendation/Recommendation"
 import AnimeNotFound from "@/components/errors/AnimeNotFound"
 
@@ -61,7 +60,6 @@ const Watch = async ({ params }) => {
 
 
           <div className="flex mb-5 gap-5 max-[1125px]:flex-col">
-            <Comments AnimeID={AnimeID} title={animeInfo?.title?.english} />
             <Recommendation info={animeInfo} />
           </div>
 
