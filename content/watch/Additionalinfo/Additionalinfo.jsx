@@ -7,7 +7,7 @@ import Relations from "./Relations/Relations"
 const Additionalinfo = ({ info }) => {
   const [active, setActive] = useState("Relation")
 
-  const links = ["Characters", "Relation", "Comments"]
+  const links = ["Characters", "Relation"]
 
   return (
     <div className="mt-8 mb-16 w-full">
