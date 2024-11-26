@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/mongodb-adapter": "^3.4.2",
+    "@auth/mongodb-adapter": "^3.7.4",
     "@vercel/analytics": "^1.3.1",
     "artplayer": "^5.1.6",
     "artplayer-plugin-chapter": "^1.0.0",
@@ -23,7 +23,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
     "next": "14.2.18",
-    "next-auth": "^4.24.7",
+    "next-auth": "^4.24.10",
     "next-nprogress-bar": "^2.3.13",
     "react": "^18",
     "react-dom": "^18",
