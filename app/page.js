@@ -5,10 +5,9 @@ import Popular from "@/content/Home/Popular";
 import Season from "@/content/Home/Season";
 import Trending from "@/content/Home/Trending";
 import WatchHistory from "@/content/Home/WatchHistory";
-import { SeasonalAnilist, Top100Anilist, TrendingAnilist } from "@/lib/Anilistfunction";
+import { SeasonalAnilist, TrendingAnilist } from "@/lib/Anilistfunction";
 
 const Home = async () => {
-  // const top100data = await Top100Anilist();
   const [trendingdata, seasonaldata] = await Promise.all([
     TrendingAnilist(),
     SeasonalAnilist()
@@ -36,3 +35,4 @@ const Home = async () => {
 }
 
 export default Home
+export const revalidate = 129600

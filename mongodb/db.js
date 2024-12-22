@@ -1,44 +1,26 @@
-// This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-import { MongoClient } from "mongodb"
-import mongoose from 'mongoose';
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI ?? "";
-const options = {}
+const uri = process.env.MONGODB_URI;
+const options = {};
 
-let client
-let clientPromise
+let client;
+let clientPromise;
 
-if (!uri) {
-  console.log("Please add your MongoDB URI to .env")
+if (!process.env.MONGODB_URI) {
+  throw new Error("Please add your Mongo URI to .env.local");
 }
 
-try {
-  if (process.env.NODE_ENV === "development") {
-    // In development mode, use a global variable so that the value
-    // is preserved across module reloads caused by HMR (Hot Module Replacement).
-    if (!global._mongoClientPromise && uri) {
-      client = new MongoClient(uri, options)
-      global._mongoClientPromise = client.connect()
-    }
-    clientPromise = global._mongoClientPromise
-  } else {
-    // In production mode, it's best to not use a global variable.
-    client = new MongoClient(uri, options)
-    clientPromise = client.connect()
+if (process.env.NODE_ENV === "development") {
+  // Use a global variable to preserve the value across module reloads in development
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
   }
-} catch (err) {
-  console.log(err)
+  clientPromise = global._mongoClientPromise;
+} else {
+  // In production, it's best to not use a global variable
+  client = new MongoClient(uri, options);
+  clientPromise = client.connect();
 }
 
-export const connectMongo = async () => {
-  if (!uri) return;
-  try {
-    mongoose.connect(uri);
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client 
-export default clientPromise
+export default clientPromise;

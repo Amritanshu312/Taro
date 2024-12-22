@@ -5,7 +5,7 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import Select from "@/components/ui/Select";
 import EpisodeCard from "./EpisodeCard";
 import { useWatchContext } from "@/context/Watch";
-import { FetchEpisodes } from "@/lib/ConsumetFunction";
+import { getEpisodes } from "@/actions/episode";
 
 const EpisodeSelector = ({ AnimeID }) => {
   const [dubSelected, setDubSelected] = useState({ id: 0 });
@@ -20,15 +20,19 @@ const EpisodeSelector = ({ AnimeID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { sub, dub } = await FetchEpisodes(AnimeID);
+      setEpisodes("loading")
+      const data = await getEpisodes(AnimeID)
+
+      const { sub, dub } = data.find(item => item?.providerId === 'gogoanime')?.episodes;
+
 
       setEpisodes({ dub, sub });
     };
 
     fetchData();
-  }, [AnimeID, setEpisodes]);
+  }, [AnimeID]);
 
-  const loading = episodes === "loading";
+  const loading = (episodes === "loading");
   const isSubSelected = dubSelected.id === 0 || dubSelected.id === 1;
 
   const data = useMemo(() => {

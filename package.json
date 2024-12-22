@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/mongodb-adapter": "^3.4.2",
+    "@auth/mongodb-adapter": "^3.7.4",
+    "@consumet/extensions": "github:consumet/consumet.ts",
     "@vercel/analytics": "^1.3.1",
     "artplayer": "^5.1.6",
     "artplayer-plugin-chapter": "^1.0.0",
@@ -18,21 +19,23 @@
     "clsx": "^2.1.1",
     "disqus-react": "^1.1.5",
     "framer-motion": "^11.3.8",
-    "hls.js": "^1.5.11",
-    "ioredis": "^5.4.1",
-    "mongodb": "^6.8.0",
+    "hls.js": "^1.5.17",
+    "mongodb": "^6.11.0",
     "mongoose": "^8.5.2",
     "next": "14.2.4",
-    "next-auth": "^4.24.7",
+    "next-auth": "^4.24.10",
     "next-nprogress-bar": "^2.3.13",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
     "react-paginate": "^8.2.0",
     "react-toastify": "^10.0.5",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "string-similarity": "^4.0.4"
   },
   "devDependencies": {
+    "@types/node": "22.7.8",
+    "@types/react": "18.3.11",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",

@@ -1,44 +1,64 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
-import Hls from 'hls.js';
-import Artplayer from 'artplayer';
-import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-import artplayerPluginChapter from 'artplayer-plugin-chapter';
-import { useWatchContext } from '@/context/Watch';
-import { useWatchSettingContext } from '@/context/WatchSetting';
-import { SaveProgress } from '@/utils/saveProgress';
-
+import { useEffect, useRef } from "react";
+import Hls from "hls.js";
+import Artplayer from "artplayer";
+import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
+import artplayerPluginChapter from "artplayer-plugin-chapter";
+import { useWatchContext } from "@/context/Watch";
+import { useWatchSettingContext } from "@/context/WatchSetting";
+import { SaveProgress } from "@/utils/saveProgress";
 
 const useArtplayer = (getInstance) => {
-  const { setEpisode, watchInfo, episode, animeid, AnimeInfo } = useWatchContext();
-  const { setWatchSetting, watchSetting } = useWatchSettingContext();
+  const { setEpisode, watchInfo, episode, server, animeid, AnimeInfo } =
+    useWatchContext();
+  const { watchSetting } = useWatchSettingContext();
   const artRef = useRef();
-
 
   useEffect(() => {
     const initializeArtPlayer = () => {
-      const M3U8Url = watchInfo?.streamingData?.sources?.find(source => source?.quality === 'default')?.url;
+      console.log(watchInfo);
+      const M3U8Url = watchInfo?.streamingData?.sources?.find(
+        (source) => source?.quality === "default"
+      )?.url;
+      const proxyUrl =
+        server === "Renova"
+          ? M3U8Url
+          : `https://m3-u8-proxy-iota.vercel.app/m3u8-proxy?url=${encodeURIComponent(
+            M3U8Url
+          )}&headers=${encodeURIComponent(
+            JSON.stringify({
+              referer: watchInfo?.streamingData?.headers?.Referer,
+            })
+          )}`;
+
+      console.log(proxyUrl);
 
       if (!M3U8Url || watchInfo?.loading) return;
 
       try {
         const art = new Artplayer({
-          url: M3U8Url,
+          url: proxyUrl,
           setting: true,
-          theme: '#7569c8',
+          theme: "#7569c8",
+          type: "m3u8",
           autoplay: watchSetting?.autoPlay,
           playbackRate: true,
+          aspectRatio: true,
+          backdrop: true,
           miniProgressBar: true,
           pip: true,
           fullscreen: true,
           container: artRef.current,
+          icons: {
+            loading: `<img style="height: 54px;top: 50 % !important;!i;!;position: absolute;left: 50 %;transform: translate(-50 %, -50 %);" src="https://i.pinimg.com/originals/ab/be/28/abbe28a943ed44fcd98452687f7c46c9.gif">`,
+          },
           plugins: [
             artplayerPluginHlsQuality({
               control: true,
               setting: true,
               getResolution: (level) => `${level.height}P`,
-              title: 'Quality',
-              auto: 'Auto',
+              title: "Quality",
+              auto: "Auto",
             }),
 
             // artplayerPluginChapter({
@@ -48,7 +68,6 @@ const useArtplayer = (getInstance) => {
             //     title: item?.skipType === "op" ? "opening" : item?.skipType === "ed" ? "ending" : ""
             //   })) || [],
             // }),
-
           ],
           customType: {
             m3u8: (video, url, art) => {
@@ -58,31 +77,21 @@ const useArtplayer = (getInstance) => {
                 hls.loadSource(url);
                 hls.attachMedia(video);
                 art.hls = hls;
-                art.on('destroy', () => hls.destroy());
-              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                art.on("destroy", () => hls.destroy());
+              } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                 video.src = url;
               } else {
-                art.notice.show = 'Unsupported playback format: m3u8';
+                art.notice.show = "Unsupported playback format: m3u8";
               }
-            }
+            },
           },
         });
 
-        art.on('loading', () => {
-          const loading = art.template.$loading;
-          loading.innerHTML = '';
-          const customLoading = document.createElement('div');
-          customLoading.className = 'i';
-          customLoading.innerHTML = '<div></div><div></div>';
-          loading.appendChild(customLoading);
-        });
-
-        art.on('video:ended', () => {
+        art.on("video:ended", () => {
           if (watchSetting.autoNext) {
-            setEpisode(prev => prev + 1);
+            setEpisode((prev) => prev + 1);
           }
         });
-
 
         function throttle(func, limit) {
           let lastFunc, lastRan;
@@ -110,23 +119,30 @@ const useArtplayer = (getInstance) => {
             data?.target?.currentTime,
             watchInfo?.thumbnail,
             data?.target?.duration,
-            watchInfo?.title || AnimeInfo?.title?.english || AnimeInfo?.title?.romaji
+            watchInfo?.title ||
+            AnimeInfo?.title?.english ||
+            AnimeInfo?.title?.romaji
           );
         }, 8000);
 
-        art.on('video:timeupdate', throttledSaveProgress);
+        art.on("video:timeupdate", throttledSaveProgress);
 
-
-        art.on('ready', () => {
-          const watch_history = JSON.parse(localStorage?.getItem("watch_history"));
+        art.on("ready", () => {
+          const watch_history = JSON.parse(
+            localStorage?.getItem("watch_history")
+          );
 
           if (
             watch_history &&
             watch_history[animeid] &&
-            watch_history[animeid].episode?.toString() === episode?.toString() &&
+            watch_history[animeid].episode?.toString() ===
+            episode?.toString() &&
             watch_history[animeid].currentTime
           ) {
-            const currentTime = parseInt(watch_history[animeid].currentTime, 10);
+            const currentTime = parseInt(
+              watch_history[animeid].currentTime,
+              10
+            );
             if (!isNaN(currentTime)) {
               art.seek = currentTime;
 
@@ -135,11 +151,7 @@ const useArtplayer = (getInstance) => {
           }
         });
 
-
-
-
-
-        if (getInstance && typeof getInstance === 'function') {
+        if (getInstance && typeof getInstance === "function") {
           getInstance(art);
         }
 
@@ -149,7 +161,7 @@ const useArtplayer = (getInstance) => {
           }
         };
       } catch (error) {
-        console.error('Error initializing Artplayer:', error);
+        console.error("Error initializing Artplayer:", error);
       }
     };
 

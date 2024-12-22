@@ -13,7 +13,15 @@ const nextConfig = {
       'media.themoviedb.org'
     ],
     unoptimized: true
-  }
+  },
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    ANILIST_CLIENT_ID: process.env.ANILIST_CLIENT_ID,
+    ANILIST_CLIENT_SECRET: process.env.ANILIST_CLIENT_SECRET,
+    GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
+  },
+
 };
 
 export default nextConfig;

@@ -1,52 +1,60 @@
-'use client';
+"use client";
 
-import { fetchWatchData } from '@/lib/ConsumetFunction';
-import { useSearchParams } from 'next/navigation';
-import { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { toast } from 'react-toastify';
+import { fetchWatchData } from "@/lib/ConsumetFunction";
+import { useSearchParams } from "next/navigation";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { toast } from "react-toastify";
 
 export const WatchAreaContext = createContext();
 
 export function WatchAreaContextProvider({ children, AnimeInfo }) {
-  const searchparam = useSearchParams()
+  const searchparam = useSearchParams();
 
-  const [episode, setEpisode] = useState(parseInt(searchparam.get('ep')) || 1);
+  const [episode, setEpisode] = useState(parseInt(searchparam.get("ep")) || 1);
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
-  const [episodes, setEpisodes] = useState("loading")
+  const [episodes, setEpisodes] = useState("loading");
+  const [server, setServer] = useState("Renova");
 
   let dub, sub;
   if (episodes !== "loading") {
     ({ dub, sub } = episodes);
   }
   useEffect(() => {
-    if (episodes === "loading") return
+    if (episodes === "loading") return;
 
     let isMounted = true;
+
     const fetchData = async () => {
       setWatchInfo((prev) => ({ ...prev, loading: true }));
 
       try {
         const selectedList = isDub ? dub : sub;
         const episodeData = findEpisodeData(selectedList, episode);
+
         if (!episodeData) {
-          handleNoEpisodeFound(isMounted);
+          if (isMounted) handleNoEpisodeFound();
           return;
         }
-        const watchData = await fetchWatchData(episodeData.id, AnimeInfo?.idMal, episodeData.number);
-        console.log(watchData);
+
+        const watchData = await fetchWatchData(
+          episodeData.id,
+          AnimeInfo?.idMal,
+          episodeData.number,
+          server
+        );
 
         if (isMounted) {
-          setWatchInfo(
-            {
-              ...watchData,
-              thumbnail: episodeData?.image,
-              title: episodeData?.title,
-              loading: false
-            });
+          setWatchInfo((prev) => ({
+            ...prev,
+            ...watchData,
+            thumbnail: episodeData.image,
+            title: episodeData.title,
+            loading: false,
+          }));
         }
       } catch (error) {
-        handleError(error, isMounted);
+        if (isMounted) handleError(error);
       }
     };
 
@@ -55,37 +63,41 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
     return () => {
       isMounted = false;
     };
-  }, [episode, dub, sub, isDub]);
+  }, [episode, dub, sub, isDub, server, episodes]);
 
   const findEpisodeData = (selectedList, episodeNumber) => {
     return selectedList?.find((item) => item.number === episodeNumber);
   };
 
-
   const handleNoEpisodeFound = () => {
     setWatchInfo({ loading: false });
-    toast(`No ${isDub ? 'Dub' : 'Sub'} episode found`);
+    toast(`No ${isDub ? "Dub" : "Sub"} episode found`);
   };
 
   const handleError = (error, isMounted) => {
-    console.error('Failed to fetch watch data:', error);
+    console.error("Failed to fetch watch data:", error);
     if (isMounted) {
-      setWatchInfo({ loading: false, error: 'Failed to fetch data' });
-      toast('Failed to fetch data');
+      setWatchInfo({ loading: false, error: "Failed to fetch data" });
+      toast("Failed to fetch data");
     }
   };
 
-  const contextValue = useMemo(() => ({
-    episode,
-    watchInfo,
-    setEpisode,
-    setIsDub,
-    isDub,
-    setEpisodes,
-    episodes,
-    AnimeInfo,
-    animeid: AnimeInfo?.id
-  }), [episode, watchInfo, isDub, episodes, AnimeInfo]);
+  const contextValue = useMemo(
+    () => ({
+      episode,
+      watchInfo,
+      setEpisode,
+      setIsDub,
+      isDub,
+      setEpisodes,
+      episodes,
+      AnimeInfo,
+      server,
+      setServer,
+      animeid: AnimeInfo?.id,
+    }),
+    [episode, watchInfo, isDub, episodes, server, setServer, AnimeInfo]
+  );
 
   return (
     <WatchAreaContext.Provider value={contextValue}>

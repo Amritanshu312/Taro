@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const Banner = ({ info, data }) => {
   const { count, episodesWatched } = info?.statistics?.anime
-  const watchedAnime = data?.entries?.length
+  const watchedAnime = data?.entries?.length || "0"
 
   return (
     <div className="relative after:bg-[linear-gradient(360deg,#000000a6,transparent);] after:content-[''] after:w-full after:h-56 after:bottom-0 after:absolute ">

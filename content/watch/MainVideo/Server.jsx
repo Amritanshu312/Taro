@@ -2,13 +2,15 @@ import { useWatchContext } from "@/context/Watch"
 import { FaMicrophone } from "react-icons/fa6"
 
 const Server = () => {
-  const { isDub, setIsDub, episodes } = useWatchContext()
+  const { isDub, setIsDub, server, setServer, episodes } = useWatchContext()
 
 
   let dub, sub;
   if (episodes) {
     ({ dub, sub } = episodes);
   }
+
+  const servers = ["Renova", "Tokiro", "Hikato"]
 
   return (
     <div className="w-full h-full flex flex-col gap-1 ">
@@ -23,11 +25,17 @@ const Server = () => {
 
         <div className="flex gap-2">
           {(sub && sub.length > 0) ?
-            <div
+            servers.map(item => <div
+              key={item}
               className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-              style={{ backgroundColor: !isDub ? "#4a446c" : "" }}
-              onClick={() => isDub && setIsDub(false)}
-            >Load Sub</div> :
+              style={{ backgroundColor: (!isDub && item === server) ? "#4a446c" : "" }}
+              onClick={() => {
+                isDub && setIsDub(false)
+                setServer(item)
+              }}
+            >{item}</div>
+            )
+            :
 
             <div
               className="px-4  py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
@@ -38,7 +46,6 @@ const Server = () => {
       <div className="bg-[#323044] w-full h-full px-4 flex items-center gap-8 max-[880px]:py-2">
         {dub && dub.length > 0 ?
           <>
-
             <div className="flex items-center">
               <span className="mr-1">
                 <FaMicrophone />
@@ -48,11 +55,16 @@ const Server = () => {
 
             <div className="flex gap-2 ml-[2px]">
 
-              <div
+              {servers.map(item => <div
+                key={item}
                 className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-                style={{ backgroundColor: isDub ? "#4a446c" : "" }}
-                onClick={() => !isDub && setIsDub(true)}
-              >Load Dub</div>
+                style={{ backgroundColor: (isDub && item === server) ? "#4a446c" : "" }}
+                onClick={() => {
+                  !isDub && setIsDub(true)
+                  setServer(item)
+                }}
+              >{item}</div>
+              )}
             </div>
           </>
           : null}

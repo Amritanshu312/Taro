@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
-  const { setEpisode, AnimeInfo } = useWatchContext();
+  const { setEpisode, watchInfo, AnimeInfo } = useWatchContext();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -60,7 +60,7 @@ const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
     >
       <div className="w-full max-w-[150px] relative">
         <Image
-          src={info?.image || "/default-image.jpg"}
+          src={info?.image || AnimeInfo?.coverImage?.large}
           alt={`Episode ${info?.number}`}
           width={150}
           height={100}
