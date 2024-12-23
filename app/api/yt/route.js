@@ -9,8 +9,8 @@ const getTrailer = async (id) => {
   const info = await ytdl.getInfo(constructedUrl);
 
   const video = info.formats
-    .filter((e) => e.hasVideo)
-    .find((e) => !e.isHLS && e.audioQuality)?.url;
+    .filter((e) => e.hasVideo && !e.isHLS && e.container === "webm" && e.codecs.includes("vp09"))
+    .find((e) => e.quality === "hd1080")?.url;
 
   return video;
 };

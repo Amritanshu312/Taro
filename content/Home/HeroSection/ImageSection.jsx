@@ -10,7 +10,7 @@ const ImageSection = ({ populardata }) => {
 
 
   useEffect(() => {
-    setVideoPlay(JSON.parse(localStorage.getItem("setting.Taro") || '{}')?.Preferences?.homePageTrailer || false)
+    setVideoPlay(JSON.parse(localStorage.getItem("setting.Taro") || '{}')?.Preferences?.homePageTrailer || true)
   }, [])
 
 
