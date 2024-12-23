@@ -16,12 +16,13 @@ const EpisodeSelector = ({ AnimeID }) => {
 
   const chunkSize = 80;
 
-  const { setIsDub, episode, setEpisodes, episodes } = useWatchContext();
+  const { setIsDub, episode, setEpisodes, episodes, AnimeInfo } = useWatchContext();
 
   useEffect(() => {
     const fetchData = async () => {
       setEpisodes("loading")
-      const data = await getEpisodes(AnimeID)
+      const cachetime = Math.floor(Date.now() / 1000) - AnimeInfo?.nextAiringEpisode?.airingAt || 3600 * 24 * 2
+      const data = await getEpisodes(AnimeID, cachetime, 3600 * 24)
 
       const { sub, dub } = data.find(item => item?.providerId === 'gogoanime')?.episodes;
 

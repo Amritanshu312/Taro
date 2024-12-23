@@ -2,9 +2,15 @@
 import { ANIME } from "@consumet/extensions";
 import { CombineEpisodeMeta } from "../utils/EpisodeFunctions";
 import { getMappings } from "./mapping";
+import Redis from "ioredis";
 
 const gogo = new ANIME.Gogoanime();
 const zoro = new ANIME.Zoro();
+const redis = new Redis({
+  host: process.env.NEXT_REDIS_HOST,
+  port: process.env.NEXT_REDIS_PORT,
+  password: process.env.NEXT_REDIS_PASSWORD,
+});
 
 export async function fetchGogoEpisodes(id) {
   try {
@@ -93,8 +99,32 @@ const fetchData = async (id) => {
   return data;
 };
 
-export const getEpisodes = async (id) => {
-  const fetchdata = await fetchData(id);
-  return fetchdata;
-};
+export const getEpisodes = async (id, cachePeriod = 3600, cacheTTL = 120) => {
+  const cacheKey = `episodes:${id}`;
 
+  try {
+    const cachedData = await redis.get(cacheKey);
+
+    if (cachedData) {
+      // Reset TTL on access
+      await redis.expire(cacheKey, cacheTTL);
+      return JSON.parse(cachedData);
+    }
+
+    const fetchedData = await fetchData(id);
+
+    // Set initial cache with primary expiration (cachePeriod)
+    await redis.set(cacheKey, JSON.stringify(fetchedData), {
+      EX: cachePeriod,  // Primary expiry (3600s default)
+      NX: true         // Only set if key doesn't exist
+    });
+
+    // Set shorter TTL if not accessed
+    await redis.expire(cacheKey, cacheTTL);  // Secondary expiry (120s default)
+
+    return fetchedData;
+  } catch (error) {
+    console.error('Redis error:', error);
+    return fetchData(id);
+  }
+};

@@ -13,11 +13,11 @@ const Comments = ({ AnimeID, title }) => {
       const disqusNode = document.querySelector('#disqus_thread');
       if (disqusNode && disqusNode.innerHTML.trim() !== "") {
         setLoading(false);
-        clearInterval(interval); // Clear the interval here
+        clearInterval(interval);
       }
     }, 500);
 
-    return () => clearInterval(interval); // Cleanup function to clear interval on unmount
+    return () => clearInterval(interval);
   }, []);
 
 
@@ -39,7 +39,7 @@ const Comments = ({ AnimeID, title }) => {
             url: `${process.env.NEXT_PUBLIC_URL}${pathname}`,
             identifier: AnimeID,
             title: `${title} Anime - Watch online`,
-            language: 'en' // e.g. for Traditional Chinese (Taiwan)
+            language: 'en'
           }}
         />
       </div>
