@@ -18,20 +18,17 @@ const useArtplayer = (getInstance) => {
     const initializeArtPlayer = () => {
       console.log(watchInfo);
       const M3U8Url = watchInfo?.streamingData?.sources?.find(
-        (source) => source?.quality === "default"
+        (source) => source?.quality === (server === "Tokiro" ? "default" : server === "Hikato" ? "backup" : "1080p")
       )?.url;
-      const proxyUrl =
-        server === "Renova"
-          ? M3U8Url
-          : `https://m3-u8-proxy-iota.vercel.app/m3u8-proxy?url=${encodeURIComponent(
-            M3U8Url
-          )}&headers=${encodeURIComponent(
-            JSON.stringify({
-              referer: watchInfo?.streamingData?.headers?.Referer,
-            })
-          )}`;
 
-      console.log(proxyUrl);
+      const proxyUrl = server === "Renova" ? M3U8Url : `https://slave.ffdarkrayon.workers.dev/proxy?url=${encodeURIComponent(
+        btoa(M3U8Url)
+      )}&headers=${encodeURIComponent(btoa(
+        JSON.stringify({
+          referer: watchInfo?.streamingData?.headers?.Referer,
+        }))
+      )}`;
+
 
       if (!M3U8Url || watchInfo?.loading) return;
 
@@ -61,13 +58,26 @@ const useArtplayer = (getInstance) => {
               auto: "Auto",
             }),
 
-            // artplayerPluginChapter({
-            //   chapters: watchInfo?.skipTime?.results?.map(item => ({
-            //     start: item?.interval?.startTime,
-            //     end: item?.skipType === "ed" ? Infinity : item?.interval?.endTime,
-            //     title: item?.skipType === "op" ? "opening" : item?.skipType === "ed" ? "ending" : ""
-            //   })) || [],
-            // }),
+            ...(watchInfo?.skipTime?.skipTime
+              ? [
+                artplayerPluginChapter({
+                  chapters:
+                    watchInfo.skipTime.results?.map((item) => ({
+                      start: item?.interval?.startTime,
+                      end:
+                        item?.skipType === "ed"
+                          ? Infinity
+                          : item?.interval?.endTime,
+                      title:
+                        item?.skipType === "op"
+                          ? "opening"
+                          : item?.skipType === "ed"
+                            ? "ending"
+                            : "",
+                    })) || [],
+                }),
+              ]
+              : []),
           ],
           customType: {
             m3u8: (video, url, art) => {

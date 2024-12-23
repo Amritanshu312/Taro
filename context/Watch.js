@@ -10,11 +10,15 @@ export const WatchAreaContext = createContext();
 export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const searchparam = useSearchParams();
 
-  const [episode, setEpisode] = useState(parseInt(searchparam.get("ep")) || 1);
+  const [episode, setEpisode] = useState(() => {
+    const epFromSearch = parseInt(searchparam.get("ep"));
+    return !isNaN(epFromSearch) ? epFromSearch : 1;
+  });
+
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
   const [episodes, setEpisodes] = useState("loading");
-  const [server, setServer] = useState("Renova");
+  const [server, setServer] = useState("Tokiro");
 
   let dub, sub;
   if (episodes !== "loading") {
@@ -64,6 +68,18 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
       isMounted = false;
     };
   }, [episode, dub, sub, isDub, server, episodes]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const watchHistory = JSON.parse(localStorage.getItem("watch_history")) || {};
+      const animeHistory = watchHistory?.[AnimeInfo?.id];
+      const epFromHistory = parseInt(animeHistory?.episode);
+
+      if (!isNaN(epFromHistory)) {
+        setEpisode(epFromHistory);
+      }
+    }
+  }, [AnimeInfo?.id, episodes]);
 
   const findEpisodeData = (selectedList, episodeNumber) => {
     return selectedList?.find((item) => item.number === episodeNumber);

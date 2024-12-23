@@ -10,7 +10,7 @@ const Server = () => {
     ({ dub, sub } = episodes);
   }
 
-  const servers = ["Renova", "Tokiro", "Hikato"]
+  const servers = ["Tokiro", "Hikato", "Renova"]
 
   return (
     <div className="w-full h-full flex flex-col gap-1 ">
@@ -33,7 +33,7 @@ const Server = () => {
                 isDub && setIsDub(false)
                 setServer(item)
               }}
-            >{item}</div>
+            >{item} {item === "Renova" ? "1080p" : ""}</div>
             )
             :
 
@@ -63,7 +63,7 @@ const Server = () => {
                   !isDub && setIsDub(true)
                   setServer(item)
                 }}
-              >{item}</div>
+              >{item} {item === "Renova" ? "1080p" : ""}</div>
               )}
             </div>
           </>
