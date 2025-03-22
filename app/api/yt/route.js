@@ -1,36 +1,7 @@
-import ytdl from '@distube/ytdl-core';
-import { NextRequest, NextResponse } from 'next/server';
-
-const getTrailer = async (id, quality) => {
-  const constructedUrl = ytdl.getURLVideoID(
-    `https://www.youtube.com/watch?v=${id}`
-  );
-
-  const info = await ytdl.getInfo(constructedUrl);
-  let video = null
-
-  if (quality === "all") {
-    video = info.formats
-      .filter((e) => e.hasVideo && !e.isHLS)
-  }
-
-  else if (quality) {
-    // if a quality is specfied then it will scrape all the quality realted to it
-    video = info.formats
-      .filter((e) => e.hasVideo && !e.isHLS && e.qualityLabel === quality)
-
-  } else {
-    video = info.formats
-      .filter((e) => e.hasVideo && !e.isHLS && e.qualityLabel === "1080p")
-      .find((e) => e.quality === "hd1080")?.url;
-  }
-
-  return video;
-};
+import { NextResponse } from 'next/server';
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
-
   const id = searchParams.get('id');
   const quality = searchParams.get('q') || null;
 
@@ -39,22 +10,34 @@ export const GET = async (req) => {
   }
 
   try {
-    const url = await getTrailer(id, quality);
+    // Dynamically import `@distube/ytdl-core`
+    const ytdl = (await import('@distube/ytdl-core')).default;
 
-    return NextResponse.json({
-      url,
-    });
+    const constructedUrl = ytdl.getURLVideoID(
+      `https://www.youtube.com/watch?v=${id}`
+    );
+    const info = await ytdl.getInfo(constructedUrl);
+
+    let video = null;
+    if (quality === "all") {
+      video = info.formats.filter((e) => e.hasVideo && !e.isHLS);
+    } else if (quality) {
+      video = info.formats.filter(
+        (e) => e.hasVideo && !e.isHLS && e.qualityLabel === quality
+      );
+    } else {
+      video = info.formats
+        .filter((e) => e.hasVideo && !e.isHLS && e.qualityLabel === "1080p")
+        .find((e) => e.quality === "hd1080")?.url;
+    }
+
+    return NextResponse.json({ url: video });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error);
-
     return NextResponse.json(
       {
         message: 'Internal Server Error',
-        error: {
-          message: error.message,
-          name: error.name,
-        },
+        error: { message: error.message, name: error.name },
       },
       { status: 500 }
     );
