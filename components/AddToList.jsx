@@ -46,7 +46,6 @@ const AddToList = () => {
         return;
       }
 
-      console.log("Saved media list entry", data.SaveMediaListEntry);
 
 
       toast.success("List entry updated");

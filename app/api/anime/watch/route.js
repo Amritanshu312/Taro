@@ -1,15 +1,18 @@
-import Anilist from "@consumet/extensions/dist/providers/meta/anilist";
+import { StreamingServers } from "@consumet/extensions";
+import AnimeKai from "@consumet/extensions/dist/providers/anime/animekai";
 import { NextResponse } from "next/server";
 
-const fetchStreamingData = async (episodeId, server) => {
+const fetchStreamingData = async (episodeId, isDub) => {
   try {
     if (!episodeId) {
       throw new Error("Invalid or missing episodeId");
     }
 
-    const anilist = new Anilist();
-    const data = await anilist.fetchEpisodeSources(
-      episodeId
+    const animekai = new AnimeKai();
+    const data = await animekai.fetchEpisodeSources(
+      episodeId,
+      StreamingServers.MegaUp,
+      !!isDub ? "dub" : "sub"
     );
 
 
@@ -27,14 +30,15 @@ const fetchStreamingData = async (episodeId, server) => {
 
 export async function GET(req, { params }) {
   try {
-    const episodeId = params?.episodeId;
+    const episodeId = decodeURIComponent(req.nextUrl.searchParams.get("episodeid"))
+    const isdub = req.nextUrl.searchParams.get("isdub");
 
 
     if (!episodeId) {
       return NextResponse.json({ error: "Episode ID is required" }, { status: 400 });
     }
 
-    const data = await fetchStreamingData(episodeId);
+    const data = await fetchStreamingData(episodeId, isdub);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error handling GET request:", error.message);

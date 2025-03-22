@@ -7,7 +7,6 @@ const Appearence = () => {
   const [continueWatchingSection, setContinueWatchingSection] = useState(false)
 
 
-
   useEffect(() => {
     const jsonifiedLocalsotrage = JSON.parse(localStorage.getItem("setting.Taro") || '{}')
     if (jsonifiedLocalsotrage?.appearence) {
@@ -17,16 +16,10 @@ const Appearence = () => {
   }, [])
 
   useEffect(() => {
-    const jsonifiedLocalsotrage = JSON.parse(localStorage.getItem("setting.Taro") || '{}')
+    const LocalsotrageData = localStorage.getItem("setting.Taro")
 
-    if (!jsonifiedLocalsotrage) {
-      localStorage.setItem("setting.Taro", JSON.stringify({
-        ...jsonifiedLocalsotrage, appearence: {
-          featuredSection: featuredSection === true,
-          continueWatchingSection: continueWatchingSection === true
-        }
-      }))
-    } else {
+    if (LocalsotrageData) {
+      let jsonifiedLocalsotrage = JSON.parse(LocalsotrageData || "{}")
 
       localStorage.setItem("setting.Taro", JSON.stringify({
         ...jsonifiedLocalsotrage, appearence: {
@@ -34,7 +27,13 @@ const Appearence = () => {
           continueWatchingSection
         }
       }))
-
+    } else {
+      localStorage.setItem("setting.Taro", JSON.stringify({
+        appearence: {
+          featuredSection: true,
+          continueWatchingSection: true
+        }
+      }))
     }
   }, [featuredSection, continueWatchingSection])
 

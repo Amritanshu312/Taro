@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchWatchData } from "@/lib/ConsumetFunction";
+import { fetchWatchData } from "@/lib/StreamingVideo";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { toast } from "react-toastify";
@@ -18,56 +18,54 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
   const [watchInfo, setWatchInfo] = useState({ loading: true });
   const [isDub, setIsDub] = useState(false);
   const [episodes, setEpisodes] = useState("loading");
-  const [server, setServer] = useState("Tokiro");
+  const [server, setServer] = useState("sub");
 
-  let dub, sub;
-  if (episodes !== "loading") {
-    ({ dub, sub } = episodes);
-  }
+  const [sub, dub] = episodes !== "loading" && episodes.length > 0
+    ? [episodes.filter(e => e?.isSubbed), episodes.filter(e => e?.isDubbed)]
+    : [[], []];
+
+
+
   useEffect(() => {
-    if (episodes === "loading") return;
-
-    let isMounted = true;
+    if (!episodes || episodes === "loading") return;
 
     const fetchData = async () => {
-      setWatchInfo((prev) => ({ ...prev, loading: true }));
-
       try {
-        const selectedList = isDub ? dub : sub;
-        const episodeData = findEpisodeData(selectedList, episode);
+        setWatchInfo((prev) => ({ ...prev, loading: true }));
 
-        if (!episodeData) {
-          if (isMounted) handleNoEpisodeFound();
+        if (episodes.length === 0) {
+          toast("No Episodes found");
           return;
         }
 
-        const watchData = await fetchWatchData(
-          episodeData.id,
-          AnimeInfo?.idMal,
-          episodeData.number,
-          server
-        );
-
-        if (isMounted) {
-          setWatchInfo((prev) => ({
-            ...prev,
-            ...watchData,
-            thumbnail: episodeData.image,
-            title: episodeData.title,
-            loading: false,
-          }));
+        const currentEpisode = episodes.find((ep) => ep.number === episode);
+        if (!currentEpisode) {
+          toast("Episode not found");
+          return;
         }
+
+        const [watchData, episodeData] = await Promise.all([
+          fetchWatchData(currentEpisode.id, !!(server === "dub")),
+          findEpisodeData(!!(server === "dub") ? dub : sub, episode),
+        ]);
+
+        setWatchInfo({
+          watchData,
+          thumbnail: episodeData?.image || "",
+          title: episodeData?.title || `Episode ${episode}`,
+          loading: false,
+        });
       } catch (error) {
-        if (isMounted) handleError(error);
+        console.error("Failed to fetch watch info:", error);
+        toast("Failed to load episode data");
+        setWatchInfo((prev) => ({ ...prev, loading: false }));
       }
     };
 
     fetchData();
+  }, [episode, server, episodes]);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [episode, dub, sub, isDub, server, episodes]);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -75,7 +73,7 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
       const animeHistory = watchHistory?.[AnimeInfo?.id];
       const epFromHistory = parseInt(animeHistory?.episode);
 
-      if (!isNaN(epFromHistory)) {
+      if (!isNaN(epFromHistory) && !searchparam.get("ep")) {
         setEpisode(epFromHistory);
       }
     }
@@ -85,10 +83,6 @@ export function WatchAreaContextProvider({ children, AnimeInfo }) {
     return selectedList?.find((item) => item.number === episodeNumber);
   };
 
-  const handleNoEpisodeFound = () => {
-    setWatchInfo({ loading: false });
-    toast(`No ${isDub ? "Dub" : "Sub"} episode found`);
-  };
 
   const handleError = (error, isMounted) => {
     console.error("Failed to fetch watch data:", error);

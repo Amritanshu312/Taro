@@ -6,8 +6,14 @@ import { getWatchProgress } from "@/utils/GetProgress";
 
 const WatchHistory = () => {
   const [mappedData, setMappedData] = useState([]);
+  const [showContinueWatching, setShowContinueWatching] = useState(false)
 
   useEffect(() => {
+    const localSetting = JSON.parse(localStorage.getItem("setting.Taro") || "{}")
+    if (!!(localSetting?.appearence?.continueWatchingSection)) {
+      setShowContinueWatching(true)
+    }
+
     const data = getWatchProgress()
 
     if (data) {
@@ -16,7 +22,7 @@ const WatchHistory = () => {
   }, []);
 
 
-  return mappedData.length < 1 ? null : (
+  return showContinueWatching ? mappedData.length < 1 ? null : (
     <div className="w-full max-w-[96rem] relative mx-5">
       <div className="flex justify-between">
         <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins'] max-[450px]:text-[1.2rem]">| Continue Watching</h1>
@@ -32,7 +38,7 @@ const WatchHistory = () => {
         {(mappedData?.length < 4) ? Array.from({ length: 4 - mappedData?.length }).map((i, _) => <ContinueWatchingCard key={_} hidden />) : null}
       </div>
     </div>
-  );
+  ) : null;
 }
 
 export default WatchHistory;

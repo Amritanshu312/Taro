@@ -5,12 +5,10 @@ const Server = () => {
   const { isDub, setIsDub, server, setServer, episodes } = useWatchContext()
 
 
-  let dub, sub;
-  if (episodes) {
-    ({ dub, sub } = episodes);
-  }
+  const [sub, dub] = episodes !== "loading" && episodes.length > 0
+    ? [episodes.filter(e => e?.isSubbed), episodes.filter(e => e?.isDubbed)]
+    : [[], []];
 
-  const servers = ["Tokiro", "Hikato", "Renova"]
 
   return (
     <div className="w-full h-full flex flex-col gap-1 ">
@@ -25,16 +23,14 @@ const Server = () => {
 
         <div className="flex gap-2">
           {(sub && sub.length > 0) ?
-            servers.map(item => <div
-              key={item}
+            <div
               className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-              style={{ backgroundColor: (!isDub && item === server) ? "#4a446c" : "" }}
+              style={{ backgroundColor: ("sub" === server) ? "#4a446c" : "" }}
               onClick={() => {
                 isDub && setIsDub(false)
-                setServer(item)
+                setServer("sub")
               }}
-            >{item} {item === "Renova" ? "1080p" : ""}</div>
-            )
+            >Load Sub</div>
             :
 
             <div
@@ -55,16 +51,15 @@ const Server = () => {
 
             <div className="flex gap-2 ml-[2px]">
 
-              {servers.map(item => <div
-                key={item}
+              <div
                 className="px-4 py-[6px] text-[15px] bg-[#413d57] hover:bg-[#4a446c] border border-[#5b5682] rounded-md cursor-pointer"
-                style={{ backgroundColor: (isDub && item === server) ? "#4a446c" : "" }}
+                style={{ backgroundColor: ("dub" === server) ? "#4a446c" : "" }}
                 onClick={() => {
                   !isDub && setIsDub(true)
-                  setServer(item)
+                  setServer("dub")
                 }}
-              >{item} {item === "Renova" ? "1080p" : ""}</div>
-              )}
+              >Load Dub</div>
+
             </div>
           </>
           : null}

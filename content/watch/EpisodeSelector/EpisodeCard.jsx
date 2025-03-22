@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
+const EpisodeCard = ({ info, currentEp, loading, watchedEP, showType }) => {
   const { setEpisode, watchInfo, AnimeInfo } = useWatchContext();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -30,13 +30,22 @@ const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
 
   if (loading) {
     return (
-      <div className="flex py-2 h-[96px] my-[3px] border-2 border-[#21232e] rounded-md bg-[#242430] cursor-pointer group relative">
+      <div className={clsx(
+        "flex py-2 h-[96px] my-[3px] border-2 border-[#21232e] rounded-md bg-[#242430] cursor-pointer group relative",
+        { "w-full !h-10 bg-[#48455f] my-0": showType === "grid" }
+      )}>
         <div className="absolute bottom-1/2 translate-y-1/2 flex gap-3 w-full">
-          <div className="h-[80px] min-w-[150px] bg-[#48455f] rounded-md"></div>
-          <div className="w-full flex flex-col gap-3">
-            <div className="h-4 w-full bg-[#48465e] rounded-sm"></div>
-            <div className="h-6 w-full bg-[#48465e] rounded-sm"></div>
+          <div className={clsx(
+            "h-[80px] min-w-[150px] bg-[#48455f] rounded-md",
+            { "h-full min-w-full flex items-center justify-center": showType === "grid" }
+          )}>
           </div>
+          {showType !== "grid" &&
+            <div className="w-full flex flex-col gap-3">
+              <div className="h-4 w-full bg-[#48465e] rounded-sm"></div>
+              <div className="h-6 w-full bg-[#48465e] rounded-sm"></div>
+            </div>
+          }
         </div>
       </div>
     );
@@ -50,15 +59,22 @@ const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
       className={clsx(
         "flex gap-3 py-2 border-2 border-[#21232e] rounded-md cursor-pointer group",
         {
-          "bg-[#242430]": isCurrentEpisode,
+          "bg-[#3c3c4c]": isCurrentEpisode,
           "bg-[#1f1f28]": !isCurrentEpisode && !isWatched,
           "bg-[#2a2a38] hover:bg-[#1c1c26]": isWatched,
           "hover:bg-[#242430]": !isCurrentEpisode,
+          "w-full h-10 text-center py-0 flex items-center justify-center": showType === "grid",
+          "px-3 border-[#262838d1]": showType === "compact_list"
         }
       )}
       onClick={handleClick}
+      title={showType !== "list" ?
+        info?.title ||
+        (AnimeInfo?.title?.english || AnimeInfo?.title?.romaji) ||
+        "No title available" : ""
+      }
     >
-      <div className="w-full max-w-[150px] relative">
+      {showType === "list" && <div className="w-full max-w-[150px] relative">
         <Image
           src={info?.image || AnimeInfo?.coverImage?.large}
           alt={`Episode ${info?.number}`}
@@ -70,16 +86,17 @@ const EpisodeCard = ({ info, currentEp, loading, watchedEP }) => {
           24m
         </div>
       </div>
+      }
       <div className="w-full pr-1">
-        <div className="text-slate-200 break-words overflow-hidden text-ellipsis line-clamp-2 font-['Poppins'] text-sm">
+        {showType !== "grid" && <div className="text-slate-200 break-words overflow-hidden text-ellipsis line-clamp-2 font-['Poppins'] text-sm">
           {
             info?.title ||
             (AnimeInfo?.title?.english || AnimeInfo?.title?.romaji) ||
             "No title available"
           }
-        </div>
+        </div>}
         <div className="text-[#ffffffa3] font-['Poppins'] text-[14px]">
-          Episode {info?.number}
+          {showType !== "grid" && "Episode"} {info?.number}
         </div>
       </div>
     </div>

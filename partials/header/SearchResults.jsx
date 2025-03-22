@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Anilist from "@consumet/extensions/dist/providers/meta/anilist";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -72,12 +73,9 @@ const SearchResults = ({ searchValue }) => {
       return;
     }
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_CONSUMET_URL}/meta/anilist/${debouncedSearchValue}`
-      );
-      if (!response.ok) throw new Error("Failed to fetch data");
+      const anilist_consumet = new Anilist()
 
-      const dataJSON = await response.json();
+      const dataJSON = await anilist_consumet.search(debouncedSearchValue)
       if (dataJSON?.results?.length === 0) {
         setData("NO_RESULT_FOUND");
       } else {
@@ -110,7 +108,7 @@ const SearchResults = ({ searchValue }) => {
       initial="hidden"
       animate="show"
     >
-      {error && <div>Error: {error}</div>}
+
       {Array.isArray(data?.results) &&
         data?.results?.slice(0, 5)?.map((result) => (
           <Fragment key={result.id}>

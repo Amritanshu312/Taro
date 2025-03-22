@@ -1,0 +1,69 @@
+.art-video-player {
+  font-family: "Rubik", sans-serif !important;
+}
+
+.art-progress-tip {
+  background: #484460 !important;
+  font-size: 14px !important;
+  border: 2px solid #4c4767;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-family: "poppins", sans-serif;
+  top: -32px !important;
+}
+
+.artplayer-plugin-chapter .art-chapter-title {
+  background: transparent !important;
+  top: -54px !important;
+  font-size: 15px !important;
+}
+
+body .art-video-player.art-backdrop .art-selector-list {
+  background-color: #484460bf !important;
+  border-radius: 10px;
+  /* border: 1px solid #595670; */
+}
+
+.art-selector-item {
+  color: #ffffffd6;
+  font-size: 15px;
+  font-family: "Poppins";
+}
+
+.art-selector-item:hover {
+  background: #565076;
+  color: #00a6ff !important;
+}
+
+body .art-video-player.art-backdrop .art-settings {
+  background-color: #32304780 !important;
+  backdrop-filter: blur(12px);
+  border-radius: 11px !important;
+  font-family: "poppins", sans-serif;
+  height: max-content !important;
+}
+
+.art-setting-item {
+  padding: 20px 9px !important;
+  transition: 0.01s;
+}
+
+body .art-video-player.art-backdrop .art-contextmenus {
+  border-radius: 12px;
+}
+
+/* hide some stuffs */
+.art-contextmenu-version,
+.art-contextmenu-aspectRatio,
+.art-contextmenu-playbackRate {
+  display: none !important;
+}
+
+[class*="hint--"][aria-label]:after {
+  /* content: attr(aria-label); */
+  background: #5f5d90;
+  padding: 5px 8px !important;
+  font-family: "poppins", sans-serif;
+  border-radius: 5px;
+}
+

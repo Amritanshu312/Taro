@@ -22,23 +22,23 @@ const getRandomFeaturedAnime = (data) => {
 const FeaturedAnime = ({ data }) => {
   const [populardata, setPopulardata] = useState([])
 
-  // useEffect(() => {
-  //   if (typeof window !== undefined) {
-  //     const setting = JSON.parse(localStorage.getItem("setting.Taro"))
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const setting = JSON.parse(localStorage.getItem("setting.Taro"))
 
-  //     if (
-  //       setting?.appearence?.featuredSection ||
-  //       setting?.appearence?.featuredSection === undefined
-  //     ) {
+      if (
+        setting?.appearence?.featuredSection ||
+        setting?.appearence?.featuredSection === undefined
+      ) {
 
-  //       const populardata = getRandomFeaturedAnime(data);
+        const populardata = getRandomFeaturedAnime(data);
 
-  //       setPopulardata(populardata)
-  //     }
+        setPopulardata(populardata)
+      }
 
 
-  //   }
-  // }, [])
+    }
+  }, [])
 
 
 
@@ -47,7 +47,7 @@ const FeaturedAnime = ({ data }) => {
       <h1 className="text-[#f6f4f4ea] font-medium text-2xl font-['poppins'] max-[450px]:text-[1.2rem]">| Featured Anime</h1>
 
 
-      <div className="my-20 flex h-[24rem] relative overflow-hidden rounded-lg">
+      <div className="my-20 mt-16 flex h-[24rem] relative overflow-hidden rounded-lg">
         <div className="absolute z-10 top-3 right-0  h-full max-[1348px]:hidden">
           <Image src="/images/waifus/1.png" alt="Ecchi " width={350} height={344} quality={100} className="object-cover" />
         </div>
