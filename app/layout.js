@@ -130,7 +130,7 @@ export const metadata = {
   other: {
     'google-site-verification': 'ls1OUoOoLjxYsmKMPQ1ML9P99TWDsm7d5hfnGQjW7Tw',
     "X-Frame-Options": "SAMEORIGIN",
-    
+
   }
 };
 
@@ -144,10 +144,10 @@ export default async function RootLayout({ children }) {
         <AuthProvider session={session}>
           <Header />
           {children}
-          <Analytics />
           {/* <Footer /> */}
         </AuthProvider>
 
+        <Analytics />
         <ToastContainer draggable theme="dark" />
       </body>
     </html>

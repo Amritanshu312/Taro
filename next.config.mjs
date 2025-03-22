@@ -21,12 +21,7 @@ const nextConfig = {
     ANILIST_CLIENT_SECRET: process.env.ANILIST_CLIENT_SECRET,
     GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...config.externals, "undici"];
-    }
-    return config;
-  },
+
 
 
 };

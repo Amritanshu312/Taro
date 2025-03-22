@@ -18,7 +18,7 @@ const EpisodeSelector = ({ AnimeID }) => {
 
   const chunkSize = 80;
   const { setIsDub, episode, setEpisodes, episodes, AnimeInfo } = useWatchContext();
-
+  console.log(AnimeInfo)
   useEffect(() => {
     const fetchData = async () => {
       setEpisodes("loading");

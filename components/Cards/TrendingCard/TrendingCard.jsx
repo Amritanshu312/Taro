@@ -60,7 +60,7 @@ const TrendingCard = ({ info }) => {
     }
 
     if (imageHovered && !trailer && !isTrailerFetched) {
-      fetch_and_set_data(info.trailer.id)
+      fetch_and_set_data(info?.trailer?.id || null)
     }
   }, [imageHovered])
 

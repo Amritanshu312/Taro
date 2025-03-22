@@ -10,9 +10,8 @@ const Dropdown = ({ data, isLoggedIn }) => {
     <motion.div
       className="bg-[#17151e6f] backdrop-blur-2xl border-2 border-[#4844606e] absolute top-14 right-0 rounded-2xl overflow-hidden min-w-52 px-2 pt-4 pb-2 text-[14px]"
       style={{ transformOrigin: 'top right' }}
-      initial={{ scale: "0.1 0.3" }}
+      initial={{ scale: "0.6" }}
       animate={{ scale: 1 }}
-
     >
       {
         isLoggedIn ? <>
